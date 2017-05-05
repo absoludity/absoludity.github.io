@@ -32,7 +32,24 @@
         </address>
 <p>In <a href="/category/tutorials.html">Tutorials</a>.</p>
 
-</footer><!-- /.post-info --><p>I recently purchased a <a href="http://www.dell.com/au/p/xps-13-9365-2-in-1-laptop/pd?oc=z511203au&amp;model_id=xps-13-9365-2-in-1-laptop">Dell XPS13 (9365)</a> for my new position at Bitnami.</p>                </article>
+</footer><!-- /.post-info --><p>I recently purchased a <a href="http://www.dell.com/au/p/xps-13-9365-2-in-1-laptop/pd?oc=z511203au&amp;model_id=xps-13-9365-2-in-1-laptop">Dell XPS13 (9365)</a> thanks to my new employer <a href="https://bitnami.com/">Bitnami</a>
+(obligatory <a href="https://bitnami.com/careers">we're hiring</a> message), which comes with Windows 10 preinstalled. I was
+aware when purchasing that <a href="https://bugzilla.kernel.org/show_bug.cgi?id=192591">suspend on Linux is not yet working</a>
+(thanks <a href="http://perltricks.com/article/laptop-review--dell-xps-13-2-in-1--9365-/">David Farrell</a>, as well as other functionality (autorotate,
+pen integration etc.) and so was keen to have a few options to work on this machine:</p>
+<ul>
+<li>Dual booting to Ubuntu/Linux,</li>
+<li>Bash on Windows (mainly just out of interest)</li>
+<li>Running Ubuntu within VirtualBox.</li>
+</ul>
+<p>There were already various articles around for setting up dual booting on the Dell XPS13 9365 model,
+but none of them had a complete picture. Here's what I did:</p>
+<ul>
+<li>Downloaded and installed all <a href="http://www.dell.com/support/home/us/en/04/product-support/product/xps-13-9365-2-in-1-laptop/drivers">Dell driver, firmware and application updates</a> from Windows 10</li>
+<li>Disabled hibernation, pagefile and system protection to be able to <a href="http://www.download3k.com/articles/How-to-shrink-a-disk-volume-beyond-the-point-where-any-unmovable-files-are-located-00432">resize the drive using Windows 10's partition software</a></li>
+<li>Switched the SSD drive (and Windows 10) to <a href="https://www.tenforums.com/drivers-hardware/15006-attn-ssd-owners-enabling-ahci-mode-after-windows-10-installation.html">AHCI mode</a> mode (as Linux doesn't support the default RAID as <a href="http://perltricks.com/article/laptop-review--dell-xps-13-2-in-1--9365-/">David</a> mentions)</li>
+</ul>
+<p>With that done, I was able to install Ubuntu while still dual booting.</p>                </article>
             </aside><!-- /#featured -->
         <section id="extras" class="body">
                 <div class="blogroll">
