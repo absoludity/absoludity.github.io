@@ -2,11 +2,11 @@
 <feed xmlns="http://www.w3.org/2005/Atom"><title>Live and let learn - Tutorials</title><link href="/" rel="alternate"></link><link href="/feeds/tutorials.atom.xml" rel="self"></link><id>/</id><updated>2017-04-30T19:50:00+10:00</updated><entry><title>Dual booting the Dell XPS13 (9365) with linux</title><link href="/dual-booting-the-dell-xps13-9365-with-linux.html" rel="alternate"></link><published>2017-04-30T19:50:00+10:00</published><updated>2017-04-30T19:50:00+10:00</updated><author><name>Michael Nelson</name></author><id>tag:None,2017-04-30:/dual-booting-the-dell-xps13-9365-with-linux.html</id><summary type="html">&lt;p&gt;I recently purchased a &lt;a href="http://www.dell.com/au/p/xps-13-9365-2-in-1-laptop/pd?oc=z511203au&amp;amp;model_id=xps-13-9365-2-in-1-laptop"&gt;Dell XPS13 (9365)&lt;/a&gt; (thanks to my new
 employer &lt;a href="https://bitnami.com/"&gt;Bitnami&lt;/a&gt;) which comes with Windows 10 preinstalled. I was
 aware when purchasing that &lt;a href="https://bugzilla.kernel.org/show_bug.cgi?id=192591"&gt;suspend on Linux is not yet working&lt;/a&gt;
-(thanks &lt;a href="http://perltricks.com/article/laptop-review--dell-xps-13-2-in-1--9365-/"&gt;David Farrell&lt;/a&gt;, as well as other functionality
+(thanks &lt;a href="http://perltricks.com/article/laptop-review--dell-xps-13-2-in-1--9365-/"&gt;David Farrell&lt;/a&gt;), as well as other functionality
 (autorotate, pen integration etc.) and so was keen to have …&lt;/p&gt;</summary><content type="html">&lt;p&gt;I recently purchased a &lt;a href="http://www.dell.com/au/p/xps-13-9365-2-in-1-laptop/pd?oc=z511203au&amp;amp;model_id=xps-13-9365-2-in-1-laptop"&gt;Dell XPS13 (9365)&lt;/a&gt; (thanks to my new
 employer &lt;a href="https://bitnami.com/"&gt;Bitnami&lt;/a&gt;) which comes with Windows 10 preinstalled. I was
 aware when purchasing that &lt;a href="https://bugzilla.kernel.org/show_bug.cgi?id=192591"&gt;suspend on Linux is not yet working&lt;/a&gt;
-(thanks &lt;a href="http://perltricks.com/article/laptop-review--dell-xps-13-2-in-1--9365-/"&gt;David Farrell&lt;/a&gt;, as well as other functionality
+(thanks &lt;a href="http://perltricks.com/article/laptop-review--dell-xps-13-2-in-1--9365-/"&gt;David Farrell&lt;/a&gt;), as well as other functionality
 (autorotate, pen integration etc.) and so was keen to have a few options to
 work on this machine:&lt;/p&gt;
 &lt;ul&gt;
