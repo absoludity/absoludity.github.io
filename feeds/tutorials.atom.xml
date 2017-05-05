@@ -21,6 +21,9 @@ but none of them had a complete picture. Here's what I did:&lt;/p&gt;
 &lt;li&gt;Temporarily disabled hibernation, pagefile and system protection to be able to &lt;a href="http://www.download3k.com/articles/How-to-shrink-a-disk-volume-beyond-the-point-where-any-unmovable-files-are-located-00432"&gt;resize the drive using Windows 10's partition software&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;Switched the SSD drive (and Windows 10) to &lt;a href="https://www.tenforums.com/drivers-hardware/15006-attn-ssd-owners-enabling-ahci-mode-after-windows-10-installation.html"&gt;AHCI mode&lt;/a&gt; mode (as Linux doesn't support the default &lt;a href="https://en.wikipedia.org/wiki/NVM_Express"&gt;NVMExpress&lt;/a&gt; RAID as &lt;a href="http://perltricks.com/article/laptop-review--dell-xps-13-2-in-1--9365-/"&gt;David&lt;/a&gt; mentions)&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;With that done, I was able to install Ubuntu while still dual booting. I am
-currently booting Windows and working within an Ubuntu 17.04 VirtualBox image
-as I move around quite a bit during my day so suspend is critical, but &lt;/p&gt;</content></entry></feed>
+&lt;p&gt;With that done, I was able to install Ubuntu while still dual booting Windows
+10. Currently it's most practical to boot Windows mostly and work within an
+Ubuntu 17.04 VirtualBox image as I move around quite a bit and depend on
+suspend/resume. But the difference between running in a VM and on the metal is
+noticeable so I'll be watching the suspend bug and testing the newer kernel
+releases.&lt;/p&gt;</content></entry></feed>
