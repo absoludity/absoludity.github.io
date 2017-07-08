@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on Live and let Learn</title>
+    <link>https://liveandletlearn.net/tags/</link>
+    <description>Recent content in Tags on Live and let Learn</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <managingEditor>absoludity&#43;lll@gmail.com (Michael Nelson)</managingEditor>
+    <webMaster>absoludity&#43;lll@gmail.com (Michael Nelson)</webMaster>
+    <lastBuildDate>Sun, 30 Apr 2017 19:50:00 +1000</lastBuildDate>
+    
+	<atom:link href="https://liveandletlearn.net/tags/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Dell</title>
+      <link>https://liveandletlearn.net/tags/dell/</link>
+      <pubDate>Sun, 30 Apr 2017 19:50:00 +1000</pubDate>
+      <author>absoludity&#43;lll@gmail.com (Michael Nelson)</author>
+      <guid>https://liveandletlearn.net/tags/dell/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Linux</title>
+      <link>https://liveandletlearn.net/tags/linux/</link>
+      <pubDate>Sun, 30 Apr 2017 19:50:00 +1000</pubDate>
+      <author>absoludity&#43;lll@gmail.com (Michael Nelson)</author>
+      <guid>https://liveandletlearn.net/tags/linux/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Tutorial</title>
+      <link>https://liveandletlearn.net/tags/tutorial/</link>
+      <pubDate>Sun, 30 Apr 2017 19:50:00 +1000</pubDate>
+      <author>absoludity&#43;lll@gmail.com (Michael Nelson)</author>
+      <guid>https://liveandletlearn.net/tags/tutorial/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Ubuntu</title>
+      <link>https://liveandletlearn.net/tags/ubuntu/</link>
+      <pubDate>Sun, 30 Apr 2017 19:50:00 +1000</pubDate>
+      <author>absoludity&#43;lll@gmail.com (Michael Nelson)</author>
+      <guid>https://liveandletlearn.net/tags/ubuntu/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

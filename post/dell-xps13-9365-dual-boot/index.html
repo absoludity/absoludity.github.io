@@ -5,9 +5,12 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
-  <title>Live and let Learn</title>
-  <meta property="og:title" content="Live and let Learn" />
-  <meta name="twitter:title" content="Live and let Learn" />
+  <title>Dual booting the Dell XPS13 (9365) with linux</title>
+  <meta property="og:title" content="Dual booting the Dell XPS13 (9365) with linux" />
+  <meta name="twitter:title" content="Dual booting the Dell XPS13 (9365) with linux" />
+  <meta name="description" content="Here we go">
+  <meta property="og:description" content="Here we go">
+  <meta name="twitter:description" content="Here we go">
   <meta name="author" content="Michael Nelson"/>
   <link href='https://liveandletlearn.net/img/favicon.ico' rel='icon' type='image/x-icon'/>
   <meta property="og:image" content="https://liveandletlearn.net/img/avatar-icon.png" />
@@ -15,12 +18,12 @@
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:site" content="@michaelanelson" />
   <meta name="twitter:creator" content="@michaelanelson" />
-  <meta property="og:url" content="https://liveandletlearn.net/" />
+  <meta property="og:url" content="https://liveandletlearn.net/post/dell-xps13-9365-dual-boot/" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Live and let Learn" />
 
   <meta name="generator" content="Hugo 0.25" />
-  <link rel="canonical" href="https://liveandletlearn.net/" />
+  <link rel="canonical" href="https://liveandletlearn.net/post/dell-xps13-9365-dual-boot/" />
   <link rel="alternate" href="https://liveandletlearn.net/index.xml" type="application/rss+xml" title="Live and let Learn">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
@@ -157,14 +160,16 @@
       <div class="container">
         <div class="row">
           <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-            <div class="page-heading">
-              <h1>Live and let Learn</h1>
+            <div class="post-heading">
+              <h1>Dual booting the Dell XPS13 (9365) with linux</h1>
                 
-                  
-                    <hr class="small">
-                    <span class="page-subheading">Living and learning together</span>
-                  
                 
+                  <span class="post-meta">
+  Posted on April 30, 2017
+  
+</span>
+
+
                 
             </div>
           </div>
@@ -175,59 +180,54 @@
 
 
     
-  <div role="main" class="container">
-    <div class="row">
-      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-        
-
-        <div class="posts-list">
-          
-          
-            <article class="post-preview">
-              <a href="https://liveandletlearn.net/post/dell-xps13-9365-dual-boot/">
-                <h2 class="post-title">Dual booting the Dell XPS13 (9365) with linux</h2>
-                
-              </a>
-
-              <span class="post-meta">
-  Posted on April 30, 2017
-  
-</span>
-
-
-              <div class="post-entry">
-                
-                  <p>I recently purchased a <a href="http://www.dell.com/au/p/xps-13-9365-2-in-1-laptop/pd?oc=z511203au&amp;model_id=xps-13-9365-2-in-1-laptop">Dell XPS13 (9365)</a> (thanks to
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        <p>I recently purchased a <a href="http://www.dell.com/au/p/xps-13-9365-2-in-1-laptop/pd?oc=z511203au&amp;model_id=xps-13-9365-2-in-1-laptop">Dell XPS13 (9365)</a> (thanks to
 <a href="https://bitnami.com/">Bitnami</a> for whom I now work) which comes with Windows 10 preinstalled. I was
 aware when purchasing that <a href="https://bugzilla.kernel.org/show_bug.cgi?id=192591">suspend on Linux is not yet working</a>
 (thanks <a href="http://perltricks.com/article/laptop-review--dell-xps-13-2-in-1--9365-/">David Farrell</a>), as well as other functionality
 (autorotate, pen integration etc.) and so was keen to have a few options to
 work on this machine:</p>
-                  <a href="https://liveandletlearn.net/post/dell-xps13-9365-dual-boot/" class="post-read-more">[Read More]</a>
-                
-              </div>
 
-              
-                <span class="post-meta">
-                
-                  #<a href="/tags/ubuntu">ubuntu</a>&nbsp;
-                
-                  #<a href="/tags/linux">linux</a>&nbsp;
-                
-                  #<a href="/tags/dell">dell</a>&nbsp;
-                
-                  #<a href="/tags/tutorial">tutorial</a>&nbsp;
-                
-                </span>
-              
-            </article>
-          
-        </div>
+<ul>
+<li>Running Ubuntu within VirtualBox.</li>
+<li>Dual booting to Ubuntu/Linux (once the suspend issues fixed, I&rsquo;ll be using this most of the time)</li>
+<li>Bash on Windows (mainly just out of interest)</li>
+</ul>
 
+<p>There were already various articles around for setting up dual booting on the Dell XPS13 9365 model,
+but none of them had a complete picture. Here&rsquo;s what I did:</p>
+
+<ul>
+<li>Downloaded and installed all <a href="http://www.dell.com/support/home/us/en/04/product-support/product/xps-13-9365-2-in-1-laptop/drivers">Dell driver, firmware and application updates</a> from Windows 10</li>
+<li>Temporarily disabled hibernation, pagefile and system protection to be able to <a href="http://www.download3k.com/articles/How-to-shrink-a-disk-volume-beyond-the-point-where-any-unmovable-files-are-located-00432">resize the drive using Windows 10&rsquo;s partition software</a></li>
+<li>Switched the SSD drive (and Windows 10) to <a href="https://www.tenforums.com/drivers-hardware/15006-attn-ssd-owners-enabling-ahci-mode-after-windows-10-installation.html">AHCI mode</a> mode (as Linux doesn&rsquo;t support the default <a href="https://en.wikipedia.org/wiki/NVM_Express">NVMExpress</a> RAID as <a href="http://perltricks.com/article/laptop-review--dell-xps-13-2-in-1--9365-/">David</a> mentions)</li>
+</ul>
+
+<p>With that done, I was able to install Ubuntu while still dual booting. I am
+currently booting Windows and working within an Ubuntu 17.04 VirtualBox image
+as I move around quite a bit and depend on suspend/resume. But the difference
+between running in a VM and on the metal is noticeable so I&rsquo;ll be watching the
+suspend bug and testing newer kernel releases.</p>
+
+<p><em>Edit July 2017</em>: For the short-term, it actually works fine to just update my Ubuntu power settings
+so that the computer doesn&rsquo;t suspend when the lid is closed.</p>
+      </article>
+
+      <ul class="pager blog-pager">
         
-      </div>
+        
+      </ul>
+
+      
+        
+      
+
     </div>
   </div>
+</div>
 
     <footer>
   <div class="container">
