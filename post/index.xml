@@ -8,10 +8,22 @@
     <language>en-us</language>
     <managingEditor>absoludity&#43;lll@gmail.com (Michael Nelson)</managingEditor>
     <webMaster>absoludity&#43;lll@gmail.com (Michael Nelson)</webMaster>
-    <lastBuildDate>Sun, 30 Apr 2017 19:50:00 +1000</lastBuildDate>
+    <lastBuildDate>Mon, 10 Jul 2017 01:15:27 +1000</lastBuildDate>
     
 	<atom:link href="https://liveandletlearn.net/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Spanish Interactions</title>
+      <link>https://liveandletlearn.net/post/spanish-interaction/</link>
+      <pubDate>Mon, 10 Jul 2017 01:15:27 +1000</pubDate>
+      <author>absoludity&#43;lll@gmail.com (Michael Nelson)</author>
+      <guid>https://liveandletlearn.net/post/spanish-interaction/</guid>
+      <description>&lt;p&gt;I&amp;rsquo;m currently travelling at nearly 300km/h through the Spanish country-side on my way to
+&lt;a href=&#34;https://en.wikipedia.org/wiki/Seville&#34;&gt;Seville&lt;/a&gt; to meet some of the &lt;a href=&#34;https://bitnami.com/&#34;&gt;Bitnami&lt;/a&gt; team, but it&amp;rsquo;s not the speed
+which has me surprised, but the willingness of people to engage with total nearby strangers.
+&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>Dual booting the Dell XPS13 (9365) with linux</title>

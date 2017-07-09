@@ -8,10 +8,28 @@
     <language>en-us</language>
     <managingEditor>absoludity&#43;lll@gmail.com (Michael Nelson)</managingEditor>
     <webMaster>absoludity&#43;lll@gmail.com (Michael Nelson)</webMaster>
-    <lastBuildDate>Sun, 30 Apr 2017 19:50:00 +1000</lastBuildDate>
+    <lastBuildDate>Mon, 10 Jul 2017 01:15:27 +1000</lastBuildDate>
     
 	<atom:link href="https://liveandletlearn.net/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Bitnami</title>
+      <link>https://liveandletlearn.net/tags/bitnami/</link>
+      <pubDate>Mon, 10 Jul 2017 01:15:27 +1000</pubDate>
+      <author>absoludity&#43;lll@gmail.com (Michael Nelson)</author>
+      <guid>https://liveandletlearn.net/tags/bitnami/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Culture</title>
+      <link>https://liveandletlearn.net/tags/culture/</link>
+      <pubDate>Mon, 10 Jul 2017 01:15:27 +1000</pubDate>
+      <author>absoludity&#43;lll@gmail.com (Michael Nelson)</author>
+      <guid>https://liveandletlearn.net/tags/culture/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Dell</title>
@@ -28,6 +46,15 @@
       <pubDate>Sun, 30 Apr 2017 19:50:00 +1000</pubDate>
       <author>absoludity&#43;lll@gmail.com (Michael Nelson)</author>
       <guid>https://liveandletlearn.net/tags/linux/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Spain</title>
+      <link>https://liveandletlearn.net/tags/spain/</link>
+      <pubDate>Mon, 10 Jul 2017 01:15:27 +1000</pubDate>
+      <author>absoludity&#43;lll@gmail.com (Michael Nelson)</author>
+      <guid>https://liveandletlearn.net/tags/spain/</guid>
       <description></description>
     </item>
     
