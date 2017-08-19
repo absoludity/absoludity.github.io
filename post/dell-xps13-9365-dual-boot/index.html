@@ -8,9 +8,24 @@
   <title>Dual booting the Dell XPS13 (9365) with linux</title>
   <meta property="og:title" content="Dual booting the Dell XPS13 (9365) with linux" />
   <meta name="twitter:title" content="Dual booting the Dell XPS13 (9365) with linux" />
-  <meta name="description" content="Here we go">
-  <meta property="og:description" content="Here we go">
-  <meta name="twitter:description" content="Here we go">
+  <meta name="description" content="I recently purchased a Dell XPS13 (9365) (thanks to
+Bitnami for whom I now work) which comes with Windows 10 preinstalled. I was
+aware when purchasing that suspend on Linux is not yet working
+(thanks David Farrell. As of Aug 2017 suspend is fixed,
+see below), as well as other functionality (autorotate, pen integration etc.)
+and so was keen to have a few options to
+work on this machine:">
+  <meta property="og:description" content="I recently purchased a Dell XPS13 (9365) (thanks to
+Bitnami for whom I now work) which comes with Windows 10 preinstalled. I was
+aware when purchasing that suspend on Linux is not yet working
+(thanks David Farrell. As of Aug 2017 suspend is fixed,
+see below), as well as other functionality (autorotate, pen integration etc.)
+and so was keen to have a few options to
+work on this machine:">
+  <meta name="twitter:description" content="I recently purchased a Dell XPS13 (9365) (thanks to
+Bitnami for whom I now work) which comes with Windows 10 preinstalled. I was
+aware when purchasing that suspend on Linux is not yet working
+(thanks …">
   <meta name="author" content="Michael Nelson"/>
   <link href='https://liveandletlearn.net/img/favicon.ico' rel='icon' type='image/x-icon'/>
   <meta property="og:image" content="https://liveandletlearn.net/img/avatar-icon.png" />
@@ -187,8 +202,9 @@
         <p>I recently purchased a <a href="http://www.dell.com/au/p/xps-13-9365-2-in-1-laptop/pd?oc=z511203au&amp;model_id=xps-13-9365-2-in-1-laptop">Dell XPS13 (9365)</a> (thanks to
 <a href="https://bitnami.com/">Bitnami</a> for whom I now work) which comes with Windows 10 preinstalled. I was
 aware when purchasing that <a href="https://bugzilla.kernel.org/show_bug.cgi?id=192591">suspend on Linux is not yet working</a>
-(thanks <a href="http://perltricks.com/article/laptop-review--dell-xps-13-2-in-1--9365-/">David Farrell</a>), as well as other functionality
-(autorotate, pen integration etc.) and so was keen to have a few options to
+(thanks <a href="http://perltricks.com/article/laptop-review--dell-xps-13-2-in-1--9365-/">David Farrell</a>. As of <a href="#suspendfix">Aug 2017 suspend is fixed</a>,
+see below), as well as other functionality (autorotate, pen integration etc.)
+and so was keen to have a few options to
 work on this machine:</p>
 
 <ul>
@@ -214,6 +230,25 @@ suspend bug and testing newer kernel releases.</p>
 
 <p><em>Edit July 2017</em>: For the short-term, it actually works fine to just update my Ubuntu power settings
 so that the computer doesn&rsquo;t suspend when the lid is closed.</p>
+
+<h3 id="a-name-suspendfix-a-suspend-fix"><a name="suspendfix"></a>Suspend fix</h3>
+
+<p><em>Edit August 2017</em>: Suspend now works perfectly with the <a href="http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.13-rc4/">4.13 rc2 Linux kernel</a> and later.
+As one person mentioned on the bug report, after installing the 4.13 rc2 kernel I also installed
+<code>sysfsutils</code> and added the following file to my system:</p>
+
+<pre><code>$ cat /etc/sysfs.d/suspend_dell_9365.conf
+# Changes from https://bugzilla.kernel.org/show_bug.cgi?id=192591
+
+# Use s2idle (not deep) for suspend.
+power/mem_sleep = s2idle
+
+# Enable key press to wakeup
+devices/platform/i8042/serio0/power/wakeup = enabled
+
+# Disable heartbeat wakeups during suspend.
+module/acpi/parameters/ec_no_wakeup = Y
+</code></pre>
       </article>
 
       <ul class="pager blog-pager">
