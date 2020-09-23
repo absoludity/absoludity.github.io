@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>tkg on Live and let Learn</title>
+    <link>https://liveandletlearn.net/tags/tkg/</link>
+    <description>Recent content in tkg on Live and let Learn</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <managingEditor>absoludity&#43;lll@gmail.com (Michael Nelson)</managingEditor>
+    <webMaster>absoludity&#43;lll@gmail.com (Michael Nelson)</webMaster>
+    <lastBuildDate>Tue, 22 Sep 2020 10:01:03 +1000</lastBuildDate>
+    
+	<atom:link href="https://liveandletlearn.net/tags/tkg/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>VMware Tanzu Kubernetes Grid (TKG) with OpenID Connect - First Experience</title>
+      <link>https://liveandletlearn.net/post/tanzu-kubernetes-grid-tkg-first-experience/</link>
+      <pubDate>Tue, 22 Sep 2020 10:01:03 +1000</pubDate>
+      <author>absoludity&#43;lll@gmail.com (Michael Nelson)</author>
+      <guid>https://liveandletlearn.net/post/tanzu-kubernetes-grid-tkg-first-experience/</guid>
+      <description>Andres and I have been doing quite a bit of feature work in Kubeapps over the past months at VMware and one of the key features that I&amp;rsquo;ve been working on personally is enabling Kubeapps users to deploy applications not only on the cluster on which Kubeapps is installed, but to multiple other clusters as well.
+Enter VMware Tanzu Kubernetes Grid (TGK): an &amp;ldquo;Enterprise-ready Kubernetes runtime which streamlines operations across multi-cloud infrastructure&amp;rdquo;, so naturally I was keen to test out running Kubeapps on TKG and deploying applications to a set of TKG-managed clusters.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/WebPage">
+  <head>
+    
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>VMware Tanzu Kubernetes Grid (TKG) with OpenID Connect - First Experience - Live and let Learn</title>
+  <meta name="description" content="Andres and I have been doing quite a bit of feature work in Kubeapps over the past months at VMware and one of the key features that I&rsquo;ve been working on personally is enabling Kubeapps users to deploy applications not only on the cluster on which Kubeapps is installed, but to multiple other clusters as well.
+Enter VMware Tanzu Kubernetes Grid (TGK): an &ldquo;Enterprise-ready Kubernetes runtime which streamlines operations across multi-cloud infrastructure&rdquo;, so naturally I was keen to test out running Kubeapps on TKG and deploying applications to a set of TKG-managed clusters.">
+  <meta name="author" content="Michael Nelson"/><script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "WebSite",
+    "name": "Live and let Learn",
+    
+    "url": "https:\/\/liveandletlearn.net\/"
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Organization",
+  "name": "",
+  "url": "https:\/\/liveandletlearn.net\/"
+  
+  
+  
+  
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@id": "https:\/\/liveandletlearn.net\/",
+          "name": "home"
+        }
+    },{
+        "@type": "ListItem",
+        "position": 3,
+        "item": {
+          "@id": "https:\/\/liveandletlearn.net\/post\/tanzu-kubernetes-grid-tkg-first-experience\/",
+          "name": "V mware tanzu kubernetes grid ( t k g) with open i d connect first experience"
+        }
+    }]
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "author": {
+    "name" : "Michael Nelson"
+  },
+  "headline": "VMware Tanzu Kubernetes Grid (TKG) with OpenID Connect - First Experience",
+  "description" : "Andres and I have been doing quite a bit of feature work in Kubeapps over the past months at VMware and one of the key features that I\x26rsquo;ve been working on personally is enabling Kubeapps users to deploy applications not only on the cluster on which Kubeapps is installed, but to multiple other clusters as well.\nEnter VMware Tanzu Kubernetes Grid (TGK): an \x26ldquo;Enterprise-ready Kubernetes runtime which streamlines operations across multi-cloud infrastructure\x26rdquo;, so naturally I was keen to test out running Kubeapps on TKG and deploying applications to a set of TKG-managed clusters.",
+  "inLanguage" : "en",
+  "wordCount":  2097 ,
+  "datePublished" : "2020-09-22T10:01:03",
+  "dateModified" : "2020-09-22T10:01:03",
+  "image" : "https:\/\/liveandletlearn.net\/img\/avatar-icon.png",
+  "keywords" : [ "tutorial, kubeapps, tkg, vmware" ],
+  "mainEntityOfPage" : "https:\/\/liveandletlearn.net\/post\/tanzu-kubernetes-grid-tkg-first-experience\/",
+  "publisher" : {
+    "@type": "Organization",
+    "name" : "https:\/\/liveandletlearn.net\/",
+    "logo" : {
+        "@type" : "ImageObject",
+        "url" : "https:\/\/liveandletlearn.net\/img\/avatar-icon.png",
+        "height" :  60 ,
+        "width" :  60
+    }
+  }
+}
+</script>
+
+<meta property="og:title" content="VMware Tanzu Kubernetes Grid (TKG) with OpenID Connect - First Experience" />
+<meta property="og:description" content="Andres and I have been doing quite a bit of feature work in Kubeapps over the past months at VMware and one of the key features that I&rsquo;ve been working on personally is enabling Kubeapps users to deploy applications not only on the cluster on which Kubeapps is installed, but to multiple other clusters as well.
+Enter VMware Tanzu Kubernetes Grid (TGK): an &ldquo;Enterprise-ready Kubernetes runtime which streamlines operations across multi-cloud infrastructure&rdquo;, so naturally I was keen to test out running Kubeapps on TKG and deploying applications to a set of TKG-managed clusters.">
+<meta property="og:image" content="https://liveandletlearn.net/img/avatar-icon.png" />
+<meta property="og:url" content="https://liveandletlearn.net/post/tanzu-kubernetes-grid-tkg-first-experience/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Live and let Learn" />
+
+  <meta name="twitter:title" content="VMware Tanzu Kubernetes Grid (TKG) with OpenID Connect - First …" />
+  <meta name="twitter:description" content="Andres and I have been doing quite a bit of feature work in Kubeapps over the past months at VMware and one of the key features that I&rsquo;ve been working on personally is enabling Kubeapps users to …">
+  <meta name="twitter:image" content="https://liveandletlearn.net/img/avatar-icon.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@michaelanelson" />
+  <meta name="twitter:creator" content="@michaelanelson" />
+  <link href='https://liveandletlearn.net/img/favicon.ico' rel='icon' type='image/x-icon'/>
+  <meta name="generator" content="Hugo 0.69.2" />
+  <link rel="alternate" href="https://liveandletlearn.net/index.xml" type="application/rss+xml" title="Live and let Learn"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"><link rel="stylesheet" href="https://liveandletlearn.net/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" /><link rel="stylesheet" href="https://liveandletlearn.net/css/syntax.css" /><link rel="stylesheet" href="https://liveandletlearn.net/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://liveandletlearn.net/">Live and let Learn</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="Blog" href="/">Blog</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="About" href="/about/">About</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="Tags" href="/tags">Tags</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="Live and let Learn" href="https://liveandletlearn.net/">
+            <img class="avatar-img" src="https://liveandletlearn.net/img/avatar-icon.png" alt="Live and let Learn" />
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-heading">
+              
+                <h1>VMware Tanzu Kubernetes Grid (TKG) with OpenID Connect - First Experience</h1>
+              
+              
+              
+              
+                <span class="post-meta">
+  
+  
+  <i class="fas fa-calendar"></i>&nbsp;Posted on September 22, 2020
+  
+  
+  
+  
+    
+      &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;Michael Nelson
+    
+  
+  
+</span>
+
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        <p><a href="https://github.com/andresmgot">Andres</a> and I have been doing quite a bit of
+feature work in <a href="https://kubeapps.com/">Kubeapps</a> over the past months at VMware and
+one of the key features that I&rsquo;ve been working on personally is enabling
+Kubeapps users to deploy applications not only on the cluster on which
+Kubeapps is installed, but to multiple other clusters as well.</p>
+<p><img src="/img/kubeapps-on-tkg-management-cluster/kubeapps-multicluster.png" alt="The new Kubeapps UI with Multicluster support"></p>
+<p>Enter <a href="https://tanzu.vmware.com/kubernetes-grid">VMware Tanzu Kubernetes Grid</a>
+(TGK): an &ldquo;Enterprise-ready Kubernetes runtime which streamlines operations
+across multi-cloud infrastructure&rdquo;, so naturally I was keen to test out
+running Kubeapps on TKG and deploying applications to a set of TKG-managed clusters.</p>
+<p>Enter <a href="https://github.com/vrabbi">Scott Rosenberg</a> from a VMware partner company called
+<a href="https://www.terasky.com/">Terasky</a>, who has been doing a lot of helpful early
+testing of the multicluster support in Kubeapps. Scott suggested that it&rsquo;d be
+awesome if <a href="https://github.com/kubeapps/kubeapps/issues/1942">Kubeapps could be installed on the TKG management
+cluster as infrastructure</a> while configured
+so that users can only deploy apps to the workload clusters.</p>
+<p>This series of two post details the steps that I took to make that happen with the latest Kubeapps running on a TKG
+management cluster (on AWS) configured to allow users to deploy applications to the
+workload clusters. Though details will differ, a similar setup works on other non-TKG multicluster setups as well.
+This post focuses on the TKG setup required for workload clusters using OpenID Connect, while the followup post will detail the Kubeapps installation and configuration.</p>
+<h2 id="creating-the-management-cluster">Creating the management cluster</h2>
+<p>I started with the docs for VMware Tanzu Kubernetes Grid 1.1 which is the
+latest version of TKG at the time of writing. Following the instructions to
+<a href="https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/1.1/vmware-tanzu-kubernetes-grid-11/GUID-install-tkg-aws.html">prepare to deploy management clusters to Amazon
+EC2</a>
+was quite straight forward and only failed for me initially because I tried
+with a poweruser (an Administrator with a few privileges related to IAM APIs
+missing) rather than an admin user with full access to the IAM API. So take note, an administrator account with full API access really is required to run the <code>clusterawsadm</code> tool successfully (do you realise how hard it is to get access to such an account in a large corporate environment??).</p>
+<p>I was then able to deploy the <a href="https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/1.1/vmware-tanzu-kubernetes-grid-11/GUID-install-tkg-aws-ui.html">management cluster to Amazon EC2 with the
+installer
+interface</a>
+without any issues, simply starting the UI from the same terminal with <code>tkg init --ui</code> and the folowing choices:</p>
+<ul>
+<li>At step 6 in the <strong>VPC for AWS</strong> I chose to <strong>Create new VPC on AWS</strong>.</li>
+<li>At step 7 I selected the <strong>Development</strong> tile (ie. a single control plane node)</li>
+<li>At steps 8 and 10 I selected a <code>small</code> instance given that my environment is just for my own testing and demoing.</li>
+</ul>
+<p>Once that had completed, I played around a little, <a href="https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/1.1/vmware-tanzu-kubernetes-grid-11/GUID-tanzu-k8s-clusters-create.html">creating a workload cluster</a> or two before deleting those and continuing with the task at hand: enabling workload clusters configured with OpenID Connect.</p>
+<h3 id="ensuring-workload-clusters-share-the-vpc-with-the-management-cluster">Ensuring workload clusters share the VPC with the management cluster</h3>
+<p>Although it&rsquo;s not necessary, I followed the steps to ensure that further
+workload clusters which I deploy will share the virtual private cloud (VPC) of the
+management cluster.
+Essentially this was just taking a backup copy of my generated TKG config
+before editing the main config file as per the <a href="https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/1.1/vmware-tanzu-kubernetes-grid-11/GUID-tanzu-k8s-clusters-create.html#aws-vpc">excellent documentation</a>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">cp ~/.tkg/config.yaml ~/.tkg/config-orig.yaml
+vim ~/.tkg/config.yaml
+</code></pre></div><h2 id="using-the-tkg-extension-bundle-for-openid-connect-authentication">Using the TKG extension bundle for OpenID Connect authentication</h2>
+<p>One of the nice things about TKG is that VMware provides a bundle of
+extensions which you can choose to include to help further <a href="https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/1.1/vmware-tanzu-kubernetes-grid-11/GUID-manage-instance-index.html">configure and manage
+your TKG
+environment</a>
+with extra functionality for user authentication among other things. You
+don&rsquo;t have to use these bundled configurations, you could roll your own configs using the
+same tools, but if you choose to, you can do so knowing that the binaries and
+images are all built and supported by VMware.</p>
+<p>For the Kubeapps multicluster case, I&rsquo;m particularly interested in the
+supported user authentication for the workload clusters&rsquo; API servers. This allows
+authentication with the workload clusters to be handled by third-party
+single-signon providers. Although we could configure our workload clusters to
+trust an established identity provider directly, such as Google, Github or
+Active Directory, it would be painful to later change that decision and need
+to reconfigure all clusters. Instead, <a href="https://github.com/dexidp/dex">Dex</a> runs on the management cluster and acts as the trusted identity provider for the workload clusters,
+allowing us to configure our workload clusters to trust the Dex
+identity provider while we
+configure Dex itself to trust whatever established upstream identity
+provider we want. If we ever change identity providers, we need only update
+Dex&rsquo;s config on the management cluster, not all our clusters. Pretty neat.</p>
+<h3 id="installing-dex-on-the-management-cluster-configured-with-a-google-identity-platform-credential">Installing Dex on the management cluster configured with a Google Identity Platform credential</h3>
+<p>I <a href="https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/1.1/vmware-tanzu-kubernetes-grid-11/GUID-manage-instance-index.html#unpack-bundle">downloaded and extracted the
+<code>tkg-extensions-manifests-v1.1.0-vmware.1.tar.gz</code></a> (the latest at the time of
+writing) and followed the instructions to <a href="https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/1.1/vmware-tanzu-kubernetes-grid-11/GUID-manage-instance-dex-aws.html">deploy Dex to my management
+cluster running on
+AWS</a>. This is quite long and currently quite fiddly - in the future I imagine the TKG team will make this simpler using some sort of Kubernetes package. I setup using Google&rsquo;s Identity Platform to create my OAuth2.0 / OIDC credentials as follows:</p>
+<ul>
+<li>At step 9 I replaced <code>&lt;OIDC_IDP_URL&gt;</code> with <code>https://accounts.google.com</code> (and yes, this needs to be exact - an extra slash at the end will cause Dex to enter a <code>CrashLoopBackOff</code> as the URL won&rsquo;t match what Google says it should be)</li>
+<li>At step 14 I replaced <code>&lt;CLIENT_ID&gt;</code> and <code>&lt;CLIENT_SECRET&gt;</code> with the Base64 values of the client id and secret that I&rsquo;m presented with after <a href="https://developers.google.com/identity/protocols/oauth2/openid-connect#appsetup">Setting up OAuth 2.0 / OIDC credentials</a>. For example, to get the base64-encoded value of the client id:</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">export CLIENT_ID_FROM_GOOGLE<span style="color:#f92672">=</span>whateverValueGoogleGivesYou
+echo $CLIENT_ID_FROM_GOOGLE | base64
+d2hhdGV2ZXJWYWx1ZUdvb2dsZUdpdmVzWW91Cg<span style="color:#f92672">==</span>
+</code></pre></div><ul>
+<li>You will also need to <a href="https://developers.google.com/identity/protocols/oauth2/openid-connect#setredirecturi">set a redirect URL</a> while setting up your credentials. For this you will need to use the hostname of the Dex services loadbalancer as per step 4 and append the path <code>/callback</code> using the <code>https</code> protocol, as this is where Dex is configured by default to receive redirects from the auth provider. For example, <code>https://abc123abc123abc123abc123abc123.us-east-2.elb.amazonaws.com/callback</code>, where <code>abc123abc123abc123abc123abc123.us-east-2.elb.amazonaws.com</code> is the value you obtain in step 4.</li>
+<li>You can also add the same hostname without the path as an Authorised JavaScript origin for use with the Google identity client id, on the same page as the authorised redirect URIs. So the value for the Authorised JavaScript origin URI would be <code>https://abc123abc123abc123abc123abc123.us-east-2.elb.amazonaws.com</code></li>
+</ul>
+<h3 id="configuring-an-oidc-enabled-workload-cluster">Configuring an OIDC-enabled workload cluster</h3>
+<p>I was then able to <a href="https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/1.1/vmware-tanzu-kubernetes-grid-11/GUID-manage-instance-deploy-oidc-cluster.html">configure and deploy an authentication-enabled (OIDC-enabled) cluster with TKG</a> with only one small hiccup. When I got to step 5 where you test creating the oidc-enabled cluster, I saw the following error:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ tkg create cluster my-oidc-cluster --plan<span style="color:#f92672">=</span>oidc
+Logs of the command execution can also be found at: /tmp/tkg-20200910T110807050315191.log
+Validating configuration...
+
+Error: : unable to get cluster configuration: unable to get template: failed to read <span style="color:#e6db74">&#34;cluster-template-oidc.yaml&#34;</span> from provider<span style="color:#960050;background-color:#1e0010">&#39;</span>s repository <span style="color:#e6db74">&#34;infrastructure-aws&#34;</span>: failed to read file <span style="color:#e6db74">&#34;/home/homedir/.tkg/providers/infrastructure-aws/v0.5.4/cluster-template-oidc.yaml&#34;</span> from local release v0.5.4
+
+Detailed log about the failure can be found at: /tmp/tkg-20200910T110807050315191.log
+</code></pre></div><p>This appears to be because in Step 1, the instruction creates the file as:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mv tkg-extensions-v1.1.0/authentication/dex/aws/cluster-template-oidc.yaml ~/.tkg/providers/infrastructure-aws/v0.5.3/cluster-template-oidc.yaml
+</code></pre></div><p>where as it appears to be needed in the <code>v0.5.4</code> directory instead (I assume a newer version than was available when the docs were created):</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ mv ~/.tkg/providers/infrastructure-aws/v0.5.3/cluster-template-oidc.yaml ~/.tkg/providers/infrastructure-aws/v0.5.4/
+
+$ tkg create cluster my-oidc-cluster --plan<span style="color:#f92672">=</span>oidc
+Logs of the command execution can also be found at: /tmp/tkg-20200910T110925661328540.log
+Validating configuration...
+Creating workload cluster <span style="color:#e6db74">&#39;my-oidc-cluster&#39;</span>...
+Waiting <span style="color:#66d9ef">for</span> cluster to be initialized...
+...
+<span style="color:#f92672">(</span>everything worked<span style="color:#f92672">)</span>
+</code></pre></div><p>Continue on to configure your <code>kubectl</code> config and install <code>cert-manager</code> and we&rsquo;re ready to add Kubeapps to the management cluster!</p>
+<h3 id="testing-the-oidc-enabled-cluster-with-gangway">Testing the OIDC-enabled cluster with Gangway</h3>
+<p>From the <a href="https://github.com/heptiolabs/gangway">Gangway README</a>: &ldquo;Gangway allows users to self-configure their kubectl configuration in a few short steps.&rdquo; It&rsquo;s a small OIDC-enabled application that allows you to log in via the configured authorisation provider (Google Identity Services in my case) and receive a custom <code>kubectl</code> configuration to access the cluster with <code>kubectl</code> as yourself.</p>
+<p>Although Gangway is not required for the Kubeapps environment, I&rsquo;d recommend continuing on to <a href="https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/1.1/vmware-tanzu-kubernetes-grid-11/GUID-manage-instance-gangway-aws.html">Enable Gangway on your OIDC-enabled cluster</a> for this first workload cluster only for two reasons:</p>
+<ul>
+<li>The process gets you updating the Dex configuration adding a <code>staticClient</code> for the OIDC-enabled workload cluster.</li>
+<li>It enables you to verify that the OIDC configuration is correct, before we assume it&rsquo;s working and add Kubeapps to the mix.</li>
+</ul>
+<p>But if you&rsquo;re confident in your ability to independently debug potential issues, skip straigth along to create your second oidc-enabled cluster below.</p>
+<p>Following the instructions to <a href="https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/1.1/vmware-tanzu-kubernetes-grid-11/GUID-manage-instance-gangway-aws.html">Enable Gangway on my OIDC-enabled cluster</a> failed for me at step 3. I was unable to get the hostname of the Gangway service load balancer because a hostname was never appearing in the output of <code>kubectl get svc gangwaysvc -n tanzu-system-auth</code>. When running <code>kubectl describe svc gangwaysvc -n tanzu-system-auth</code> I would see the warning:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">  Warning  SyncLoadBalancerFailed  2s <span style="color:#f92672">(</span>x8 over 10m<span style="color:#f92672">)</span>  service-controller  Error syncing load balancer: failed to ensure load balancer: could not find any suitable subnets <span style="color:#66d9ef">for</span> creating the ELB
+</code></pre></div><p>Translation: AWS is unable to find a suitable subnet (of the VPC) within which it can create the Elastic Load Balancers. Why? So as far as I can tell, this is because I had a VPC created automatically when creating my management cluster - which importantly created and tagged a public and private subnet for use by that cluster - but I then updated my config so that subsequent workload clusters would share the VPC with its public and private subnets, without updating the tags for the subnet to indicate that it can be used for my workload cluster.</p>
+<p>To fix this, navigate to the list of subnets for the region you&rsquo;re working in, for example, for us-east-1 you will find the list at <a href="https://console.aws.amazon.com/vpc/home?region=us-east-1#subnets:sort=desc:tag:Name">https://console.aws.amazon.com/vpc/home?region=us-east-1#subnets:sort=desc:tag:Name</a>. In this list you will see a <code>-public</code> and <code>-private</code> subnet prefixed by the name of your management cluster, for example, in my case I see:</p>
+<p><img src="/img/kubeapps-on-tkg-management-cluster/tkg-management-subnets.png" alt="Management cluster subnets"></p>
+<p>If you click on the first subnet, the public one, the details will be displayed including a <code>Tags</code> tab. Click on the <code>Tags</code> tab and you will see that the subnet includes a tag for your management cluster. So in my case, I see the tag <code>kubernetes.io/cluster/mnelson-test-tkg</code> with the value <code>shared</code>. This tag enables AWS to know that it can use this subnet for a public load balancer for my management cluster. Add a new tag for your workload cluster to the subnet. In my case, I added the tag <code>kubernetes.io/cluster/my-oidc-cluster</code> with the value <code>shared</code> to both the public and private subnets created for my management cluster. Once this was done, the Gangway service was assigned a hostname and I could continue&hellip; through to step 4.</p>
+<p>For step 4 you need to know the <code>&lt;APISERVER_URL&gt;</code> for the workload cluster. To find this, navigate within the AWS console to the EC2 service where you can list the load balancers. For the <code>us-east-1</code> region, this will be <a href="https://console.aws.amazon.com/ec2/v2/home?region=us-east-1#LoadBalancers:sort=loadBalancerName">https://console.aws.amazon.com/ec2/v2/home?region=us-east-1#LoadBalancers:sort=loadBalancerName</a>. Within the list you&rsquo;ll find a load balancer with a name matching your workload cluster (eg. <code>my-oidc-cluster-apiserver</code>) and need to use the associated DNS name.</p>
+<p>Step 18 (yes, there are that many steps) is the part that is most relevant to us: updating the Dex configuration with the details of the workload cluster. Note that each OIDC-enabled workload cluster that we deploy via TKG will be configured to use its own cluster name as the <code>client_id</code> when verifyng the signed <code>id_tokens</code> that are sent with a request to the API server. We will be updating this again later with the Kubeapps client id, but for now it&rsquo;s worth noting the format (each client ID has a name and a list of redirect urls).</p>
+<p>With the Dex service bounced after updating the config, we can verify the OIDC login is working by following the documentation <a href="https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/1.1/vmware-tanzu-kubernetes-grid-11/GUID-manage-instance-connect-oidc-cluster.html">Access the OIDC-Enabled Cluster with your IDP credentials</a>.</p>
+<p>If everything works as expected then our TKG environment is now correctly configured with Dex on the management cluster as the Identity Provider trusted by the workload clusters, and we&rsquo;re ready to  install Kubeapps on the management cluster!</p>
+<h3 id="create-a-second-oidc-enabled-cluster">Create a second oidc-enabled cluster</h3>
+<p>Before we start with the Kubeapps installation, let&rsquo;s create a second OIDC-enabled workload cluster, which is now a one-liner, with:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">tkg create cluster my-second-cluster --plan<span style="color:#f92672">=</span>oidc
+</code></pre></div><p>The only thing to be careful of here is that you&rsquo;re running this command in the same shell where you <a href="https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/1.1/vmware-tanzu-kubernetes-grid-11/GUID-manage-instance-deploy-oidc-cluster.html">created the first workload cluster</a>. Follow the steps on that page to get the admin credentials, but there&rsquo;s no need to followup with the other tasks (we don&rsquo;t need cert-manager, nor do we need Gangway installed on the cluster - we know the OIDC configuration is correct now).</p>
+<p>We&rsquo;ll re-edit the Dex configuration later with a static client for this second workload cluster.</p>
+<p>Now onto the Kubeapps installation and configuration! (To be continued)</p>
+
+
+        
+          <div class="blog-tags">
+            
+              <a href="https://liveandletlearn.net//tags/tutorial/">tutorial</a>&nbsp;
+            
+              <a href="https://liveandletlearn.net//tags/kubeapps/">kubeapps</a>&nbsp;
+            
+              <a href="https://liveandletlearn.net//tags/tkg/">tkg</a>&nbsp;
+            
+              <a href="https://liveandletlearn.net//tags/vmware/">vmware</a>&nbsp;
+            
+          </div>
+        
+
+        
+
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="https://liveandletlearn.net/post/spanish-interaction/" data-toggle="tooltip" data-placement="top" title="Spanish Interactions">&larr; Previous Post</a>
+            </li>
+          
+          
+        </ul>
+      
+
+
+      
+        
+          
+          <div class="disqus-comments">
+            <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "liveandletlearn" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+          </div>
+          
+        
+        
+      
+
+    </div>
+  </div>
+</div>
+
+      
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+                <a href="mailto:absoludity&#43;lll@gmail.com" title="Email me">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://github.com/absoludity" title="GitHub">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://twitter.com/michaelanelson" title="Twitter">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-twitter fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          <li>
+            <a href="" title="RSS">
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              Michael Nelson
+            
+          
+
+          &nbsp;&bull;&nbsp;&copy;
+          
+            2020
+          
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://liveandletlearn.net/">Live and let Learn</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="https://gohugo.io">Hugo v0.69.2</a> powered &nbsp;&bull;&nbsp; Theme <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a> adapted from <a href="https://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer><script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.js" integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/contrib/auto-render.min.js" integrity="sha384-kmZOZB5ObwgQnS/DuDg6TScgOiWWBiVt0plIRkZCmE6rDZGrEOQeHM5PcHi+nyqe" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+<script src="https://liveandletlearn.net/js/main.js"></script><script> renderMathInElement(document.body); </script><script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script><script src="https://liveandletlearn.net/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+
+
+
+    
+  </body>
+</html>
+

@@ -1,58 +1,180 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" itemscope itemtype="http://schema.org/WebPage">
   <head>
+    
+
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
-  <title>Dual booting the Dell XPS13 (9365) with linux</title>
-  <meta property="og:title" content="Dual booting the Dell XPS13 (9365) with linux" />
-  <meta name="twitter:title" content="Dual booting the Dell XPS13 (9365) with linux" />
+  <title>Dual booting the Dell XPS13 (9365) with linux - Live and let Learn</title>
   <meta name="description" content="I recently purchased a Dell XPS13 (9365) (thanks to
 Bitnami for whom I now work) which comes with Windows 10 preinstalled. I was
 aware when purchasing that suspend on Linux is not yet working
 (thanks David Farrell. As of Aug 2017 suspend is fixed,
 see below), as well as other functionality (autorotate, pen integration etc.)
 and so was keen to have a few options to
-work on this machine:">
-  <meta property="og:description" content="I recently purchased a Dell XPS13 (9365) (thanks to
+work on this machine">
+  <meta name="author" content="Michael Nelson"/><script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "WebSite",
+    "name": "Live and let Learn",
+    
+    "url": "https:\/\/liveandletlearn.net\/"
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Organization",
+  "name": "",
+  "url": "https:\/\/liveandletlearn.net\/"
+  
+  
+  
+  
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@id": "https:\/\/liveandletlearn.net\/",
+          "name": "home"
+        }
+    },{
+        "@type": "ListItem",
+        "position": 3,
+        "item": {
+          "@id": "https:\/\/liveandletlearn.net\/post\/dell-xps13-9365-dual-boot\/",
+          "name": "Dual booting the dell x p s13 (9365) with linux"
+        }
+    }]
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "author": {
+    "name" : "Michael Nelson"
+  },
+  "headline": "Dual booting the Dell XPS13 (9365) with linux",
+  "description" : "I recently purchased a Dell XPS13 (9365) (thanks to Bitnami for whom I now work) which comes with Windows 10 preinstalled. I was aware when purchasing that suspend on Linux is not yet working (thanks David Farrell. As of Aug 2017 suspend is fixed, see below), as well as other functionality (autorotate, pen integration etc.) and so was keen to have a few options to work on this machine\n",
+  "inLanguage" : "en",
+  "wordCount":  351 ,
+  "datePublished" : "2017-04-30T19:50:00",
+  "dateModified" : "2017-04-30T19:50:00",
+  "image" : "https:\/\/liveandletlearn.net\/img\/avatar-icon.png",
+  "keywords" : [ "ubuntu, linux, dell, tutorial, bitnami" ],
+  "mainEntityOfPage" : "https:\/\/liveandletlearn.net\/post\/dell-xps13-9365-dual-boot\/",
+  "publisher" : {
+    "@type": "Organization",
+    "name" : "https:\/\/liveandletlearn.net\/",
+    "logo" : {
+        "@type" : "ImageObject",
+        "url" : "https:\/\/liveandletlearn.net\/img\/avatar-icon.png",
+        "height" :  60 ,
+        "width" :  60
+    }
+  }
+}
+</script>
+
+<meta property="og:title" content="Dual booting the Dell XPS13 (9365) with linux" />
+<meta property="og:description" content="I recently purchased a Dell XPS13 (9365) (thanks to
 Bitnami for whom I now work) which comes with Windows 10 preinstalled. I was
 aware when purchasing that suspend on Linux is not yet working
 (thanks David Farrell. As of Aug 2017 suspend is fixed,
 see below), as well as other functionality (autorotate, pen integration etc.)
 and so was keen to have a few options to
-work on this machine:">
+work on this machine">
+<meta property="og:image" content="https://liveandletlearn.net/img/avatar-icon.png" />
+<meta property="og:url" content="https://liveandletlearn.net/post/dell-xps13-9365-dual-boot/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Live and let Learn" />
+
+  <meta name="twitter:title" content="Dual booting the Dell XPS13 (9365) with linux" />
   <meta name="twitter:description" content="I recently purchased a Dell XPS13 (9365) (thanks to
 Bitnami for whom I now work) which comes with Windows 10 preinstalled. I was
 aware when purchasing that suspend on Linux is not yet working
 (thanks …">
-  <meta name="author" content="Michael Nelson"/>
-  <link href='https://liveandletlearn.net/img/favicon.ico' rel='icon' type='image/x-icon'/>
-  <meta property="og:image" content="https://liveandletlearn.net/img/avatar-icon.png" />
   <meta name="twitter:image" content="https://liveandletlearn.net/img/avatar-icon.png" />
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:site" content="@michaelanelson" />
   <meta name="twitter:creator" content="@michaelanelson" />
-  <meta property="og:url" content="https://liveandletlearn.net/post/dell-xps13-9365-dual-boot/" />
-  <meta property="og:type" content="website" />
-  <meta property="og:site_name" content="Live and let Learn" />
-
-  <meta name="generator" content="Hugo 0.25" />
-  <link rel="canonical" href="https://liveandletlearn.net/post/dell-xps13-9365-dual-boot/" />
-  <link rel="alternate" href="https://liveandletlearn.net/index.xml" type="application/rss+xml" title="Live and let Learn">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://liveandletlearn.net/css/main.css" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
-  <link rel="stylesheet" href="https://liveandletlearn.net/css/pygment_highlights.css" />
-  <link rel="stylesheet" href="https://liveandletlearn.net/css/highlight.min.css" />
+  <link href='https://liveandletlearn.net/img/favicon.ico' rel='icon' type='image/x-icon'/>
+  <meta name="generator" content="Hugo 0.69.2" />
+  <link rel="alternate" href="https://liveandletlearn.net/index.xml" type="application/rss+xml" title="Live and let Learn"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"><link rel="stylesheet" href="https://liveandletlearn.net/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" /><link rel="stylesheet" href="https://liveandletlearn.net/css/syntax.css" /><link rel="stylesheet" href="https://liveandletlearn.net/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
 
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.1/photoswipe.min.css" integrity="sha256-sCl5PUOGMLfFYctzDW3MtRib0ctyUvI9Qsmq2wXOeBY=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.1/default-skin/default-skin.min.css" integrity="sha256-BFeI1V+Vh1Rk37wswuOYn5lsTcaU96hGaI7OUVCLjPc=" crossorigin="anonymous" />
 
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://liveandletlearn.net/">Live and let Learn</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="Blog" href="/">Blog</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="About" href="/about/">About</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="Tags" href="/tags">Tags</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="Live and let Learn" href="https://liveandletlearn.net/">
+            <img class="avatar-img" src="https://liveandletlearn.net/img/avatar-icon.png" alt="Live and let Learn" />
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
 
 
 <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
@@ -99,69 +221,12 @@ aware when purchasing that suspend on Linux is not yet working
     </div>
 </div>
 
-</head>
 
-  <body>
-    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="https://liveandletlearn.net/">Live and let Learn</a>
-    </div>
-
-    <div class="collapse navbar-collapse" id="main-navbar">
-      <ul class="nav navbar-nav navbar-right">
-        
-          
-            <li>
-              <a title="Blog" href="/">Blog</a>
-            </li>
-          
-        
-          
-            <li>
-              <a title="About" href="/about/">About</a>
-            </li>
-          
-        
-          
-            <li>
-              <a title="Tags" href="/tags">Tags</a>
-            </li>
-          
-        
-
-        
-
-        
-      </ul>
-    </div>
-
-    <div class="avatar-container">
-      <div class="avatar-img-border">
-        
-          <a title="Live and let Learn" href="https://liveandletlearn.net/">
-            <img class="avatar-img" src="https://liveandletlearn.net/img/avatar-icon.png" alt="Live and let Learn" />
-          </a>
-        
-      </div>
-    </div>
-
-  </div>
-</nav>
-
-
-
-
-    
   
   
   
+
+
 
 
 
@@ -171,21 +236,33 @@ aware when purchasing that suspend on Linux is not yet working
   <header class="header-section ">
     
     <div class="intro-header no-img">
-      
       <div class="container">
         <div class="row">
           <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
             <div class="post-heading">
-              <h1>Dual booting the Dell XPS13 (9365) with linux</h1>
-                
-                
-                  <span class="post-meta">
-  Posted on April 30, 2017
+              
+                <h1>Dual booting the Dell XPS13 (9365) with linux</h1>
+              
+              
+              
+              
+                <span class="post-meta">
+  
+  
+  <i class="fas fa-calendar"></i>&nbsp;Posted on April 30, 2017
+  
+  
+  
+  
+    
+      &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;Michael Nelson
+    
+  
   
 </span>
 
 
-                
+              
             </div>
           </div>
         </div>
@@ -205,38 +282,31 @@ aware when purchasing that <a href="https://bugzilla.kernel.org/show_bug.cgi?id=
 (thanks <a href="http://perltricks.com/article/laptop-review--dell-xps-13-2-in-1--9365-/">David Farrell</a>. As of <a href="#suspendfix">Aug 2017 suspend is fixed</a>,
 see below), as well as other functionality (autorotate, pen integration etc.)
 and so was keen to have a few options to
-work on this machine:</p>
-
+work on this machine</p>
+<p>:</p>
 <ul>
 <li>Running Ubuntu within VirtualBox.</li>
 <li>Dual booting to Ubuntu/Linux (once the suspend issues fixed, I&rsquo;ll be using this most of the time)</li>
 <li>Bash on Windows (mainly just out of interest)</li>
 </ul>
-
 <p>There were already various articles around for setting up dual booting on the Dell XPS13 9365 model,
 but none of them had a complete picture. Here&rsquo;s what I did:</p>
-
 <ul>
 <li>Downloaded and installed all <a href="http://www.dell.com/support/home/us/en/04/product-support/product/xps-13-9365-2-in-1-laptop/drivers">Dell driver, firmware and application updates</a> from Windows 10</li>
 <li>Temporarily disabled hibernation, pagefile and system protection to be able to <a href="http://www.download3k.com/articles/How-to-shrink-a-disk-volume-beyond-the-point-where-any-unmovable-files-are-located-00432">resize the drive using Windows 10&rsquo;s partition software</a></li>
 <li>Switched the SSD drive (and Windows 10) to <a href="https://www.tenforums.com/drivers-hardware/15006-attn-ssd-owners-enabling-ahci-mode-after-windows-10-installation.html">AHCI mode</a> mode (as Linux doesn&rsquo;t support the default <a href="https://en.wikipedia.org/wiki/NVM_Express">NVMExpress</a> RAID as <a href="http://perltricks.com/article/laptop-review--dell-xps-13-2-in-1--9365-/">David</a> mentions)</li>
 </ul>
-
 <p>With that done, I was able to install Ubuntu while still dual booting. I am
 currently booting Windows and working within an Ubuntu 17.04 VirtualBox image
 as I move around quite a bit and depend on suspend/resume. But the difference
 between running in a VM and on the metal is noticeable so I&rsquo;ll be watching the
 suspend bug and testing newer kernel releases.</p>
-
 <p><em>Edit July 2017</em>: For the short-term, it actually works fine to just update my Ubuntu power settings
 so that the computer doesn&rsquo;t suspend when the lid is closed.</p>
-
-<h3 id="a-name-suspendfix-a-suspend-fix"><a name="suspendfix"></a>Suspend fix</h3>
-
+<h3 id="a-namesuspendfixasuspend-fix"><!-- raw HTML omitted --><!-- raw HTML omitted -->Suspend fix</h3>
 <p><em>Edit August 2017</em>: Suspend now works perfectly with the <a href="http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.13-rc4/">4.13 rc2 Linux kernel</a> and later.
 As one person mentioned on the bug report, after installing the 4.13 rc2 kernel I also installed
 <code>sysfsutils</code> and added the following file to my system:</p>
-
 <pre><code>$ cat /etc/sysfs.d/suspend_dell_9365.conf
 # Changes from https://bugzilla.kernel.org/show_bug.cgi?id=192591
 
@@ -249,22 +319,46 @@ devices/platform/i8042/serio0/power/wakeup = enabled
 # Disable heartbeat wakeups during suspend.
 module/acpi/parameters/ec_no_wakeup = Y
 </code></pre>
+
+        
+          <div class="blog-tags">
+            
+              <a href="https://liveandletlearn.net//tags/ubuntu/">ubuntu</a>&nbsp;
+            
+              <a href="https://liveandletlearn.net//tags/linux/">linux</a>&nbsp;
+            
+              <a href="https://liveandletlearn.net//tags/dell/">dell</a>&nbsp;
+            
+              <a href="https://liveandletlearn.net//tags/tutorial/">tutorial</a>&nbsp;
+            
+              <a href="https://liveandletlearn.net//tags/bitnami/">bitnami</a>&nbsp;
+            
+          </div>
+        
+
+        
+
+        
       </article>
 
-      <ul class="pager blog-pager">
-        
-        
-          <li class="next">
-            <a href="https://liveandletlearn.net/post/spanish-interaction/" data-toggle="tooltip" data-placement="top" title="Spanish Interactions">Next Post &rarr;</a>
-          </li>
-        
-      </ul>
+      
+        <ul class="pager blog-pager">
+          
+          
+            <li class="next">
+              <a href="https://liveandletlearn.net/post/spanish-interaction/" data-toggle="tooltip" data-placement="top" title="Spanish Interactions">Next Post &rarr;</a>
+            </li>
+          
+        </ul>
+      
+
 
       
         
+          
           <div class="disqus-comments">
             <div id="disqus_thread"></div>
-<script>
+<script type="application/javascript">
     var disqus_config = function () {
     
     
@@ -281,9 +375,11 @@ module/acpi/parameters/ec_no_wakeup = Y
         (d.head || d.body).appendChild(s);
     })();
 </script>
-<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
           </div>
+          
+        
         
       
 
@@ -291,7 +387,8 @@ module/acpi/parameters/ec_no_wakeup = Y
   </div>
 </div>
 
-    <footer>
+      
+<footer>
   <div class="container">
     <div class="row">
       <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
@@ -300,50 +397,49 @@ module/acpi/parameters/ec_no_wakeup = Y
               <li>
                 <a href="mailto:absoludity&#43;lll@gmail.com" title="Email me">
                   <span class="fa-stack fa-lg">
-                    <i class="fa fa-circle fa-stack-2x"></i>
-                    <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
-                  </span>
-                </a>
-              </li>
-              <li>
-                <a href="https://plus.google.com/&#43;MichaelNelson-0" title="Google&#43;">
-                  <span class="fa-stack fa-lg">
-                    <i class="fa fa-circle fa-stack-2x"></i>
-                    <i class="fa fa-google-plus fa-stack-1x fa-inverse"></i>
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
                   </span>
                 </a>
               </li>
               <li>
                 <a href="https://github.com/absoludity" title="GitHub">
                   <span class="fa-stack fa-lg">
-                    <i class="fa fa-circle fa-stack-2x"></i>
-                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
                   </span>
                 </a>
               </li>
               <li>
                 <a href="https://twitter.com/michaelanelson" title="Twitter">
                   <span class="fa-stack fa-lg">
-                    <i class="fa fa-circle fa-stack-2x"></i>
-                    <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-twitter fa-stack-1x fa-inverse"></i>
                   </span>
                 </a>
               </li>
           
           <li>
-            <a href="https://liveandletlearn.net/index.xml" title="RSS">
+            <a href="" title="RSS">
               <span class="fa-stack fa-lg">
-                <i class="fa fa-circle fa-stack-2x"></i>
-                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
               </span>
             </a>
           </li>
           
         </ul>
         <p class="credits copyright text-muted">
-          Michael Nelson
-          &nbsp;&bull;&nbsp;
-          2017
+          
+            
+              Michael Nelson
+            
+          
+
+          &nbsp;&bull;&nbsp;&copy;
+          
+            2020
+          
 
           
             &nbsp;&bull;&nbsp;
@@ -352,28 +448,29 @@ module/acpi/parameters/ec_no_wakeup = Y
         </p>
         
         <p class="credits theme-by text-muted">
-          <a href="http://gohugo.io">Hugo v0.25</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          <a href="https://gohugo.io">Hugo v0.69.2</a> powered &nbsp;&bull;&nbsp; Theme <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a> adapted from <a href="https://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a>
           
         </p>
       </div>
     </div>
   </div>
-</footer>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha384-dq1/gEHSxPZQ7DdrM82ID4YVol9BYyU7GbWlIwnwyPzotpoc57wDw/guX8EaYGPx" crossorigin="anonymous"></script>
+</footer><script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.js" integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/contrib/auto-render.min.js" integrity="sha384-kmZOZB5ObwgQnS/DuDg6TScgOiWWBiVt0plIRkZCmE6rDZGrEOQeHM5PcHi+nyqe" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-<script src="https://liveandletlearn.net/js/main.js"></script>
-<script src="https://liveandletlearn.net/js/highlight.min.js"></script>
-<script> hljs.initHighlightingOnLoad(); </script>
-<script> renderMathInElement(document.body); </script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.1/photoswipe.min.js" integrity="sha256-UplRCs9v4KXVJvVY+p+RSo5Q4ilAUXh7kpjyIP5odyc=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.1/photoswipe-ui-default.min.js" integrity="sha256-PWHOlUzc96pMc8ThwRIXPn8yH4NOLu42RQ0b9SpnpFk=" crossorigin="anonymous"></script>
-<script src="/js/load-photoswipe.js"></script>
+
+<script src="https://liveandletlearn.net/js/main.js"></script><script> renderMathInElement(document.body); </script><script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script><script src="https://liveandletlearn.net/js/load-photoswipe.js"></script>
 
 
 
+
+
+
+
+
+
+    
   </body>
 </html>
 

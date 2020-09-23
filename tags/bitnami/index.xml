@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Bitnami on Live and let Learn</title>
+    <title>bitnami on Live and let Learn</title>
     <link>https://liveandletlearn.net/tags/bitnami/</link>
-    <description>Recent content in Bitnami on Live and let Learn</description>
+    <description>Recent content in bitnami on Live and let Learn</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <managingEditor>absoludity&#43;lll@gmail.com (Michael Nelson)</managingEditor>
@@ -21,8 +21,7 @@
       <guid>https://liveandletlearn.net/post/spanish-interaction/</guid>
       <description>&lt;p&gt;I&amp;rsquo;m currently travelling at nearly 300km/h through the Spanish country-side on my way to
 &lt;a href=&#34;https://en.wikipedia.org/wiki/Seville&#34;&gt;Seville&lt;/a&gt; to meet some of the &lt;a href=&#34;https://bitnami.com/&#34;&gt;Bitnami&lt;/a&gt; team, but it&amp;rsquo;s not the speed
-which has me surprised, but the willingness of people to engage with total nearby strangers.
-&lt;/p&gt;</description>
+which has me surprised, but the willingness of people to engage with total nearby strangers.&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -37,7 +36,7 @@ aware when purchasing that &lt;a href=&#34;https://bugzilla.kernel.org/show_bug.
 (thanks &lt;a href=&#34;http://perltricks.com/article/laptop-review--dell-xps-13-2-in-1--9365-/&#34;&gt;David Farrell&lt;/a&gt;. As of &lt;a href=&#34;#suspendfix&#34;&gt;Aug 2017 suspend is fixed&lt;/a&gt;,
 see below), as well as other functionality (autorotate, pen integration etc.)
 and so was keen to have a few options to
-work on this machine:&lt;/p&gt;</description>
+work on this machine&lt;/p&gt;</description>
     </item>
     
   </channel>

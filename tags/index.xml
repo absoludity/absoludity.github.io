@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on Live and let Learn</title>
@@ -8,13 +8,49 @@
     <language>en-us</language>
     <managingEditor>absoludity&#43;lll@gmail.com (Michael Nelson)</managingEditor>
     <webMaster>absoludity&#43;lll@gmail.com (Michael Nelson)</webMaster>
-    <lastBuildDate>Mon, 10 Jul 2017 01:15:27 +1000</lastBuildDate>
+    <lastBuildDate>Tue, 22 Sep 2020 10:01:03 +1000</lastBuildDate>
     
 	<atom:link href="https://liveandletlearn.net/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Bitnami</title>
+      <title>kubeapps</title>
+      <link>https://liveandletlearn.net/tags/kubeapps/</link>
+      <pubDate>Tue, 22 Sep 2020 10:01:03 +1000</pubDate>
+      <author>absoludity&#43;lll@gmail.com (Michael Nelson)</author>
+      <guid>https://liveandletlearn.net/tags/kubeapps/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>tkg</title>
+      <link>https://liveandletlearn.net/tags/tkg/</link>
+      <pubDate>Tue, 22 Sep 2020 10:01:03 +1000</pubDate>
+      <author>absoludity&#43;lll@gmail.com (Michael Nelson)</author>
+      <guid>https://liveandletlearn.net/tags/tkg/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>tutorial</title>
+      <link>https://liveandletlearn.net/tags/tutorial/</link>
+      <pubDate>Tue, 22 Sep 2020 10:01:03 +1000</pubDate>
+      <author>absoludity&#43;lll@gmail.com (Michael Nelson)</author>
+      <guid>https://liveandletlearn.net/tags/tutorial/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>vmware</title>
+      <link>https://liveandletlearn.net/tags/vmware/</link>
+      <pubDate>Tue, 22 Sep 2020 10:01:03 +1000</pubDate>
+      <author>absoludity&#43;lll@gmail.com (Michael Nelson)</author>
+      <guid>https://liveandletlearn.net/tags/vmware/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>bitnami</title>
       <link>https://liveandletlearn.net/tags/bitnami/</link>
       <pubDate>Mon, 10 Jul 2017 01:15:27 +1000</pubDate>
       <author>absoludity&#43;lll@gmail.com (Michael Nelson)</author>
@@ -23,7 +59,7 @@
     </item>
     
     <item>
-      <title>Culture</title>
+      <title>culture</title>
       <link>https://liveandletlearn.net/tags/culture/</link>
       <pubDate>Mon, 10 Jul 2017 01:15:27 +1000</pubDate>
       <author>absoludity&#43;lll@gmail.com (Michael Nelson)</author>
@@ -32,25 +68,7 @@
     </item>
     
     <item>
-      <title>Dell</title>
-      <link>https://liveandletlearn.net/tags/dell/</link>
-      <pubDate>Sun, 30 Apr 2017 19:50:00 +1000</pubDate>
-      <author>absoludity&#43;lll@gmail.com (Michael Nelson)</author>
-      <guid>https://liveandletlearn.net/tags/dell/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Linux</title>
-      <link>https://liveandletlearn.net/tags/linux/</link>
-      <pubDate>Sun, 30 Apr 2017 19:50:00 +1000</pubDate>
-      <author>absoludity&#43;lll@gmail.com (Michael Nelson)</author>
-      <guid>https://liveandletlearn.net/tags/linux/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Spain</title>
+      <title>spain</title>
       <link>https://liveandletlearn.net/tags/spain/</link>
       <pubDate>Mon, 10 Jul 2017 01:15:27 +1000</pubDate>
       <author>absoludity&#43;lll@gmail.com (Michael Nelson)</author>
@@ -59,16 +77,25 @@
     </item>
     
     <item>
-      <title>Tutorial</title>
-      <link>https://liveandletlearn.net/tags/tutorial/</link>
+      <title>dell</title>
+      <link>https://liveandletlearn.net/tags/dell/</link>
       <pubDate>Sun, 30 Apr 2017 19:50:00 +1000</pubDate>
       <author>absoludity&#43;lll@gmail.com (Michael Nelson)</author>
-      <guid>https://liveandletlearn.net/tags/tutorial/</guid>
+      <guid>https://liveandletlearn.net/tags/dell/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>Ubuntu</title>
+      <title>linux</title>
+      <link>https://liveandletlearn.net/tags/linux/</link>
+      <pubDate>Sun, 30 Apr 2017 19:50:00 +1000</pubDate>
+      <author>absoludity&#43;lll@gmail.com (Michael Nelson)</author>
+      <guid>https://liveandletlearn.net/tags/linux/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>ubuntu</title>
       <link>https://liveandletlearn.net/tags/ubuntu/</link>
       <pubDate>Sun, 30 Apr 2017 19:50:00 +1000</pubDate>
       <author>absoludity&#43;lll@gmail.com (Michael Nelson)</author>
