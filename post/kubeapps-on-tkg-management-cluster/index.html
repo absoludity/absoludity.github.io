@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/WebPage">
+  <head>
+    
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>Kubeapps on a TKG Management Cluster - Live and let Learn</title>
+  <meta name="description" content="This is part two of a series detailing the steps required to run Kubeapps on a VMware TKG management cluster (on AWS) configured to allow users to deploy applications to multiple workload clusters, using the new multicluster support in Kubeapps. Though details will differ, a similar configuration works on other non-TKG multicluster setups as well.
+The first post described setting up your VMware TKG management cluster with two OpenIDConnect-enabled workload clusters.">
+  <meta name="author" content="Michael Nelson"/><script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "WebSite",
+    "name": "Live and let Learn",
+    
+    "url": "https:\/\/liveandletlearn.net\/"
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Organization",
+  "name": "",
+  "url": "https:\/\/liveandletlearn.net\/"
+  
+  
+  
+  
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@id": "https:\/\/liveandletlearn.net\/",
+          "name": "home"
+        }
+    },{
+        "@type": "ListItem",
+        "position": 3,
+        "item": {
+          "@id": "https:\/\/liveandletlearn.net\/post\/kubeapps-on-tkg-management-cluster\/",
+          "name": "Kubeapps on a t k g management cluster"
+        }
+    }]
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "author": {
+    "name" : "Michael Nelson"
+  },
+  "headline": "Kubeapps on a TKG Management Cluster",
+  "description" : "This is part two of a series detailing the steps required to run Kubeapps on a VMware TKG management cluster (on AWS) configured to allow users to deploy applications to multiple workload clusters, using the new multicluster support in Kubeapps. Though details will differ, a similar configuration works on other non-TKG multicluster setups as well.\nThe first post described setting up your VMware TKG management cluster with two OpenIDConnect-enabled workload clusters.",
+  "inLanguage" : "en",
+  "wordCount":  856 ,
+  "datePublished" : "2020-09-23T11:01:36",
+  "dateModified" : "2020-09-23T11:01:36",
+  "image" : "https:\/\/liveandletlearn.net\/img\/avatar-icon.png",
+  "keywords" : [ "tutorial, kubeapps, tkg, vmware" ],
+  "mainEntityOfPage" : "https:\/\/liveandletlearn.net\/post\/kubeapps-on-tkg-management-cluster\/",
+  "publisher" : {
+    "@type": "Organization",
+    "name" : "https:\/\/liveandletlearn.net\/",
+    "logo" : {
+        "@type" : "ImageObject",
+        "url" : "https:\/\/liveandletlearn.net\/img\/avatar-icon.png",
+        "height" :  60 ,
+        "width" :  60
+    }
+  }
+}
+</script>
+
+<meta property="og:title" content="Kubeapps on a TKG Management Cluster" />
+<meta property="og:description" content="This is part two of a series detailing the steps required to run Kubeapps on a VMware TKG management cluster (on AWS) configured to allow users to deploy applications to multiple workload clusters, using the new multicluster support in Kubeapps. Though details will differ, a similar configuration works on other non-TKG multicluster setups as well.
+The first post described setting up your VMware TKG management cluster with two OpenIDConnect-enabled workload clusters.">
+<meta property="og:image" content="https://liveandletlearn.net/img/avatar-icon.png" />
+<meta property="og:url" content="https://liveandletlearn.net/post/kubeapps-on-tkg-management-cluster/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Live and let Learn" />
+
+  <meta name="twitter:title" content="Kubeapps on a TKG Management Cluster" />
+  <meta name="twitter:description" content="This is part two of a series detailing the steps required to run Kubeapps on a VMware TKG management cluster (on AWS) configured to allow users to deploy applications to multiple workload clusters, …">
+  <meta name="twitter:image" content="https://liveandletlearn.net/img/avatar-icon.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@michaelanelson" />
+  <meta name="twitter:creator" content="@michaelanelson" />
+  <link href='https://liveandletlearn.net/img/favicon.ico' rel='icon' type='image/x-icon'/>
+  <meta name="generator" content="Hugo 0.69.2" />
+  <link rel="alternate" href="https://liveandletlearn.net/index.xml" type="application/rss+xml" title="Live and let Learn"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"><link rel="stylesheet" href="https://liveandletlearn.net/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" /><link rel="stylesheet" href="https://liveandletlearn.net/css/syntax.css" /><link rel="stylesheet" href="https://liveandletlearn.net/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://liveandletlearn.net/">Live and let Learn</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="Blog" href="/">Blog</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="About" href="/about/">About</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="Tags" href="/tags">Tags</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="Live and let Learn" href="https://liveandletlearn.net/">
+            <img class="avatar-img" src="https://liveandletlearn.net/img/avatar-icon.png" alt="Live and let Learn" />
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-heading">
+              
+                <h1>Kubeapps on a TKG Management Cluster</h1>
+              
+              
+              
+              
+                <span class="post-meta">
+  
+  
+  <i class="fas fa-calendar"></i>&nbsp;Posted on September 23, 2020
+  
+  
+  
+  
+    
+      &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;Michael Nelson
+    
+  
+  
+</span>
+
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        <p>This is part two of a series detailing the steps required to run <a href="https://kubeapps.com">Kubeapps</a> on a <a href="https://tanzu.vmware.com/kubernetes-grid">VMware TKG</a> management cluster (on AWS) configured to allow users to deploy applications to multiple
+workload clusters, using the new multicluster support in Kubeapps. Though details will differ, a similar configuration works on other non-TKG multicluster setups as well.</p>
+<p>The first post described <a href="/post/tanzu-kubernetes-grid-tkg-first-experience/">setting up your VMware TKG management cluster with two OpenIDConnect-enabled workload clusters</a>. This post assumes you have your TKG environment setup as described there and focuses on the Kubeapps installation and configuration.</p>
+<h2 id="prepare-a-kubeapps-configuration">Prepare a Kubeapps configuration</h2>
+<p>We&rsquo;ll need two random values for the client and cookie secret required as part of Kubeapps&rsquo; oauth2-proxy configuration, so generate these values with:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nv">kubeappsClientSecret</span><span class="o">=</span><span class="k">$(</span>openssl rand -base64 32<span class="k">)</span> <span class="o">&amp;&amp;</span> <span class="nb">echo</span> <span class="nv">$kubeappsClientSecret</span>
+<span class="nv">kubeappsCookieSecret</span><span class="o">=</span><span class="k">$(</span>openssl rand -base64 32<span class="k">)</span> <span class="o">&amp;&amp;</span> <span class="nb">echo</span> <span class="nv">$kubeappsCookieSecret</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Next, create a <code>kubeapps-tkg-values.yaml</code> file with the following contents, substituting in the same values from earlier steps:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="c"># Ensure that Kubeapps is reachable externally via the frontend svc as an ELB</span><span class="w">
+</span><span class="w"></span><span class="c"># currently without TLS.</span><span class="w">
+</span><span class="w"></span><span class="k">frontend</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="k">service</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="k">annotations</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="k">service.beta.kubernetes.io/aws-load-balancer-backend-protocol</span><span class="p">:</span><span class="w"> </span>http<span class="w">
+</span><span class="w">    </span><span class="k">port</span><span class="p">:</span><span class="w"> </span><span class="m">80</span><span class="w">
+</span><span class="w">    </span><span class="k">type</span><span class="p">:</span><span class="w"> </span>LoadBalancer<span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="c"># Setup the oauth2-proxy running on the frontend to handle the OIDC authentication</span><span class="w">
+</span><span class="w"></span><span class="c"># for us.</span><span class="w">
+</span><span class="w"></span><span class="k">authProxy</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="k">enabled</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="w">  </span><span class="k">provider</span><span class="p">:</span><span class="w"> </span>oidc<span class="w">
+</span><span class="w">  </span><span class="k">clientID</span><span class="p">:</span><span class="w"> </span>kubeapps-oauth2-proxy<span class="w">
+</span><span class="w">  </span><span class="k">clientSecret</span><span class="p">:</span><span class="w"> </span>&lt;KUBEAPPS_CLIENT_SECRET<span class="sd">&gt;
+</span><span class="sd">  cookieSecret: &lt;KUBEAPPS_COOKIE_SECRET&gt;</span><span class="w">
+</span><span class="w">  </span><span class="k">additionalFlags</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span>- --oidc-issuer-url=https<span class="p">:</span>//&lt;DEX_SVC_LB_HOSTNAME<span class="sd">&gt;
+</span><span class="sd">    # IMPORTANT: We are overwriting the scope option to include the workload clusters&#39; clientids in the audience.</span><span class="w">
+</span><span class="w">    </span>- --scope=openid<span class="w"> </span>email<span class="w"> </span>groups<span class="w"> </span>audience<span class="p">:</span>server<span class="p">:</span>client_id<span class="p">:</span>my-oidc-cluster<span class="w"> </span>audience<span class="p">:</span>server<span class="p">:</span>client_id<span class="p">:</span>second-oidc-cluster<span class="w">
+</span><span class="w">    </span><span class="c"># TODO: Update to provide the dex ca via --provider-ca-file and mounting etc.</span><span class="w">
+</span><span class="w">    </span>- --ssl-insecure-skip-verify=<span class="kc">true</span><span class="w">
+</span><span class="w">    </span><span class="c"># Since Kubeapps is running without TLS, can&#39;t use secure cookies</span><span class="w">
+</span><span class="w">    </span>- --cookie-secure=<span class="kc">false</span><span class="w">
+</span><span class="w">    </span><span class="c"># If you need to access the actual token in the frontend for testing, uncomment the following.</span><span class="w">
+</span><span class="w">    </span><span class="c"># - --set-authorization-header=true</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="c"># Configure the two workload clusters</span><span class="w">
+</span><span class="w"></span><span class="k">clusters</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>my-oidc-cluster<span class="w">
+</span><span class="w">    </span><span class="k">apiServiceURL</span><span class="p">:</span><span class="w"> </span>https<span class="p">:</span>//&lt;DNS<span class="w"> </span>of<span class="w"> </span>first<span class="w"> </span>workload<span class="w"> </span>cluster<span class="w"> </span>API<span class="w"> </span>Server&gt;<span class="p">:</span><span class="m">6443</span><span class="w">
+</span><span class="w">    </span><span class="k">certificateAuthorityData</span><span class="p">:</span><span class="w"> </span>&lt;CA<span class="w"> </span>Data<span class="w"> </span>for<span class="w"> </span>first<span class="w"> </span>cluster<span class="sd">&gt;
+</span><span class="sd">  - name: second-oidc-cluster</span><span class="w">
+</span><span class="w">    </span><span class="k">apiServiceURL</span><span class="p">:</span><span class="w"> </span>https<span class="p">:</span>//&lt;DNS<span class="w"> </span>of<span class="w"> </span>second<span class="w"> </span>workload<span class="w"> </span>cluster<span class="w"> </span>API<span class="w"> </span>server&gt;<span class="p">:</span><span class="m">6443</span><span class="w">
+</span><span class="w">    </span><span class="k">certificateAuthorityData</span><span class="p">:</span><span class="w"> </span>&lt;CA<span class="w"> </span>Data<span class="w"> </span>for<span class="w"> </span>second<span class="w"> </span>cluster<span class="sd">&gt;
+</span><span class="sd">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>As noted in the comments there, the most important part for the <code>authProxy</code> is the <code>--scope</code> argument which requests not only the normal <code>openid email groups</code> scopes but also requests that the workload client ids be included in the audience of our <code>kubeapps-oauth2-proxy</code> token. More about this below.</p>
+<p>For the <code>apiServiceURL</code> and <code>certificateAuthorityData</code> values for Kubeapps&rsquo; <code>clusters</code> configuration, you have this data all in your kubeconfig, so grab it from there:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">less <span class="nv">$KUBECONFIG</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>With the kube-context set for the management cluster, we create a namespace for Kubeapps and install away!</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">kubectl create ns kubeapps
+
+helm install --namespace kubeapps kubeapps bitnami/kubeapps --values ~/path/to/your/kubeapps-tkg-values.yaml
+</code></pre></td></tr></table>
+</div>
+</div><p>Once the pods are all up and running, check for the frontend loadbalancer domain name given by AWS:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">kubectl -n kubeapps get svc kubeapps
+</code></pre></td></tr></table>
+</div>
+</div><p>and open it up in a browser to verify that you can see kubeapps at that address. Note that logging in wil result in a bad request until we update Dex&rsquo;s configuration.</p>
+<h2 id="configuring-a-kubeapps-client-for-dex">Configuring a Kubeapps client for Dex</h2>
+<p>The last step is to edit the Dex config adding a <code>kubeapps-oauth2-proxy</code> client and importantly, ensuring that Dex views the <code>kubeapps-oauth2-proxy</code> client as a trusted peer of each cluster client. This allows us to request that the cluster client-ids be included in the audience of the returned token for the <code>kubeapps-oauth2-proxy</code>, which in turn enables the API servers of each cluster to trust a token issued to the <code>kubeapps-oauth2-proxy</code> client.</p>
+<p>So we edit the same Dex configuration file which we previously worked with while setting up the authentication for our TKG clusters:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">vim tkg-extensions-v1.1.0/authentication/dex/aws/oidc/04-cm.yaml
+</code></pre></td></tr></table>
+</div>
+</div><p>and add a second static client for the second workload cluster (the name must match the name of your second workload cluster, but you don&rsquo;t need any other secret or redirect URIs since we didn&rsquo;t install Gangway on the second workload cluster) and a third static client for the <code>kubeapps-oauth2-proxy</code>. Note that the client entry for both clusters are listed as trusted peers of the <code>kubeapps-oauth2-proxy</code> client:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="w">    </span><span class="k">staticClients</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span>- <span class="k">id</span><span class="p">:</span><span class="w"> </span>my-oidc-cluster<span class="w">
+</span><span class="w">      </span><span class="k">redirectURIs</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- <span class="s1">&#39;https://&lt;existing value for the DNS of the API server for my-oidc-cluster&gt;/callback&#39;</span><span class="w">
+</span><span class="w">      </span><span class="k">name</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;my-oidc-cluster&#39;</span><span class="w">
+</span><span class="w">      </span><span class="k">secret</span><span class="p">:</span><span class="w"> </span>&lt;existing<span class="w"> </span>value<span class="w"> </span>for<span class="w"> </span>clientSecret<span class="w"> </span>for<span class="w"> </span>my-oidc-cluster<span class="sd">&gt;
+</span><span class="sd">      trustedPeers:</span><span class="w">
+</span><span class="w">      </span>- kubeapps-oauth2-proxy<span class="w">
+</span><span class="w">    </span>- <span class="k">id</span><span class="p">:</span><span class="w"> </span>second-oidc-cluster<span class="w">
+</span><span class="w">      </span><span class="k">trustedPeers</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- kubeapps-oauth2-proxy<span class="w">
+</span><span class="w">    </span>- <span class="k">id</span><span class="p">:</span><span class="w"> </span>kubeapps-oauth2-proxy<span class="w">
+</span><span class="w">      </span><span class="k">redirectURIs</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- <span class="s1">&#39;http://&lt;kubeapps frontend dns entry&gt;/oauth2/callback&#39;</span><span class="w">
+</span><span class="w">      </span><span class="k">name</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;Kubeapps on TKG test Login&#39;</span><span class="w">
+</span><span class="w">      </span><span class="k">secret</span><span class="p">:</span><span class="w"> </span>&lt;kubeappsClientSecret<span class="sd">&gt;
+</span><span class="sd">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>While editing this file, if you&rsquo;re using Google as your upstream identity provider, I recommend making one further change to ensure dex only allows authentication for emails from a specific domain. In the <code>config</code> section of the <code>oidc</code> connector, uncomment and set the following to match the email domains which you want to allow, for example:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="w">        </span><span class="k">hostedDomains</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span>- vmware.com<span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>Bounce dex by deleting the dex pod after applying the config:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">kubectl apply -f tkg-extensions-v1.1.0/authentication/dex/aws/oidc/04-cm.yaml
+kubectl -n tanzu-system-auth delete po -l <span class="nv">app</span><span class="o">=</span>dex
+</code></pre></td></tr></table>
+</div>
+</div><p>With this, Dex will successfully authenticate, but Kubeapps still won&rsquo;t let you in because your user doesn&rsquo;t yet have access to the cluster. So switch to the first workload cluster and create the RBAC to give yourself <code>cluster-admin</code>:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">kubectl create clusterrolebinding cluster-admin-mnelson --clusterrole<span class="o">=</span>cluster-admin --user<span class="o">=</span>mnelson@bitnami.com
+</code></pre></td></tr></table>
+</div>
+</div><p>and then repeat after switching context to your second workload cluster.</p>
+<p>When you now login to Kubeapps, you should be presented with the UI including the option to switch between your clusters!</p>
+<p><img src="/img/kubeapps-on-tkg-management-cluster/kubeapps-multicluster-tkg.png" alt="Kubeapps on TKG with Multicluster support"></p>
+<p>Well done! Of course, there are many points for errors which would require debugging here. If there&rsquo;s a need, I&rsquo;ll follow up with a common issues and how to debug.</p>
+
+
+        
+          <div class="blog-tags">
+            
+              <a href="https://liveandletlearn.net//tags/tutorial/">tutorial</a>&nbsp;
+            
+              <a href="https://liveandletlearn.net//tags/kubeapps/">kubeapps</a>&nbsp;
+            
+              <a href="https://liveandletlearn.net//tags/tkg/">tkg</a>&nbsp;
+            
+              <a href="https://liveandletlearn.net//tags/vmware/">vmware</a>&nbsp;
+            
+          </div>
+        
+
+        
+
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="https://liveandletlearn.net/post/tanzu-kubernetes-grid-tkg-first-experience/" data-toggle="tooltip" data-placement="top" title="VMware Tanzu Kubernetes Grid (TKG) with OpenID Connect - First Experience">&larr; Previous Post</a>
+            </li>
+          
+          
+        </ul>
+      
+
+
+      
+        
+          
+          <div class="disqus-comments">
+            <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "liveandletlearn" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+          </div>
+          
+        
+        
+      
+
+    </div>
+  </div>
+</div>
+
+      
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+                <a href="mailto:absoludity&#43;lll@gmail.com" title="Email me">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://github.com/absoludity" title="GitHub">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://twitter.com/michaelanelson" title="Twitter">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-twitter fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          <li>
+            <a href="" title="RSS">
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              Michael Nelson
+            
+          
+
+          &nbsp;&bull;&nbsp;&copy;
+          
+            2020
+          
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://liveandletlearn.net/">Live and let Learn</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="https://gohugo.io">Hugo v0.69.2</a> powered &nbsp;&bull;&nbsp; Theme <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a> adapted from <a href="https://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer><script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.js" integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/contrib/auto-render.min.js" integrity="sha384-kmZOZB5ObwgQnS/DuDg6TScgOiWWBiVt0plIRkZCmE6rDZGrEOQeHM5PcHi+nyqe" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+<script src="https://liveandletlearn.net/js/main.js"></script><script> renderMathInElement(document.body); </script><script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script><script src="https://liveandletlearn.net/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+
+
+
+    
+  </body>
+</html>
+

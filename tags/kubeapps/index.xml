@@ -8,10 +8,20 @@
     <language>en-us</language>
     <managingEditor>absoludity&#43;lll@gmail.com (Michael Nelson)</managingEditor>
     <webMaster>absoludity&#43;lll@gmail.com (Michael Nelson)</webMaster>
-    <lastBuildDate>Tue, 22 Sep 2020 10:01:03 +1000</lastBuildDate>
+    <lastBuildDate>Wed, 23 Sep 2020 11:01:36 +1000</lastBuildDate>
     
 	<atom:link href="https://liveandletlearn.net/tags/kubeapps/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Kubeapps on a TKG Management Cluster</title>
+      <link>https://liveandletlearn.net/post/kubeapps-on-tkg-management-cluster/</link>
+      <pubDate>Wed, 23 Sep 2020 11:01:36 +1000</pubDate>
+      <author>absoludity&#43;lll@gmail.com (Michael Nelson)</author>
+      <guid>https://liveandletlearn.net/post/kubeapps-on-tkg-management-cluster/</guid>
+      <description>This is part two of a series detailing the steps required to run Kubeapps on a VMware TKG management cluster (on AWS) configured to allow users to deploy applications to multiple workload clusters, using the new multicluster support in Kubeapps. Though details will differ, a similar configuration works on other non-TKG multicluster setups as well.
+The first post described setting up your VMware TKG management cluster with two OpenIDConnect-enabled workload clusters.</description>
+    </item>
     
     <item>
       <title>VMware Tanzu Kubernetes Grid (TKG) with OpenID Connect - First Experience</title>

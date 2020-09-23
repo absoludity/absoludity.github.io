@@ -60,7 +60,7 @@ Enter VMware Tanzu Kubernetes Grid (TGK): an &ldquo;Enterprise-ready Kubernetes 
   "headline": "VMware Tanzu Kubernetes Grid (TKG) with OpenID Connect - First Experience",
   "description" : "Andres and I have been doing quite a bit of feature work in Kubeapps over the past months at VMware and one of the key features that I\x26rsquo;ve been working on personally is enabling Kubeapps users to deploy applications not only on the cluster on which Kubeapps is installed, but to multiple other clusters as well.\nEnter VMware Tanzu Kubernetes Grid (TGK): an \x26ldquo;Enterprise-ready Kubernetes runtime which streamlines operations across multi-cloud infrastructure\x26rdquo;, so naturally I was keen to test out running Kubeapps on TKG and deploying applications to a set of TKG-managed clusters.",
   "inLanguage" : "en",
-  "wordCount":  2121 ,
+  "wordCount":  2159 ,
   "datePublished" : "2020-09-22T10:01:03",
   "dateModified" : "2020-09-22T10:01:03",
   "image" : "https:\/\/liveandletlearn.net\/img\/avatar-icon.png",
@@ -281,8 +281,8 @@ cluster as infrastructure</a> while configured
 so that users can only deploy apps to the workload clusters.</p>
 <p>This series of two post details the steps that I took to make that happen with the latest Kubeapps running on a TKG
 management cluster (on AWS) configured to allow users to deploy applications to the
-workload clusters. Though details will differ, a similar setup works on other non-TKG multicluster setups as well.
-This post focuses on the TKG setup required for workload clusters using OpenID Connect, while the followup post will detail the Kubeapps installation and configuration.</p>
+workload clusters. Though details will differ, a similar configuration works on other non-TKG multicluster setups as well.
+This post focuses on the TKG setup required for workload clusters using OpenID Connect, while the followup post details the <a href="/post/kubeapps-on-tkg-management-cluster/">Kubeapps multicluster installation and configuration</a>.</p>
 <h2 id="creating-the-management-cluster">Creating the management cluster</h2>
 <p>I started with the docs for VMware Tanzu Kubernetes Grid 1.1 which is the
 latest version of TKG at the time of writing. Following the instructions to
@@ -444,7 +444,16 @@ Waiting <span class="k">for</span> cluster to be initialized...
 <p>If you click on the first subnet, the public one, the details will be displayed including a <code>Tags</code> tab. Click on the <code>Tags</code> tab and you will see that the subnet includes a tag for your management cluster. So in my case, I see the tag <code>kubernetes.io/cluster/mnelson-test-tkg</code> with the value <code>shared</code>. This tag enables AWS to know that it can use this subnet for a public load balancer for my management cluster. Add a new tag for your workload cluster to the subnet. In my case, I added the tag <code>kubernetes.io/cluster/my-oidc-cluster</code> with the value <code>shared</code> to both the public and private subnets created for my management cluster. Once this was done, the Gangway service was assigned a hostname and I could continue&hellip; through to step 4.</p>
 <p>For step 4 you need to know the <code>&lt;APISERVER_URL&gt;</code> for the workload cluster. To find this, navigate within the AWS console to the EC2 service where you can list the load balancers. For the <code>us-east-1</code> region, this will be <a href="https://console.aws.amazon.com/ec2/v2/home?region=us-east-1#LoadBalancers:sort=loadBalancerName">https://console.aws.amazon.com/ec2/v2/home?region=us-east-1#LoadBalancers:sort=loadBalancerName</a>. Within the list you&rsquo;ll find a load balancer with a name matching your workload cluster (eg. <code>my-oidc-cluster-apiserver</code>) and need to use the associated DNS name.</p>
 <p>Step 18 (yes, there are that many steps) is the part that is most relevant to us: updating the Dex configuration with the details of the workload cluster. Note that each OIDC-enabled workload cluster that we deploy via TKG will be configured to use its own cluster name as the <code>client_id</code> when verifyng the signed <code>id_tokens</code> that are sent with a request to the API server. We will be updating this again later with the Kubeapps client id, but for now it&rsquo;s worth noting the format (each client ID has a name and a list of redirect urls).</p>
-<p>With the Dex service bounced after updating the config, we can verify the OIDC login is working by following the documentation <a href="https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/1.1/vmware-tanzu-kubernetes-grid-11/GUID-manage-instance-connect-oidc-cluster.html">Access the OIDC-Enabled Cluster with your IDP credentials</a>.</p>
+<p>With the Dex service bounced after updating the config, we can verify the OIDC login is working by following the documentation <a href="https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/1.1/vmware-tanzu-kubernetes-grid-11/GUID-manage-instance-connect-oidc-cluster.html">Access the OIDC-Enabled Cluster with your IDP credentials</a>. Note that currently step 3 assumes you are deploying on vSphere. To get the DNS entry for the Gangway service, you will instead need to:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">kubectl -n tanzu-system-auth get svc
+</code></pre></td></tr></table>
+</div>
+</div><p>and then access that service at <code>https://&lt;Gangway LB DNS&gt;</code></p>
 <p>If everything works as expected then our TKG environment is now correctly configured with Dex on the management cluster as the Identity Provider trusted by the workload clusters, and we&rsquo;re ready to  install Kubeapps on the management cluster!</p>
 <h3 id="create-a-second-oidc-enabled-cluster">Create a second oidc-enabled cluster</h3>
 <p>Before we start with the Kubeapps installation, let&rsquo;s create a second OIDC-enabled workload cluster, which is now a one-liner, with:</p>
@@ -458,7 +467,7 @@ Waiting <span class="k">for</span> cluster to be initialized...
 </div>
 </div><p>The only thing to be careful of here is that you&rsquo;re running this command in the same shell where you <a href="https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/1.1/vmware-tanzu-kubernetes-grid-11/GUID-manage-instance-deploy-oidc-cluster.html">created the first workload cluster</a>. Follow the steps on that page to get the admin credentials, but there&rsquo;s no need to followup with the other tasks (we don&rsquo;t need cert-manager, nor do we need Gangway installed on the cluster - we know the OIDC configuration is correct now).</p>
 <p>We&rsquo;ll re-edit the Dex configuration later with a static client for this second workload cluster.</p>
-<p>Now onto the Kubeapps installation and configuration! (To be continued)</p>
+<p>Now onto the <a href="/post/kubeapps-on-tkg-management-cluster/">Kubeapps multicluster installation and configuration</a>!</p>
 
 
         
@@ -487,6 +496,10 @@ Waiting <span class="k">for</span> cluster to be initialized...
               <a href="https://liveandletlearn.net/post/spanish-interaction/" data-toggle="tooltip" data-placement="top" title="Spanish Interactions">&larr; Previous Post</a>
             </li>
           
+          
+            <li class="next">
+              <a href="https://liveandletlearn.net/post/kubeapps-on-tkg-management-cluster/" data-toggle="tooltip" data-placement="top" title="Kubeapps on a TKG Management Cluster">Next Post &rarr;</a>
+            </li>
           
         </ul>
       
