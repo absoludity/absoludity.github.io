@@ -60,7 +60,7 @@ Enter VMware Tanzu Kubernetes Grid (TGK): an &ldquo;Enterprise-ready Kubernetes 
   "headline": "VMware Tanzu Kubernetes Grid (TKG) with OpenID Connect - First Experience",
   "description" : "Andres and I have been doing quite a bit of feature work in Kubeapps over the past months at VMware and one of the key features that I\x26rsquo;ve been working on personally is enabling Kubeapps users to deploy applications not only on the cluster on which Kubeapps is installed, but to multiple other clusters as well.\nEnter VMware Tanzu Kubernetes Grid (TGK): an \x26ldquo;Enterprise-ready Kubernetes runtime which streamlines operations across multi-cloud infrastructure\x26rdquo;, so naturally I was keen to test out running Kubeapps on TKG and deploying applications to a set of TKG-managed clusters.",
   "inLanguage" : "en",
-  "wordCount":  2159 ,
+  "wordCount":  2165 ,
   "datePublished" : "2020-09-22T10:01:03",
   "dateModified" : "2020-09-22T10:01:03",
   "image" : "https:\/\/liveandletlearn.net\/img\/avatar-icon.png",
@@ -282,7 +282,12 @@ so that users can only deploy apps to the workload clusters.</p>
 <p>This series of two post details the steps that I took to make that happen with the latest Kubeapps running on a TKG
 management cluster (on AWS) configured to allow users to deploy applications to the
 workload clusters. Though details will differ, a similar configuration works on other non-TKG multicluster setups as well.
-This post focuses on the TKG setup required for workload clusters using OpenID Connect, while the followup post details the <a href="/post/kubeapps-on-tkg-management-cluster/">Kubeapps multicluster installation and configuration</a>.</p>
+This post focuses on the TKG setup required for workload clusters using OpenID Connect, while the followup post details the <a href="/post/kubeapps-on-tkg-management-cluster/">Kubeapps multicluster installation and configuration</a>.
+The following video demos the result: 
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/pzVMZGTK0vU" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+</p>
 <h2 id="creating-the-management-cluster">Creating the management cluster</h2>
 <p>I started with the docs for VMware Tanzu Kubernetes Grid 1.1 which is the
 latest version of TKG at the time of writing. Following the instructions to

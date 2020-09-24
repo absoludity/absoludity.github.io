@@ -60,7 +60,7 @@ The first post described setting up your VMware TKG management cluster with two 
   "headline": "Kubeapps on a TKG Management Cluster",
   "description" : "This is part two of a series detailing the steps required to run Kubeapps on a VMware TKG management cluster (on AWS) configured to allow users to deploy applications to multiple workload clusters, using the new multicluster support in Kubeapps. Though details will differ, a similar configuration works on other non-TKG multicluster setups as well.\nThe first post described setting up your VMware TKG management cluster with two OpenIDConnect-enabled workload clusters.",
   "inLanguage" : "en",
-  "wordCount":  851 ,
+  "wordCount":  857 ,
   "datePublished" : "2020-09-23T11:01:36",
   "dateModified" : "2020-09-23T11:01:36",
   "image" : "https:\/\/liveandletlearn.net\/img\/avatar-icon.png",
@@ -265,7 +265,11 @@ The first post described setting up your VMware TKG management cluster with two 
       <article role="main" class="blog-post">
         <p>This is part two of a series detailing the steps required to run <a href="https://kubeapps.com">Kubeapps</a> on a <a href="https://tanzu.vmware.com/kubernetes-grid">VMware TKG</a> management cluster (on AWS) configured to allow users to deploy applications to multiple
 workload clusters, using the new multicluster support in Kubeapps. Though details will differ, a similar configuration works on other non-TKG multicluster setups as well.</p>
-<p>The first post described <a href="/post/tanzu-kubernetes-grid-tkg-first-experience/">setting up your VMware TKG management cluster with two OpenIDConnect-enabled workload clusters</a>. This post assumes you have your TKG environment setup as described there and focuses on the Kubeapps installation and configuration.</p>
+<p>The first post described <a href="/post/tanzu-kubernetes-grid-tkg-first-experience/">setting up your VMware TKG management cluster with two OpenIDConnect-enabled workload clusters</a>. This post assumes you have your TKG environment setup as described there and focuses on the Kubeapps installation and configuration. The following video demos the result: 
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/pzVMZGTK0vU" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+</p>
 <h2 id="prepare-a-kubeapps-configuration">Prepare a Kubeapps configuration</h2>
 <p>We&rsquo;ll need two random values for the client and cookie secret required as part of Kubeapps&rsquo; oauth2-proxy configuration, so generate these values with:</p>
 <div class="highlight"><div class="chroma">
