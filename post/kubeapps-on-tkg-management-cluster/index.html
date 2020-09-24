@@ -60,7 +60,7 @@ The first post described setting up your VMware TKG management cluster with two 
   "headline": "Kubeapps on a TKG Management Cluster",
   "description" : "This is part two of a series detailing the steps required to run Kubeapps on a VMware TKG management cluster (on AWS) configured to allow users to deploy applications to multiple workload clusters, using the new multicluster support in Kubeapps. Though details will differ, a similar configuration works on other non-TKG multicluster setups as well.\nThe first post described setting up your VMware TKG management cluster with two OpenIDConnect-enabled workload clusters.",
   "inLanguage" : "en",
-  "wordCount":  856 ,
+  "wordCount":  851 ,
   "datePublished" : "2020-09-23T11:01:36",
   "dateModified" : "2020-09-23T11:01:36",
   "image" : "https:\/\/liveandletlearn.net\/img\/avatar-icon.png",
@@ -335,11 +335,11 @@ workload clusters, using the new multicluster support in Kubeapps. Though detail
 </span><span class="w">  </span><span class="k">enabled</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
 </span><span class="w">  </span><span class="k">provider</span><span class="p">:</span><span class="w"> </span>oidc<span class="w">
 </span><span class="w">  </span><span class="k">clientID</span><span class="p">:</span><span class="w"> </span>kubeapps-oauth2-proxy<span class="w">
-</span><span class="w">  </span><span class="k">clientSecret</span><span class="p">:</span><span class="w"> </span>&lt;KUBEAPPS_CLIENT_SECRET<span class="sd">&gt;
-</span><span class="sd">  cookieSecret: &lt;KUBEAPPS_COOKIE_SECRET&gt;</span><span class="w">
+</span><span class="w">  </span><span class="k">clientSecret</span><span class="p">:</span><span class="w"> </span>KUBEAPPS_CLIENT_SECRET<span class="w">
+</span><span class="w">  </span><span class="k">cookieSecret</span><span class="p">:</span><span class="w"> </span>KUBEAPPS_COOKIE_SECRET<span class="w">
 </span><span class="w">  </span><span class="k">additionalFlags</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span>- --oidc-issuer-url=https<span class="p">:</span>//&lt;DEX_SVC_LB_HOSTNAME<span class="sd">&gt;
-</span><span class="sd">    # IMPORTANT: We are overwriting the scope option to include the workload clusters&#39; clientids in the audience.</span><span class="w">
+</span><span class="w">    </span>- --oidc-issuer-url=https<span class="p">:</span>//DEX_SVC_LB_HOSTNAME<span class="w">
+</span><span class="w">    </span><span class="c"># IMPORTANT: We are overwriting the scope option to include the workload clusters&#39; clientids in the audience.</span><span class="w">
 </span><span class="w">    </span>- --scope=openid<span class="w"> </span>email<span class="w"> </span>groups<span class="w"> </span>audience<span class="p">:</span>server<span class="p">:</span>client_id<span class="p">:</span>my-oidc-cluster<span class="w"> </span>audience<span class="p">:</span>server<span class="p">:</span>client_id<span class="p">:</span>second-oidc-cluster<span class="w">
 </span><span class="w">    </span><span class="c"># TODO: Update to provide the dex ca via --provider-ca-file and mounting etc.</span><span class="w">
 </span><span class="w">    </span>- --ssl-insecure-skip-verify=<span class="kc">true</span><span class="w">
@@ -351,12 +351,12 @@ workload clusters, using the new multicluster support in Kubeapps. Though detail
 </span><span class="w"></span><span class="c"># Configure the two workload clusters</span><span class="w">
 </span><span class="w"></span><span class="k">clusters</span><span class="p">:</span><span class="w">
 </span><span class="w">  </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>my-oidc-cluster<span class="w">
-</span><span class="w">    </span><span class="k">apiServiceURL</span><span class="p">:</span><span class="w"> </span>https<span class="p">:</span>//&lt;DNS<span class="w"> </span>of<span class="w"> </span>first<span class="w"> </span>workload<span class="w"> </span>cluster<span class="w"> </span>API<span class="w"> </span>Server&gt;<span class="p">:</span><span class="m">6443</span><span class="w">
-</span><span class="w">    </span><span class="k">certificateAuthorityData</span><span class="p">:</span><span class="w"> </span>&lt;CA<span class="w"> </span>Data<span class="w"> </span>for<span class="w"> </span>first<span class="w"> </span>cluster<span class="sd">&gt;
-</span><span class="sd">  - name: second-oidc-cluster</span><span class="w">
-</span><span class="w">    </span><span class="k">apiServiceURL</span><span class="p">:</span><span class="w"> </span>https<span class="p">:</span>//&lt;DNS<span class="w"> </span>of<span class="w"> </span>second<span class="w"> </span>workload<span class="w"> </span>cluster<span class="w"> </span>API<span class="w"> </span>server&gt;<span class="p">:</span><span class="m">6443</span><span class="w">
-</span><span class="w">    </span><span class="k">certificateAuthorityData</span><span class="p">:</span><span class="w"> </span>&lt;CA<span class="w"> </span>Data<span class="w"> </span>for<span class="w"> </span>second<span class="w"> </span>cluster<span class="sd">&gt;
-</span><span class="sd">
+</span><span class="w">    </span><span class="k">apiServiceURL</span><span class="p">:</span><span class="w"> </span>https<span class="p">:</span>//DNS_OF_FIRST_WORKLOAD_CLUSTER_API_SERVER<span class="p">:</span><span class="m">6443</span><span class="w">
+</span><span class="w">    </span><span class="k">certificateAuthorityData</span><span class="p">:</span><span class="w"> </span>CA_DATA_FOR_FIRST_WORKLOAD_CLUSTER_API_SERVER<span class="w">
+</span><span class="w">  </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>second-oidc-cluster<span class="w">
+</span><span class="w">    </span><span class="k">apiServiceURL</span><span class="p">:</span><span class="w"> </span>https<span class="p">:</span>//DNS_OF_SECOND_WORKLOAD_CLUSTER_API_SERVER<span class="p">:</span><span class="m">6443</span><span class="w">
+</span><span class="w">    </span><span class="k">certificateAuthorityData</span><span class="p">:</span><span class="w"> </span>CA_DATA_FOR_SECOND_WORKLOAD_CLUSTER_API_SERVER<span class="w">
+</span><span class="w">
 </span></code></pre></td></tr></table>
 </div>
 </div><p>As noted in the comments there, the most important part for the <code>authProxy</code> is the <code>--scope</code> argument which requests not only the normal <code>openid email groups</code> scopes but also requests that the workload client ids be included in the audience of our <code>kubeapps-oauth2-proxy</code> token. More about this below.</p>
@@ -412,17 +412,17 @@ helm install --namespace kubeapps kubeapps bitnami/kubeapps --values ~/path/to/y
 </span><span class="lnt"> 4
 </span><span class="lnt"> 5
 </span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
+</span><span class="hl"><span class="lnt"> 7
+</span></span><span class="hl"><span class="lnt"> 8
+</span></span><span class="hl"><span class="lnt"> 9
+</span></span><span class="hl"><span class="lnt">10
+</span></span><span class="hl"><span class="lnt">11
+</span></span><span class="hl"><span class="lnt">12
+</span></span><span class="hl"><span class="lnt">13
+</span></span><span class="hl"><span class="lnt">14
+</span></span><span class="hl"><span class="lnt">15
+</span></span><span class="hl"><span class="lnt">16
+</span></span><span class="lnt">17
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="w">    </span><span class="k">staticClients</span><span class="p">:</span><span class="w">
@@ -431,17 +431,17 @@ helm install --namespace kubeapps kubeapps bitnami/kubeapps --values ~/path/to/y
 </span><span class="w">      </span>- <span class="s1">&#39;https://&lt;existing value for the DNS of the API server for my-oidc-cluster&gt;/callback&#39;</span><span class="w">
 </span><span class="w">      </span><span class="k">name</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;my-oidc-cluster&#39;</span><span class="w">
 </span><span class="w">      </span><span class="k">secret</span><span class="p">:</span><span class="w"> </span>&lt;existing<span class="w"> </span>value<span class="w"> </span>for<span class="w"> </span>clientSecret<span class="w"> </span>for<span class="w"> </span>my-oidc-cluster<span class="sd">&gt;
-</span><span class="sd">      trustedPeers:</span><span class="w">
-</span><span class="w">      </span>- kubeapps-oauth2-proxy<span class="w">
-</span><span class="w">    </span>- <span class="k">id</span><span class="p">:</span><span class="w"> </span>second-oidc-cluster<span class="w">
-</span><span class="w">      </span><span class="k">trustedPeers</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span>- kubeapps-oauth2-proxy<span class="w">
-</span><span class="w">    </span>- <span class="k">id</span><span class="p">:</span><span class="w"> </span>kubeapps-oauth2-proxy<span class="w">
-</span><span class="w">      </span><span class="k">redirectURIs</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span>- <span class="s1">&#39;http://&lt;kubeapps frontend dns entry&gt;/oauth2/callback&#39;</span><span class="w">
-</span><span class="w">      </span><span class="k">name</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;Kubeapps on TKG test Login&#39;</span><span class="w">
-</span><span class="w">      </span><span class="k">secret</span><span class="p">:</span><span class="w"> </span>&lt;kubeappsClientSecret<span class="sd">&gt;
-</span><span class="sd">
+</span><span class="hl"><span class="sd">      trustedPeers:</span><span class="w">
+</span></span><span class="hl"><span class="w">      </span>- kubeapps-oauth2-proxy<span class="w">
+</span></span><span class="hl"><span class="w">    </span>- <span class="k">id</span><span class="p">:</span><span class="w"> </span>second-oidc-cluster<span class="w">
+</span></span><span class="hl"><span class="w">      </span><span class="k">trustedPeers</span><span class="p">:</span><span class="w">
+</span></span><span class="hl"><span class="w">      </span>- kubeapps-oauth2-proxy<span class="w">
+</span></span><span class="hl"><span class="w">    </span>- <span class="k">id</span><span class="p">:</span><span class="w"> </span>kubeapps-oauth2-proxy<span class="w">
+</span></span><span class="hl"><span class="w">      </span><span class="k">redirectURIs</span><span class="p">:</span><span class="w">
+</span></span><span class="hl"><span class="w">      </span>- <span class="s1">&#39;http://&lt;kubeapps frontend dns entry&gt;/oauth2/callback&#39;</span><span class="w">
+</span></span><span class="hl"><span class="w">      </span><span class="k">name</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;Kubeapps on TKG test Login&#39;</span><span class="w">
+</span></span><span class="hl"><span class="w">      </span><span class="k">secret</span><span class="p">:</span><span class="w"> </span>&lt;kubeappsClientSecret<span class="sd">&gt;
+</span></span><span class="sd">
 </span></code></pre></td></tr></table>
 </div>
 </div><p>While editing this file, if you&rsquo;re using Google as your upstream identity provider, I recommend making one further change to ensure dex only allows authentication for emails from a specific domain. In the <code>config</code> section of the <code>oidc</code> connector, uncomment and set the following to match the email domains which you want to allow, for example:</p>
