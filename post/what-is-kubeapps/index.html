@@ -7,7 +7,9 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
-  <title>Posts - Live and let Learn</title>
+  <title>What is Kubeapps - Live and let Learn</title>
+  <meta name="description" content="For over a year now I&rsquo;ve been working together with Andres on the Kubeapps project at VMware and have made various videos of new features that we&rsquo;ve worked on, but I&rsquo;ve never stepped back to give an overview and answer the more general question, &ldquo;What is Kubeapps?&rdquo; and show how those features work towards a single goal.
+The goal of Kubeapps is to help users and operators install and manage applications on Kubernetes and the following features work together to achieve this goal:">
   <meta name="author" content="Michael Nelson"/><script type="application/ld+json">
 {
     "@context": "http://schema.org",
@@ -28,14 +30,65 @@
   
 }
 </script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@id": "https:\/\/liveandletlearn.net\/",
+          "name": "home"
+        }
+    },{
+        "@type": "ListItem",
+        "position": 3,
+        "item": {
+          "@id": "https:\/\/liveandletlearn.net\/post\/what-is-kubeapps\/",
+          "name": "What is kubeapps"
+        }
+    }]
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "author": {
+    "name" : "Michael Nelson"
+  },
+  "headline": "What is Kubeapps",
+  "description" : "For over a year now I\x26rsquo;ve been working together with Andres on the Kubeapps project at VMware and have made various videos of new features that we\x26rsquo;ve worked on, but I\x26rsquo;ve never stepped back to give an overview and answer the more general question, \x26ldquo;What is Kubeapps?\x26rdquo; and show how those features work towards a single goal.\nThe goal of Kubeapps is to help users and operators install and manage applications on Kubernetes and the following features work together to achieve this goal:",
+  "inLanguage" : "en",
+  "wordCount":  523 ,
+  "datePublished" : "2020-09-28T10:06:28",
+  "dateModified" : "2020-09-28T10:06:28",
+  "image" : "https:\/\/liveandletlearn.net\/img\/avatar-icon.png",
+  "keywords" : [ "" ],
+  "mainEntityOfPage" : "https:\/\/liveandletlearn.net\/post\/what-is-kubeapps\/",
+  "publisher" : {
+    "@type": "Organization",
+    "name" : "https:\/\/liveandletlearn.net\/",
+    "logo" : {
+        "@type" : "ImageObject",
+        "url" : "https:\/\/liveandletlearn.net\/img\/avatar-icon.png",
+        "height" :  60 ,
+        "width" :  60
+    }
+  }
+}
+</script>
 
-<meta property="og:title" content="Posts" />
+<meta property="og:title" content="What is Kubeapps" />
+<meta property="og:description" content="For over a year now I&rsquo;ve been working together with Andres on the Kubeapps project at VMware and have made various videos of new features that we&rsquo;ve worked on, but I&rsquo;ve never stepped back to give an overview and answer the more general question, &ldquo;What is Kubeapps?&rdquo; and show how those features work towards a single goal.
+The goal of Kubeapps is to help users and operators install and manage applications on Kubernetes and the following features work together to achieve this goal:">
 <meta property="og:image" content="https://liveandletlearn.net/img/avatar-icon.png" />
-<meta property="og:url" content="https://liveandletlearn.net/post/" />
+<meta property="og:url" content="https://liveandletlearn.net/post/what-is-kubeapps/" />
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="Live and let Learn" />
 
-  <meta name="twitter:title" content="Posts" />
+  <meta name="twitter:title" content="What is Kubeapps" />
+  <meta name="twitter:description" content="For over a year now I&rsquo;ve been working together with Andres on the Kubeapps project at VMware and have made various videos of new features that we&rsquo;ve worked on, but I&rsquo;ve never stepped …">
   <meta name="twitter:image" content="https://liveandletlearn.net/img/avatar-icon.png" />
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:site" content="@michaelanelson" />
@@ -175,7 +228,7 @@
           <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
             <div class="post-heading">
               
-                <h1>Posts</h1>
+                <h1>What is Kubeapps</h1>
               
               
               
@@ -206,261 +259,132 @@
 
 
     
-  <div class="container" role="main">
-    <div class="row">
-      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        <p>For over a year now I&rsquo;ve been working together with
+<a href="https://github.com/andresmgot">Andres</a> on the Kubeapps project at VMware
+and have made various videos of new features that we&rsquo;ve worked on, but I&rsquo;ve
+never stepped back to give an overview and answer the more general question,
+&ldquo;What is Kubeapps?&rdquo; and show how those features work towards a single goal.</p>
+<p>The goal of Kubeapps is to <strong>help users and operators install and manage
+applications on Kubernetes</strong> and the following features work together to
+achieve this goal:</p>
+<h2 id="simple-configuration-of-app-catalogs-for-your-users">Simple configuration of app catalogs for your users</h2>
+<p>When you install Kubeapps on your cluster, your users will login to see a
+catalog of apps which they can install into any namespace on the Kubernetes
+cluster to which they have the required permissions. By default this catalog
+will be the free <a href="https://bitnami.com/application-catalog">Bitnami Application
+Catalog</a> which is kept up-to-date
+with the latest security fixes by VMware:</p>
+<p><img src="/img/what-is-kubeapps/bitnami-catalog.png" alt="Easy installation of Postgresql"></p>
+<h3 id="custom-app-catalogs">Custom app catalogs</h3>
+<p>That said, with a simple configuration change it can just as easily include a
+private catalog of charts specifically built on top of your organisations&rsquo;
+chosen base image using <a href="https://tanzu.vmware.com/application-catalog">VMware Tanzu Application
+Catalog</a>.</p>
+<p>A cluster operator can also update the <a href="https://github.com/kubeapps/kubeapps/blob/master/docs/user/access-control.md#app-repositories">access-control for certain
+users</a>
+so that those users can add other catalogs in a specific namespace, available only to
+users of that namespace. This can even include private applications from
+private catalogs if you choose to <a href="https://github.com/kubeapps/kubeapps/blob/master/docs/user/private-app-repository.md#associating-docker-image-pull-secrets-to-an-apprepository">configure the required secrets to pull
+your private
+images</a>.
+Users of the namespace can simply install the private app from the catalog
+and the required secrets will be configured automatically as part of their
+deployment.</p>
+<h3 id="operator-support">Operator support</h3>
+<p>Additionally, a cluster operator can enable the display and installation of
+Kubernetes operators in the catalog. The following view shows the catalog
+filtered to display only operators providing database apps.</p>
+<p><img src="/img/what-is-kubeapps/catalog-filtered-operators.png" alt="Operators in Kubeapps catalog"></p>
+<h2 id="easy-self-service-installation-of-apps-by-users">Easy self-service installation of apps by users</h2>
+<p>To ensure that users of an app catalog on Kubeapps can install their
+applications without being overwhelmed by the myriad of options that are
+typically available, Kubeapps presents a simple form with only the options
+that the <a href="https://github.com/kubeapps/kubeapps/blob/master/docs/developer/basic-form-support.md">Helm chart author determined to be most relevant</a>.
+The following screenshot shows the options presented to a user when installing Postgresql:</p>
+<p><img src="/img/what-is-kubeapps/postgres-form-deployment.png" alt="Easy installation of Postgresql"></p>
+<h2 id="self-service-updates-and-maintenance">Self-service updates and maintenance</h2>
+<p>Once applications have been installed by users, Kubeapps will ensure they
+are aware when a new version of an app is available with the latest security fixes.</p>
+<p><img src="/img/what-is-kubeapps/app-upgrade.png" alt="App Upgrade indication"></p>
+<p>Users can reconfigure an app at any time, upgrade to a newer version or roll
+back to a previous version.</p>
+<h2 id="multi-cluster-support">Multi-cluster support</h2>
+<p>Finally, Kubeapps enables you, the cluster operator, to configure your
+Kubeapps installation so that your users can install and manage applications
+across multiple Kubernetes clusters, not just the cluster on which Kubeapps
+is installed. You can see this in action in this short demo:</p>
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/pzVMZGTK0vU" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
+<p>or you can also read more in our <a href="https://github.com/kubeapps/kubeapps/blob/master/docs/user/deploying-to-multiple-clusters.md">multi-cluster
+documentation</a>
+or browse the specific details required to <a href="/post/kubeapps-on-tkg-management-cluster/">setup Kubeapps with multi-cluster
+support on a specific Kubernetes environment - VMware Tanzu Kubernetes
+Grid</a>.</p>
+<p>That&rsquo;s it! If you think I&rsquo;ve missed an important Kubeapps feature or you have
+questions about any of the above, you can leave a comment or join us on the
+<a href="https://kubernetes.slack.com/archives/C9D3TSUG4">kubeapps channel on Kubernetes
+slack</a>.</p>
+
+
         
-        <div class="posts-list">
+
+        
+
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
           
-            <article class="post-preview">
-    <a href="https://liveandletlearn.net/post/what-is-kubeapps/">
-        <h2 class="post-title">What is Kubeapps</h2>
-        
-        
-        
-    </a>
-
-    <p class="post-meta">
-        <span class="post-meta">
-  
-  
-  <i class="fas fa-calendar"></i>&nbsp;Posted on September 28, 2020
-  
-  
-  
-  
-    
-      &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;Michael Nelson
-    
-  
-  
-</span>
-
-
-    </p>
-    <div class="post-entry">
-        
-        For over a year now I&rsquo;ve been working together with Andres on the Kubeapps project at VMware and have made various videos of new features that we&rsquo;ve worked on, but I&rsquo;ve never stepped back to give an overview and answer the more general question, &ldquo;What is Kubeapps?&rdquo; and show how those features work towards a single goal.
-The goal of Kubeapps is to help users and operators install and manage applications on Kubernetes and the following features work together to achieve this goal:
-        <a href="https://liveandletlearn.net/post/what-is-kubeapps/" class="post-read-more">[Read More]</a>
-        
-    </div>
-
-    
-
-</article>
+            <li class="previous">
+              <a href="https://liveandletlearn.net/post/kubeapps-on-tkg-management-cluster/" data-toggle="tooltip" data-placement="top" title="Kubeapps on a TKG Management Cluster">&larr; Previous Post</a>
+            </li>
           
-            <article class="post-preview">
-    <a href="https://liveandletlearn.net/post/kubeapps-on-tkg-management-cluster/">
-        <h2 class="post-title">Kubeapps on a TKG Management Cluster</h2>
-        
-        
-        
-    </a>
-
-    <p class="post-meta">
-        <span class="post-meta">
-  
-  
-  <i class="fas fa-calendar"></i>&nbsp;Posted on September 23, 2020
-  
-  
-  
-  
-    
-      &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;Michael Nelson
-    
-  
-  
-</span>
-
-
-    </p>
-    <div class="post-entry">
-        
-        This is part two of a series detailing the steps required to run Kubeapps on a VMware TKG management cluster (on AWS) configured to allow users to deploy applications to multiple workload clusters, using the new multicluster support in Kubeapps. Though details will differ, a similar configuration works on other non-TKG multicluster setups as well.
-The first post described setting up your VMware TKG management cluster with two OpenIDConnect-enabled workload clusters.
-        <a href="https://liveandletlearn.net/post/kubeapps-on-tkg-management-cluster/" class="post-read-more">[Read More]</a>
-        
-    </div>
-
-    
-    <div class="blog-tags">
-        
-        <a href="https://liveandletlearn.net//tags/tutorial/">tutorial</a>&nbsp;
-        
-        <a href="https://liveandletlearn.net//tags/kubeapps/">kubeapps</a>&nbsp;
-        
-        <a href="https://liveandletlearn.net//tags/tkg/">tkg</a>&nbsp;
-        
-        <a href="https://liveandletlearn.net//tags/vmware/">vmware</a>&nbsp;
-        
-    </div>
-    
-
-</article>
           
-            <article class="post-preview">
-    <a href="https://liveandletlearn.net/post/tanzu-kubernetes-grid-tkg-first-experience/">
-        <h2 class="post-title">VMware Tanzu Kubernetes Grid (TKG) with OpenID Connect - First Experience</h2>
-        
-        
-        
-    </a>
-
-    <p class="post-meta">
-        <span class="post-meta">
-  
-  
-  <i class="fas fa-calendar"></i>&nbsp;Posted on September 22, 2020
-  
-  
-  
-  
-    
-      &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;Michael Nelson
-    
-  
-  
-</span>
+        </ul>
+      
 
 
-    </p>
-    <div class="post-entry">
+      
         
-        Andres and I have been doing quite a bit of feature work in Kubeapps over the past months at VMware and one of the key features that I&rsquo;ve been working on personally is enabling Kubeapps users to deploy applications not only on the cluster on which Kubeapps is installed, but to multiple other clusters as well.
-Enter VMware Tanzu Kubernetes Grid (TGK): an &ldquo;Enterprise-ready Kubernetes runtime which streamlines operations across multi-cloud infrastructure&rdquo;, so naturally I was keen to test out running Kubeapps on TKG and deploying applications to a set of TKG-managed clusters.
-        <a href="https://liveandletlearn.net/post/tanzu-kubernetes-grid-tkg-first-experience/" class="post-read-more">[Read More]</a>
-        
-    </div>
-
-    
-    <div class="blog-tags">
-        
-        <a href="https://liveandletlearn.net//tags/tutorial/">tutorial</a>&nbsp;
-        
-        <a href="https://liveandletlearn.net//tags/kubeapps/">kubeapps</a>&nbsp;
-        
-        <a href="https://liveandletlearn.net//tags/tkg/">tkg</a>&nbsp;
-        
-        <a href="https://liveandletlearn.net//tags/vmware/">vmware</a>&nbsp;
-        
-    </div>
-    
-
-</article>
           
-            <article class="post-preview">
-    <a href="https://liveandletlearn.net/post/spanish-interaction/">
-        <h2 class="post-title">Spanish Interactions</h2>
-        
-        
-        
-    </a>
-
-    <p class="post-meta">
-        <span class="post-meta">
-  
-  
-  <i class="fas fa-calendar"></i>&nbsp;Posted on July 10, 2017
-  
-  
-  
-  
+          <div class="disqus-comments">
+            <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
     
-      &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;Michael Nelson
     
-  
-  
-</span>
-
-
-    </p>
-    <div class="post-entry">
-        
-        <p>I&rsquo;m currently travelling at nearly 300km/h through the Spanish country-side on my way to
-<a href="https://en.wikipedia.org/wiki/Seville">Seville</a> to meet some of the <a href="https://bitnami.com/">Bitnami</a> team, but it&rsquo;s not the speed
-which has me surprised, but the willingness of people to engage with total nearby strangers.</p>
-        <a href="https://liveandletlearn.net/post/spanish-interaction/" class="post-read-more">[Read More]</a>
-        
-    </div>
-
     
-    <div class="blog-tags">
-        
-        <a href="https://liveandletlearn.net//tags/culture/">culture</a>&nbsp;
-        
-        <a href="https://liveandletlearn.net//tags/spain/">spain</a>&nbsp;
-        
-        <a href="https://liveandletlearn.net//tags/bitnami/">bitnami</a>&nbsp;
-        
-    </div>
-    
-
-</article>
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "liveandletlearn" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+          </div>
           
-            <article class="post-preview">
-    <a href="https://liveandletlearn.net/post/dell-xps13-9365-dual-boot/">
-        <h2 class="post-title">Dual booting the Dell XPS13 (9365) with linux</h2>
         
         
-        
-    </a>
+      
 
-    <p class="post-meta">
-        <span class="post-meta">
-  
-  
-  <i class="fas fa-calendar"></i>&nbsp;Posted on April 30, 2017
-  
-  
-  
-  
-    
-      &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;Michael Nelson
-    
-  
-  
-</span>
-
-
-    </p>
-    <div class="post-entry">
-        
-        <p>I recently purchased a <a href="http://www.dell.com/au/p/xps-13-9365-2-in-1-laptop/pd?oc=z511203au&amp;model_id=xps-13-9365-2-in-1-laptop">Dell XPS13 (9365)</a> (thanks to
-<a href="https://bitnami.com/">Bitnami</a> for whom I now work) which comes with Windows 10 preinstalled. I was
-aware when purchasing that <a href="https://bugzilla.kernel.org/show_bug.cgi?id=192591">suspend on Linux is not yet working</a>
-(thanks <a href="http://perltricks.com/article/laptop-review--dell-xps-13-2-in-1--9365-/">David Farrell</a>. As of <a href="#suspendfix">Aug 2017 suspend is fixed</a>,
-see below), as well as other functionality (autorotate, pen integration etc.)
-and so was keen to have a few options to
-work on this machine</p>
-        <a href="https://liveandletlearn.net/post/dell-xps13-9365-dual-boot/" class="post-read-more">[Read More]</a>
-        
-    </div>
-
-    
-    <div class="blog-tags">
-        
-        <a href="https://liveandletlearn.net//tags/ubuntu/">ubuntu</a>&nbsp;
-        
-        <a href="https://liveandletlearn.net//tags/linux/">linux</a>&nbsp;
-        
-        <a href="https://liveandletlearn.net//tags/dell/">dell</a>&nbsp;
-        
-        <a href="https://liveandletlearn.net//tags/tutorial/">tutorial</a>&nbsp;
-        
-        <a href="https://liveandletlearn.net//tags/bitnami/">bitnami</a>&nbsp;
-        
-    </div>
-    
-
-</article>
-          
-        </div>
-        
-      </div>
     </div>
   </div>
+</div>
 
       
 <footer>
@@ -495,7 +419,7 @@ work on this machine</p>
               </li>
           
           <li>
-            <a href="/post/index.xml" title="RSS">
+            <a href="" title="RSS">
               <span class="fa-stack fa-lg">
                 <i class="fas fa-circle fa-stack-2x"></i>
                 <i class="fas fa-rss fa-stack-1x fa-inverse"></i>

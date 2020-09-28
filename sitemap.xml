@@ -3,22 +3,27 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://liveandletlearn.net/</loc>
+    <lastmod>2020-09-28T10:06:28+10:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://liveandletlearn.net/post/</loc>
+    <lastmod>2020-09-28T10:06:28+10:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://liveandletlearn.net/post/what-is-kubeapps/</loc>
+    <lastmod>2020-09-28T10:06:28+10:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://liveandletlearn.net/tags/kubeapps/</loc>
     <lastmod>2020-09-23T11:01:36+10:00</lastmod>
   </url>
   
   <url>
     <loc>https://liveandletlearn.net/post/kubeapps-on-tkg-management-cluster/</loc>
-    <lastmod>2020-09-23T11:01:36+10:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://liveandletlearn.net/</loc>
-    <lastmod>2020-09-23T11:01:36+10:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://liveandletlearn.net/post/</loc>
     <lastmod>2020-09-23T11:01:36+10:00</lastmod>
   </url>
   
