@@ -8,15 +8,33 @@
     <language>en-us</language>
     <managingEditor>absoludity&#43;lll@gmail.com (Michael Nelson)</managingEditor>
     <webMaster>absoludity&#43;lll@gmail.com (Michael Nelson)</webMaster>
-    <lastBuildDate>Mon, 28 Sep 2020 10:06:28 +1000</lastBuildDate>
+    <lastBuildDate>Tue, 02 Feb 2021 15:24:29 +1100</lastBuildDate>
     
 	<atom:link href="https://liveandletlearn.net/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
+      <title>carvel</title>
+      <link>https://liveandletlearn.net/tags/carvel/</link>
+      <pubDate>Tue, 02 Feb 2021 15:24:29 +1100</pubDate>
+      <author>absoludity&#43;lll@gmail.com (Michael Nelson)</author>
+      <guid>https://liveandletlearn.net/tags/carvel/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>helm</title>
+      <link>https://liveandletlearn.net/tags/helm/</link>
+      <pubDate>Tue, 02 Feb 2021 15:24:29 +1100</pubDate>
+      <author>absoludity&#43;lll@gmail.com (Michael Nelson)</author>
+      <guid>https://liveandletlearn.net/tags/helm/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>kubeapps</title>
       <link>https://liveandletlearn.net/tags/kubeapps/</link>
-      <pubDate>Mon, 28 Sep 2020 10:06:28 +1000</pubDate>
+      <pubDate>Tue, 02 Feb 2021 15:24:29 +1100</pubDate>
       <author>absoludity&#43;lll@gmail.com (Michael Nelson)</author>
       <guid>https://liveandletlearn.net/tags/kubeapps/</guid>
       <description></description>
@@ -25,9 +43,27 @@
     <item>
       <title>vmware</title>
       <link>https://liveandletlearn.net/tags/vmware/</link>
-      <pubDate>Mon, 28 Sep 2020 10:06:28 +1000</pubDate>
+      <pubDate>Tue, 02 Feb 2021 15:24:29 +1100</pubDate>
       <author>absoludity&#43;lll@gmail.com (Michael Nelson)</author>
       <guid>https://liveandletlearn.net/tags/vmware/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>manilla</title>
+      <link>https://liveandletlearn.net/tags/manilla/</link>
+      <pubDate>Sat, 24 Oct 2020 22:20:54 +1100</pubDate>
+      <author>absoludity&#43;lll@gmail.com (Michael Nelson)</author>
+      <guid>https://liveandletlearn.net/tags/manilla/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>paragliding</title>
+      <link>https://liveandletlearn.net/tags/paragliding/</link>
+      <pubDate>Sat, 24 Oct 2020 22:20:54 +1100</pubDate>
+      <author>absoludity&#43;lll@gmail.com (Michael Nelson)</author>
+      <guid>https://liveandletlearn.net/tags/paragliding/</guid>
       <description></description>
     </item>
     
