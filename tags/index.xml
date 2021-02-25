@@ -8,10 +8,55 @@
     <language>en-us</language>
     <managingEditor>absoludity&#43;lll@gmail.com (Michael Nelson)</managingEditor>
     <webMaster>absoludity&#43;lll@gmail.com (Michael Nelson)</webMaster>
-    <lastBuildDate>Tue, 02 Feb 2021 15:24:29 +1100</lastBuildDate>
+    <lastBuildDate>Thu, 25 Feb 2021 11:40:02 +1100</lastBuildDate>
     
 	<atom:link href="https://liveandletlearn.net/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>kubeapps</title>
+      <link>https://liveandletlearn.net/tags/kubeapps/</link>
+      <pubDate>Thu, 25 Feb 2021 11:40:02 +1100</pubDate>
+      <author>absoludity&#43;lll@gmail.com (Michael Nelson)</author>
+      <guid>https://liveandletlearn.net/tags/kubeapps/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>pinniped</title>
+      <link>https://liveandletlearn.net/tags/pinniped/</link>
+      <pubDate>Thu, 25 Feb 2021 11:40:02 +1100</pubDate>
+      <author>absoludity&#43;lll@gmail.com (Michael Nelson)</author>
+      <guid>https://liveandletlearn.net/tags/pinniped/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>tmc</title>
+      <link>https://liveandletlearn.net/tags/tmc/</link>
+      <pubDate>Thu, 25 Feb 2021 11:40:02 +1100</pubDate>
+      <author>absoludity&#43;lll@gmail.com (Michael Nelson)</author>
+      <guid>https://liveandletlearn.net/tags/tmc/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>tutorial</title>
+      <link>https://liveandletlearn.net/tags/tutorial/</link>
+      <pubDate>Thu, 25 Feb 2021 11:40:02 +1100</pubDate>
+      <author>absoludity&#43;lll@gmail.com (Michael Nelson)</author>
+      <guid>https://liveandletlearn.net/tags/tutorial/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>vmware</title>
+      <link>https://liveandletlearn.net/tags/vmware/</link>
+      <pubDate>Thu, 25 Feb 2021 11:40:02 +1100</pubDate>
+      <author>absoludity&#43;lll@gmail.com (Michael Nelson)</author>
+      <guid>https://liveandletlearn.net/tags/vmware/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>carvel</title>
@@ -28,24 +73,6 @@
       <pubDate>Tue, 02 Feb 2021 15:24:29 +1100</pubDate>
       <author>absoludity&#43;lll@gmail.com (Michael Nelson)</author>
       <guid>https://liveandletlearn.net/tags/helm/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>kubeapps</title>
-      <link>https://liveandletlearn.net/tags/kubeapps/</link>
-      <pubDate>Tue, 02 Feb 2021 15:24:29 +1100</pubDate>
-      <author>absoludity&#43;lll@gmail.com (Michael Nelson)</author>
-      <guid>https://liveandletlearn.net/tags/kubeapps/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>vmware</title>
-      <link>https://liveandletlearn.net/tags/vmware/</link>
-      <pubDate>Tue, 02 Feb 2021 15:24:29 +1100</pubDate>
-      <author>absoludity&#43;lll@gmail.com (Michael Nelson)</author>
-      <guid>https://liveandletlearn.net/tags/vmware/</guid>
       <description></description>
     </item>
     
@@ -73,15 +100,6 @@
       <pubDate>Wed, 23 Sep 2020 11:01:36 +1000</pubDate>
       <author>absoludity&#43;lll@gmail.com (Michael Nelson)</author>
       <guid>https://liveandletlearn.net/tags/tkg/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>tutorial</title>
-      <link>https://liveandletlearn.net/tags/tutorial/</link>
-      <pubDate>Wed, 23 Sep 2020 11:01:36 +1000</pubDate>
-      <author>absoludity&#43;lll@gmail.com (Michael Nelson)</author>
-      <guid>https://liveandletlearn.net/tags/tutorial/</guid>
       <description></description>
     </item>
     

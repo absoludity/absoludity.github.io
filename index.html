@@ -204,6 +204,58 @@
           
           
             <article class="post-preview">
+    <a href="https://liveandletlearn.net/post/kubeapps-on-tanzu-mission-control/">
+        <h2 class="post-title">Kubeapps on Tanzu Mission Control via Pinniped</h2>
+        
+        
+        
+    </a>
+
+    <p class="post-meta">
+        <span class="post-meta">
+  
+  
+  <i class="fas fa-calendar"></i>&nbsp;Posted on February 25, 2021
+  
+  
+  
+  
+    
+      &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;Michael Nelson
+    
+  
+  
+</span>
+
+
+    </p>
+    <div class="post-entry">
+        
+        <p>We&rsquo;ve been able to run <a href="/post/kubeapps-on-tkg-management-cluster/">Kubeapps in a multi-cluster setup on various Kubernetes clusters</a> for a while now, but this was dependent on the Kubeapps&rsquo; user being authenticated in a way that all the clusters trust. Up until now, this meant having all the clusters <a href="https://kubernetes.io/docs/reference/access-authn-authz/authentication/#configuring-the-api-server">configured to trust the same OIDC identity provider</a>, which is not possible in some Kubernetes environments.</p>
+<p>Particularly, this meant we were unable to demonstrate multi-cluster Kubeapps with clusters created by <a href="https://tanzu.vmware.com/mission-control">Tanzu Mission Control</a> since we can&rsquo;t specify API server options, such as OIDC configuration, when creating a cluster in TMC. But that requirement has now changed thanks to a new project called <a href="https://pinniped.dev/">Pinniped</a>.</p>
+        <a href="https://liveandletlearn.net/post/kubeapps-on-tanzu-mission-control/" class="post-read-more">[Read More]</a>
+        
+    </div>
+
+    
+    <div class="blog-tags">
+        
+        <a href="https://liveandletlearn.net//tags/tutorial/">tutorial</a>&nbsp;
+        
+        <a href="https://liveandletlearn.net//tags/kubeapps/">kubeapps</a>&nbsp;
+        
+        <a href="https://liveandletlearn.net//tags/tmc/">tmc</a>&nbsp;
+        
+        <a href="https://liveandletlearn.net//tags/vmware/">vmware</a>&nbsp;
+        
+        <a href="https://liveandletlearn.net//tags/pinniped/">pinniped</a>&nbsp;
+        
+    </div>
+    
+
+</article>
+          
+            <article class="post-preview">
     <a href="https://liveandletlearn.net/post/carvel-imgbld-with-helm-post-render/">
         <h2 class="post-title">Carvel kbld With Helm Post Render</h2>
         
@@ -656,52 +708,6 @@
         <a href="https://liveandletlearn.net//tags/paragliding/">paragliding</a>&nbsp;
         
         <a href="https://liveandletlearn.net//tags/manilla/">manilla</a>&nbsp;
-        
-    </div>
-    
-
-</article>
-          
-            <article class="post-preview">
-    <a href="https://liveandletlearn.net/post/what-is-kubeapps/">
-        <h2 class="post-title">What is Kubeapps</h2>
-        
-        
-        
-    </a>
-
-    <p class="post-meta">
-        <span class="post-meta">
-  
-  
-  <i class="fas fa-calendar"></i>&nbsp;Posted on September 28, 2020
-  
-  
-  
-  
-    
-      &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;Michael Nelson
-    
-  
-  
-</span>
-
-
-    </p>
-    <div class="post-entry">
-        
-        For over a year now I&rsquo;ve been working together with Andres on the Kubeapps project at VMware and have made various videos of new features that we&rsquo;ve worked on, but I&rsquo;ve never stepped back to give an overview and answer the more general question, &ldquo;What is Kubeapps?&rdquo; and show how those features work towards a single goal.
-The goal of Kubeapps is to help users and operators install and manage applications on Kubernetes and the following features work together to achieve this goal:
-        <a href="https://liveandletlearn.net/post/what-is-kubeapps/" class="post-read-more">[Read More]</a>
-        
-    </div>
-
-    
-    <div class="blog-tags">
-        
-        <a href="https://liveandletlearn.net//tags/kubeapps/">kubeapps</a>&nbsp;
-        
-        <a href="https://liveandletlearn.net//tags/vmware/">vmware</a>&nbsp;
         
     </div>
     

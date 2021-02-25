@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/WebPage">
+  <head>
+    
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>Kubeapps on Tanzu Mission Control via Pinniped - Live and let Learn</title>
+  <meta name="description" content="We&rsquo;ve been able to run Kubeapps in a multi-cluster setup on various Kubernetes clusters for a while now, but this was dependent on the Kubeapps&rsquo; user being authenticated in a way that all the clusters trust. Up until now, this meant having all the clusters configured to trust the same OIDC identity provider, which is not possible in some Kubernetes environments.
+Particularly, this meant we were unable to demonstrate multi-cluster Kubeapps with clusters created by Tanzu Mission Control since we can&rsquo;t specify API server options, such as OIDC configuration, when creating a cluster in TMC. But that requirement has now changed thanks to a new project called Pinniped.">
+  <meta name="author" content="Michael Nelson"/><script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "WebSite",
+    "name": "Live and let Learn",
+    
+    "url": "https:\/\/liveandletlearn.net\/"
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Organization",
+  "name": "",
+  "url": "https:\/\/liveandletlearn.net\/"
+  
+  
+  
+  
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@id": "https:\/\/liveandletlearn.net\/",
+          "name": "home"
+        }
+    },{
+        "@type": "ListItem",
+        "position": 3,
+        "item": {
+          "@id": "https:\/\/liveandletlearn.net\/post\/kubeapps-on-tanzu-mission-control\/",
+          "name": "Kubeapps on tanzu mission control via pinniped"
+        }
+    }]
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "author": {
+    "name" : "Michael Nelson"
+  },
+  "headline": "Kubeapps on Tanzu Mission Control via Pinniped",
+  "description" : "We\x26rsquo;ve been able to run Kubeapps in a multi-cluster setup on various Kubernetes clusters for a while now, but this was dependent on the Kubeapps\x26rsquo; user being authenticated in a way that all the clusters trust. Up until now, this meant having all the clusters configured to trust the same OIDC identity provider, which is not possible in some Kubernetes environments.\nParticularly, this meant we were unable to demonstrate multi-cluster Kubeapps with clusters created by Tanzu Mission Control since we can\x26rsquo;t specify API server options, such as OIDC configuration, when creating a cluster in TMC. But that requirement has now changed thanks to a new project called Pinniped.\n",
+  "inLanguage" : "en",
+  "wordCount":  600 ,
+  "datePublished" : "2021-02-25T11:40:02",
+  "dateModified" : "2021-02-25T11:40:02",
+  "image" : "https:\/\/liveandletlearn.net\/img\/avatar-icon.png",
+  "keywords" : [ "tutorial, kubeapps, tmc, vmware, pinniped" ],
+  "mainEntityOfPage" : "https:\/\/liveandletlearn.net\/post\/kubeapps-on-tanzu-mission-control\/",
+  "publisher" : {
+    "@type": "Organization",
+    "name" : "https:\/\/liveandletlearn.net\/",
+    "logo" : {
+        "@type" : "ImageObject",
+        "url" : "https:\/\/liveandletlearn.net\/img\/avatar-icon.png",
+        "height" :  60 ,
+        "width" :  60
+    }
+  }
+}
+</script>
+
+<meta property="og:title" content="Kubeapps on Tanzu Mission Control via Pinniped" />
+<meta property="og:description" content="We&rsquo;ve been able to run Kubeapps in a multi-cluster setup on various Kubernetes clusters for a while now, but this was dependent on the Kubeapps&rsquo; user being authenticated in a way that all the clusters trust. Up until now, this meant having all the clusters configured to trust the same OIDC identity provider, which is not possible in some Kubernetes environments.
+Particularly, this meant we were unable to demonstrate multi-cluster Kubeapps with clusters created by Tanzu Mission Control since we can&rsquo;t specify API server options, such as OIDC configuration, when creating a cluster in TMC. But that requirement has now changed thanks to a new project called Pinniped.">
+<meta property="og:image" content="https://liveandletlearn.net/img/avatar-icon.png" />
+<meta property="og:url" content="https://liveandletlearn.net/post/kubeapps-on-tanzu-mission-control/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Live and let Learn" />
+
+  <meta name="twitter:title" content="Kubeapps on Tanzu Mission Control via Pinniped" />
+  <meta name="twitter:description" content="We&rsquo;ve been able to run Kubeapps in a multi-cluster setup on various Kubernetes clusters for a while now, but this was dependent on the Kubeapps&rsquo; user being authenticated in a way that all …">
+  <meta name="twitter:image" content="https://liveandletlearn.net/img/avatar-icon.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@michaelanelson" />
+  <meta name="twitter:creator" content="@michaelanelson" />
+  <link href='https://liveandletlearn.net/img/favicon.ico' rel='icon' type='image/x-icon'/>
+  <meta name="generator" content="Hugo 0.69.2" />
+  <link rel="alternate" href="https://liveandletlearn.net/index.xml" type="application/rss+xml" title="Live and let Learn"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"><link rel="stylesheet" href="https://liveandletlearn.net/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" /><link rel="stylesheet" href="https://liveandletlearn.net/css/syntax.css" /><link rel="stylesheet" href="https://liveandletlearn.net/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://liveandletlearn.net/">Live and let Learn</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="Blog" href="/">Blog</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="About" href="/about/">About</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="Tags" href="/tags">Tags</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="Live and let Learn" href="https://liveandletlearn.net/">
+            <img class="avatar-img" src="https://liveandletlearn.net/img/avatar-icon.png" alt="Live and let Learn" />
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-heading">
+              
+                <h1>Kubeapps on Tanzu Mission Control via Pinniped</h1>
+              
+              
+              
+              
+                <span class="post-meta">
+  
+  
+  <i class="fas fa-calendar"></i>&nbsp;Posted on February 25, 2021
+  
+  
+  
+  
+    
+      &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;Michael Nelson
+    
+  
+  
+</span>
+
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        <p>We&rsquo;ve been able to run <a href="/post/kubeapps-on-tkg-management-cluster/">Kubeapps in a multi-cluster setup on various Kubernetes clusters</a> for a while now, but this was dependent on the Kubeapps&rsquo; user being authenticated in a way that all the clusters trust. Up until now, this meant having all the clusters <a href="https://kubernetes.io/docs/reference/access-authn-authz/authentication/#configuring-the-api-server">configured to trust the same OIDC identity provider</a>, which is not possible in some Kubernetes environments.</p>
+<p>Particularly, this meant we were unable to demonstrate multi-cluster Kubeapps with clusters created by <a href="https://tanzu.vmware.com/mission-control">Tanzu Mission Control</a> since we can&rsquo;t specify API server options, such as OIDC configuration, when creating a cluster in TMC. But that requirement has now changed thanks to a new project called <a href="https://pinniped.dev/">Pinniped</a>.</p>
+<p>The following video is an overview of running Kubeapps on TMC via pinniped: 
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/DGMWRZ7SyqY" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+</p>
+<h2 id="kubeapps--pinniped">Kubeapps + Pinniped</h2>
+<p>The <a href="https://pinniped.dev">Pinniped project</a>, also from VMware, enables OIDC authentication to a cluster without any configuration of the cluster&rsquo;s API server. It does this by extending the Kubernetes API to include an endpoint that can exchange a valid OIDC <code>id_token</code> for a short-lived cluster certificate that identifies that same user and groups as the original token.</p>
+<p>Pinniped itself is currently focusing on <code>kubectl</code> access to a cluster and is explicitly not (yet) supporting other clients, such as the Kubeapps web application. So we wrote a small service in <a href="https://www.rust-lang.org/">Rust</a> called <a href="https://github.com/kubeapps/kubeapps/blob/master/docs/user/using-an-OIDC-provider-with-pinniped.md"><code>pinniped-proxy</code></a> (I&rsquo;ll post more about that experience separately) which in our stack, ensures that any request from a user directed at an API server has its OIDC credential exchanged for a short-lived cluster certificate from that cluster before continuing on its journey. Note that the resulting certificate does not grant any privileges, it simply contains the same authentication information as the <code>id_token</code> to identify the username and groups associated with the user. The cluster RBAC still decides what that user can and cannot do as always.</p>
+<p>You can read the docs for <a href="https://github.com/kubeapps/kubeapps/blob/master/docs/user/using-an-OIDC-provider-with-pinniped.md">configuring Kubeapps to use an OIDC provider with pinniped</a> in a generic cluster, with the following Tanzu Mission Control specific note.</p>
+<h2 id="configure-pinniped-on-your-cluster">Configure pinniped on your cluster</h2>
+<p>TMC clusters are created with pinniped already on the cluster and at the time of writing, the version managed by the cluster is fine to use. At some point TMC will be upgrading to pinniped 0.6.0 which has a backwards incompatible change that <a href="https://github.com/kubeapps/kubeapps/issues/2426">currently breaks our pinniped-proxy integration</a>. I&rsquo;ll update this post once we&rsquo;ve adjusted to that change.</p>
+<p>The first thing to do is to ensure that the installed pinniped service knows how to verify OIDC <code>id_tokens</code> for your identity provider. You can do this by creating a <code>JWTAuthenticator</code> resource within the same namespace that pinniped is installed - which in the case of TMC&rsquo;s default installation is <code>vmware-system-tmc</code>:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="k">kind</span><span class="p">:</span><span class="w"> </span>JWTAuthenticator<span class="w">
+</span><span class="w"></span><span class="k">apiVersion</span><span class="p">:</span><span class="w"> </span>authentication.concierge.pinniped.dev/v1alpha1<span class="w">
+</span><span class="w"></span><span class="k">metadata</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>jwt-authenticator<span class="w">
+</span><span class="w">  </span><span class="k">namespace</span><span class="p">:</span><span class="w"> </span>vmware-system-tmc<span class="w">
+</span><span class="w"></span><span class="k">spec</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="k">issuer</span><span class="p">:</span><span class="w"> </span>https<span class="p">:</span>//your-oidc-issuer.example.com<span class="w">
+</span><span class="w">  </span><span class="k">audience</span><span class="p">:</span><span class="w"> </span>default<span class="w">
+</span><span class="w">  </span><span class="k">claims</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="k">groups</span><span class="p">:</span><span class="w"> </span>groups<span class="w">
+</span><span class="w">    </span><span class="k">username</span><span class="p">:</span><span class="w"> </span>email<span class="w">
+</span><span class="w">  </span><span class="k">tls</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="k">certificateAuthorityData</span><span class="p">:</span><span class="w"> </span>&lt;your-oidc-issuers-tls-cert-auth-data&gt;<span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>This enables pinniped to verify an <code>id_token</code> from your identity provider as being signed correctly. In our <code>values.yaml</code> for Kubeapps, we will need to ensure Kubeapps knows to include the <code>pinniped-proxy</code> service:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="k">pinnipedProxy</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="k">enabled</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="w">  </span><span class="k">defaultPinnipedNamespace</span><span class="p">:</span><span class="w"> </span>vmware-system-tmc<span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>The last line is required here because by default pinniped will be in <code>pinniped-concierge</code> but TMC includes it in its own <code>vmware-system-tmc</code> namespace. Finally, our multi-cluster configuration for Kubeapps needs to identify individually each cluster that is using pinniped. This is because you may have a mixture of clusters, some using pinniped, others may be using OIDC:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="k">clusters</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>tmc-aws<span class="m">-1</span><span class="w">
+</span><span class="w">    </span><span class="k">pinnipedConfig</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="k">enabled</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="w">  </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>tmc-aws<span class="m">-1</span><span class="w">
+</span><span class="w">    </span><span class="k">pinnipedConfig</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="k">enabled</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="w">    </span><span class="k">apiServiceURL</span><span class="p">:</span><span class="w"> </span>https<span class="p">:</span>//abcd123.elb.amazonaws.com<span class="p">:</span><span class="m">443</span><span class="w">
+</span><span class="w">    </span><span class="k">serviceToken</span><span class="p">:</span><span class="w"> </span>...<span class="w">
+</span><span class="w">    </span><span class="k">certificateAuthorityData</span><span class="p">:</span><span class="w"> </span>...<span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>The rest of your <code>values.yaml</code> will include the <a href="https://github.com/kubeapps/kubeapps/blob/master/docs/user/using-an-OIDC-provider.md#deploying-an-auth-proxy-to-access-kubeapps">normal OIDC configuration for Kubeapps</a> and you can <code>helm install</code> away. In the demo above I&rsquo;m using VMware&rsquo;s Cloud Services Platform for Single Sign On (SSO) and two TMC clusters in AWS.</p>
+
+        
+          <div class="blog-tags">
+            
+              <a href="https://liveandletlearn.net//tags/tutorial/">tutorial</a>&nbsp;
+            
+              <a href="https://liveandletlearn.net//tags/kubeapps/">kubeapps</a>&nbsp;
+            
+              <a href="https://liveandletlearn.net//tags/tmc/">tmc</a>&nbsp;
+            
+              <a href="https://liveandletlearn.net//tags/vmware/">vmware</a>&nbsp;
+            
+              <a href="https://liveandletlearn.net//tags/pinniped/">pinniped</a>&nbsp;
+            
+          </div>
+        
+
+        
+
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="https://liveandletlearn.net/post/carvel-imgbld-with-helm-post-render/" data-toggle="tooltip" data-placement="top" title="Carvel kbld With Helm Post Render">&larr; Previous Post</a>
+            </li>
+          
+          
+        </ul>
+      
+
+
+      
+        
+          
+          <div class="disqus-comments">
+            <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "liveandletlearn" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+          </div>
+          
+        
+        
+      
+
+    </div>
+  </div>
+</div>
+
+      
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+                <a href="mailto:absoludity&#43;lll@gmail.com" title="Email me">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://github.com/absoludity" title="GitHub">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://twitter.com/michaelanelson" title="Twitter">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-twitter fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          <li>
+            <a href="" title="RSS">
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              Michael Nelson
+            
+          
+
+          &nbsp;&bull;&nbsp;&copy;
+          
+            2021
+          
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://liveandletlearn.net/">Live and let Learn</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="https://gohugo.io">Hugo v0.69.2</a> powered &nbsp;&bull;&nbsp; Theme <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a> adapted from <a href="https://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer><script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.js" integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/contrib/auto-render.min.js" integrity="sha384-kmZOZB5ObwgQnS/DuDg6TScgOiWWBiVt0plIRkZCmE6rDZGrEOQeHM5PcHi+nyqe" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+<script src="https://liveandletlearn.net/js/main.js"></script><script> renderMathInElement(document.body); </script><script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script><script src="https://liveandletlearn.net/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+
+
+
+    
+  </body>
+</html>
+
