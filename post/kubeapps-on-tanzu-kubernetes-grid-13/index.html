@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/WebPage">
+  <head>
+    
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>Tanzu Kubernetes Grid 1.3 with Identity Management - Live and let Learn</title>
+  <meta name="description" content="Way back in 2020 I&rsquo;d detailed how I&rsquo;d setup a Tanzu Kubernetes Grid 1.1 management cluster with OpenID Connect support (for single sign-on) before installing Kubeapps with single sign-on on that management cluster.
+Recently TKG 1.3 was released and the identity management support in TKG has changed significantly, so it&rsquo;s time to see what&rsquo;s different when setting up a TKG cluster with identity management as well as how we can run Kubeapps on TKG 1.">
+  <meta name="author" content="Michael Nelson"/><script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "WebSite",
+    "name": "Live and let Learn",
+    
+    "url": "https:\/\/liveandletlearn.net\/"
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Organization",
+  "name": "",
+  "url": "https:\/\/liveandletlearn.net\/"
+  
+  
+  
+  
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@id": "https:\/\/liveandletlearn.net\/",
+          "name": "home"
+        }
+    },{
+        "@type": "ListItem",
+        "position": 3,
+        "item": {
+          "@id": "https:\/\/liveandletlearn.net\/post\/kubeapps-on-tanzu-kubernetes-grid-13\/",
+          "name": "Tanzu kubernetes grid 1.3 with identity management"
+        }
+    }]
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "author": {
+    "name" : "Michael Nelson"
+  },
+  "headline": "Tanzu Kubernetes Grid 1.3 with Identity Management",
+  "description" : "Way back in 2020 I\x26rsquo;d detailed how I\x26rsquo;d setup a Tanzu Kubernetes Grid 1.1 management cluster with OpenID Connect support (for single sign-on) before installing Kubeapps with single sign-on on that management cluster.\nRecently TKG 1.3 was released and the identity management support in TKG has changed significantly, so it\x26rsquo;s time to see what\x26rsquo;s different when setting up a TKG cluster with identity management as well as how we can run Kubeapps on TKG 1.",
+  "inLanguage" : "en",
+  "wordCount":  1509 ,
+  "datePublished" : "2021-04-19T06:42:43",
+  "dateModified" : "2021-04-19T06:42:43",
+  "image" : "https:\/\/liveandletlearn.net\/img\/avatar-icon.png",
+  "keywords" : [ "" ],
+  "mainEntityOfPage" : "https:\/\/liveandletlearn.net\/post\/kubeapps-on-tanzu-kubernetes-grid-13\/",
+  "publisher" : {
+    "@type": "Organization",
+    "name" : "https:\/\/liveandletlearn.net\/",
+    "logo" : {
+        "@type" : "ImageObject",
+        "url" : "https:\/\/liveandletlearn.net\/img\/avatar-icon.png",
+        "height" :  60 ,
+        "width" :  60
+    }
+  }
+}
+</script>
+
+<meta property="og:title" content="Tanzu Kubernetes Grid 1.3 with Identity Management" />
+<meta property="og:description" content="Way back in 2020 I&rsquo;d detailed how I&rsquo;d setup a Tanzu Kubernetes Grid 1.1 management cluster with OpenID Connect support (for single sign-on) before installing Kubeapps with single sign-on on that management cluster.
+Recently TKG 1.3 was released and the identity management support in TKG has changed significantly, so it&rsquo;s time to see what&rsquo;s different when setting up a TKG cluster with identity management as well as how we can run Kubeapps on TKG 1.">
+<meta property="og:image" content="https://liveandletlearn.net/img/avatar-icon.png" />
+<meta property="og:url" content="https://liveandletlearn.net/post/kubeapps-on-tanzu-kubernetes-grid-13/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Live and let Learn" />
+
+  <meta name="twitter:title" content="Tanzu Kubernetes Grid 1.3 with Identity Management" />
+  <meta name="twitter:description" content="Way back in 2020 I&rsquo;d detailed how I&rsquo;d setup a Tanzu Kubernetes Grid 1.1 management cluster with OpenID Connect support (for single sign-on) before installing Kubeapps with single sign-on …">
+  <meta name="twitter:image" content="https://liveandletlearn.net/img/avatar-icon.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@michaelanelson" />
+  <meta name="twitter:creator" content="@michaelanelson" />
+  <link href='https://liveandletlearn.net/img/favicon.ico' rel='icon' type='image/x-icon'/>
+  <meta name="generator" content="Hugo 0.69.2" />
+  <link rel="alternate" href="https://liveandletlearn.net/index.xml" type="application/rss+xml" title="Live and let Learn"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"><link rel="stylesheet" href="https://liveandletlearn.net/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" /><link rel="stylesheet" href="https://liveandletlearn.net/css/syntax.css" /><link rel="stylesheet" href="https://liveandletlearn.net/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://liveandletlearn.net/">Live and let Learn</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="Blog" href="/">Blog</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="About" href="/about/">About</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="Tags" href="/tags">Tags</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="Live and let Learn" href="https://liveandletlearn.net/">
+            <img class="avatar-img" src="https://liveandletlearn.net/img/avatar-icon.png" alt="Live and let Learn" />
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-heading">
+              
+                <h1>Tanzu Kubernetes Grid 1.3 with Identity Management</h1>
+              
+              
+              
+              
+                <span class="post-meta">
+  
+  
+  <i class="fas fa-calendar"></i>&nbsp;Posted on April 19, 2021
+  
+  
+  
+  
+    
+      &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;Michael Nelson
+    
+  
+  
+</span>
+
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        <p>Way back in 2020 I&rsquo;d detailed how I&rsquo;d setup a <a href="/post/tanzu-kubernetes-grid-tkg-first-experience/">Tanzu Kubernetes Grid 1.1 management cluster with OpenID Connect support</a> (for single sign-on) before installing <a href="/post/kubeapps-on-tkg-management-cluster/">Kubeapps with single sign-on on that management cluster</a>.</p>
+<p>Recently TKG 1.3 was released and the identity management support in TKG has changed significantly, so it&rsquo;s time to see what&rsquo;s different when setting up a TKG cluster with identity management as well as how we can run Kubeapps on TKG 1.3 with identity management. You will of course need to work through the <a href="https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/1.3/vmware-tanzu-kubernetes-grid-13/GUID-index.html">TKG 1.3 documentation for your environment</a>, I&rsquo;ll just highlight the significant points and small issues that I needed to work around, due to my environment.</p>
+<p>This series of two post details the steps that I took to enable Kubeapps running on a TKG
+cluster on AWS configured to allow users to access via the configured identity management:</p>
+<ul>
+<li>This post focuses on the TKG setup required to get a workload clusters with identity management (using your chosen identity provider),</li>
+<li>the followup post will detail the related Kubeapps installation and configuration.</li>
+</ul>
+<h2 id="setting-up-a-tkg-13-management-cluster-with-identity-management">Setting up a TKG 1.3 management cluster with identity management</h2>
+<h3 id="an-all-new-tanzu-cli">An all new <code>tanzu</code> CLI</h3>
+<p>The first difference is that we no longer use the <code>tkg</code> CLI, but rather a new integrated <code>tanzu</code> CLI which you will need to ensure is <a href="https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/1.3/vmware-tanzu-kubernetes-grid-13/GUID-install-cli.html">installed and ready to use on your system</a>. It seems that the <code>tanzu</code> CLI is a move towards a single CLI experience for all things Tanzu - good move!</p>
+<h3 id="setting-up-identity-management---aka-single-sign-on">Setting up identity management - AKA single sign-on</h3>
+<p>Identity management is where TKG has changed quite significantly between TKG 1.1 and TKG 1.3. Previously, TKG workload clusters were configured at creation time with OIDC parameters for the Dex instance running on your management cluster, and the management cluster itself did not enable direct access via identity management at all. With TKG 1.3, the new <a href="https://pinniped.dev">VMware Pinniped project</a> is being used so that identity management can be configured and updated at runtime and is also supported for accessing the management cluster.</p>
+<p>It&rsquo;s worth reading through the <a href="https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/1.3/vmware-tanzu-kubernetes-grid-13/GUID-mgmt-clusters-enabling-id-mgmt.html">Enabling identity management docs</a> to understand the new setup as well as create your oauth2 client id with your chosen identity provider (I&rsquo;m using google in this example below, the docs recommend Okta)</p>
+<h3 id="creating-your-tkg-13-management-cluster">Creating your TKG 1.3 management cluster</h3>
+<p>I initially had errors when trying to create a management cluster on AWS, both via the <code>--ui</code> as well as via the console. It turned out that even though I&rsquo;d used the ui installer and selected the &ldquo;Automate creation of AWS CloudFormation stack&rdquo; checkbox, the required profiles still did not exist, so my (later) console-based install attempts would fail with:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="o">[</span>cluster control plane is still being initialized, cluster infrastructure is still being provisioned<span class="o">]</span>, retrying
+cluster creation failed, reason:<span class="s1">&#39;InstanceProvisionFailed @ Machine/kubeapps-tkg-13-2-test-control-plane-x2sw2&#39;</span>, message:<span class="s1">&#39;1 of 2 completed&#39;</span>
+
+
+Failure <span class="k">while</span> deploying management cluster, Here are some steps to investigate the cause:
+
+Debug:
+    kubectl get po,deploy,cluster,kubeadmcontrolplane,machine,machinedeployment -A --kubeconfig /home/michael/.kube-tkg/tmp/config_RaAxrTtO
+    kubectl logs deployment.apps/&lt;deployment-name&gt; -n &lt;deployment-namespace&gt; manager --kubeconfig /home/michael/.kube-tkg/tmp/config_RaAxrTtO
+
+To clean up the resources created by the management cluster:
+          tanzu management-cluster delete
+Error: unable to <span class="nb">set</span> up management cluster: unable to <span class="nb">wait</span> <span class="k">for</span> cluster and get the cluster kubeconfig: error waiting <span class="k">for</span> cluster to be provisioned <span class="o">(</span>this may take a
+ few minutes<span class="o">)</span>: cluster creation failed, reason:<span class="s1">&#39;InstanceProvisionFailed @ Machine/kubeapps-tkg-13-2-test-control-plane-x2sw2&#39;</span>, message:<span class="s1">&#39;1 of 2 completed&#39;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Checking the logs as suggested indicated that the expected AWS InstanceProfiles didn&rsquo;t exist:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">kubectl logs deployment.apps/capa-controller-manager -n capa-system manager --kubeconfig /home/michael/.kube-tkg/tmp/config_RaAxrTtO
+...
+E0414 04:01:43.434245       <span class="m">1</span> controller.go:257<span class="o">]</span> controller-runtime/controller <span class="s2">&#34;msg&#34;</span><span class="o">=</span><span class="s2">&#34;Reconciler error&#34;</span> <span class="s2">&#34;error&#34;</span><span class="o">=</span><span class="s2">&#34;failed to create AWSMachine instance: failed to run instance: InvalidParameterValue: Value (control-plane.tkg.cloud.vmware.com) for parameter iamInstanceProfile.name is invalid. Invalid IAM Instance Profile name\n\tstatus code: 400, request id: ff25f867-8d16-49ef-bb9e-cc745ecd3b0c&#34;</span> <span class="s2">&#34;controller&#34;</span><span class="o">=</span><span class="s2">&#34;awsmachine&#34;</span> <span class="s2">&#34;name&#34;</span><span class="o">=</span><span class="s2">&#34;kubeapps-tkg-13-2-test-control-plane-drhmh&#34;</span> <span class="s2">&#34;namespace&#34;</span><span class="o">=</span><span class="s2">&#34;tkg-system&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Sure enough, if I then checked what <code>InstanceProfiles</code> exist within my account, I could see that similar but not the same profiles existed:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">aws --profile my-profile iam list-instance-profiles <span class="p">|</span> jq <span class="s2">&#34;.InstanceProfiles[] | .InstanceProfileName&#34;</span>
+<span class="s2">&#34;control-plane.cluster-api-provider-aws.sigs.k8s.io&#34;</span>
+<span class="s2">&#34;controllers.cluster-api-provider-aws.sigs.k8s.io&#34;</span>
+...
+<span class="s2">&#34;nodes.cluster-api-provider-aws.sigs.k8s.io&#34;</span>
+...
+</code></pre></td></tr></table>
+</div>
+</div><p>For example, the error was because the InstanceProfile <code>control-plane.tkg.cloud.vmware.com</code> did not exist, whereas <code>control-plane.cluster-api-provider-aws.sigs.k8s.io</code> <em>did</em> exist. It turns out the existing <code>InstanceProfiles</code> were from last year when I installed TKG 1.1 and the required ones for 1.3 were, for reasons still not known to me, not yet present. A helpful TKG expert pointed me to the manual TKG 1.3 management cluster install on AWS instructions, specifically the <a href="https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/1.3/vmware-tanzu-kubernetes-grid-13/GUID-mgmt-clusters-config-aws.html#create-an-aws-cloudformation-stack-1">instructions to create the CloudFormation stack on AWS</a>.</p>
+<p>When following those instructions, I had to include the <code>AWS_REGION</code> env var even though it was specified in my aws credentials file, but it did the trick:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nv">AWS_PROFILE</span><span class="o">=</span>my-profile <span class="nv">AWS_REGION</span><span class="o">=</span>us-east-1 tanzu management-cluster permissions aws <span class="nb">set</span>
+
+Creating AWS CloudFormation Stack
+
+Following resources are in the stack:
+
+Resource                  <span class="p">|</span>Type                                                                <span class="p">|</span>Status
+AWS::IAM::InstanceProfile <span class="p">|</span>control-plane.tkg.cloud.vmware.com                                  <span class="p">|</span>CREATE_COMPLETE
+AWS::IAM::InstanceProfile <span class="p">|</span>controllers.tkg.cloud.vmware.com                                    <span class="p">|</span>CREATE_COMPLETE
+...
+</code></pre></td></tr></table>
+</div>
+</div><p>With the correct profiles created, I was then able to get a management cluster running, though with a small issue.</p>
+<h3 id="tagging-an-aws-subnet">Tagging an AWS subnet</h3>
+<p>While following the <a href="https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/1.3/vmware-tanzu-kubernetes-grid-13/GUID-mgmt-clusters-configure-id-mgmt.html">configuring identity management after management cluster deployment doc</a> I noticed that although my management cluster was created, some of the services were unable to be setup as load balancers:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">  Warning  SyncLoadBalancerFailed  4m36s <span class="o">(</span>x13 over 39m<span class="o">)</span>  service-controller  Error syncing load balancer: failed to ensure load balancer: could not find any suitable subnets <span class="k">for</span> creating the ELB
+</code></pre></td></tr></table>
+</div>
+</div><p>I&rsquo;d hit this before when trying TKG 1.1 and once again, the reason it happened was that I&rsquo;d initially selected the UI option for the TKG installer to create a new VPC, but after my initial install failed, I&rsquo;d chosen to re-use that VPC (actually re-using the complete cluster config other than changing the name) when retrying, which meant that VPC subnets were not tagged with my new cluster name.</p>
+<p>To fix this, I again navigated to the list of subnets for the region, for example, for us-east-1 you will find the list at <a href="https://console.aws.amazon.com/vpc/home?region=us-east-1#subnets:sort=desc:tag:Name">https://console.aws.amazon.com/vpc/home?region=us-east-1#subnets:sort=desc:tag:Name</a>. In this list you will see a <code>-public</code> and <code>-private</code> subnet prefixed by the name of your management cluster, for example, in my case I see:</p>
+<p><img src="/img/kubeapps-on-tkg-management-cluster/tkg-management-subnets.png" alt="Management cluster subnets"></p>
+<p>If you click on the first subnet, the public one, the details will be displayed including a <code>Tags</code> tab. Click on the <code>Tags</code> tab and you should see that the subnet includes a tag for your management cluster, but in my case, it was for a previously failed management cluster name. I edited the tag to use the correct cluster name and after a few minutes the service had a load balancer.</p>
+<h3 id="ensuring-the-pinniped-post-deploy-job-succeeds">Ensuring the pinniped post-deploy job succeeds</h3>
+<p>With the load balancer now set I was able to continue following the <a href="https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/1.3/vmware-tanzu-kubernetes-grid-13/GUID-mgmt-clusters-configure-id-mgmt.html">configuration of identity management after management cluster deployment documentation</a> and update the callbacks in my identity provider, but I was unable to generate a kubeconfig for use with my configured identity provider, instead getting the error:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">tanzu management-cluster kubeconfig get --export-file /tmp/id_mgmt_test_kubeconfig
+
+Error: failed to get pinniped-info from cluster: failed to get pinniped-info from the cluster
+</code></pre></td></tr></table>
+</div>
+</div><p>Checking the pinniped pods showed that pinniped runs a post-deploy job which depends on the pinniped supervisor load balancer being available, which in my case, had not been available at the time the job ran due to the missing subnet tags identified above. So this post-deploy job had exceeded the backoff limit (of 6 failures) while I as fixing the subnet tag and was no longer retrying.</p>
+<p>To fix this, I edited the job to have a larger backoff limit (of 7), waited a few minutes and saw the job then complete successfully:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">pinniped-post-deploy-job-ver-1-w5q8g   0/1     Error       <span class="m">0</span>          66m
+pinniped-post-deploy-job-ver-2-t2fc2   0/1     Completed   <span class="m">0</span>          86s
+</code></pre></td></tr></table>
+</div>
+</div><p>I was then able to successfully authenticate via kubectl using my google account identity, following the instructions at the end of the <a href="https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/1.3/vmware-tanzu-kubernetes-grid-13/GUID-mgmt-clusters-configure-id-mgmt.html">configuration of identity management after management cluster deployment documentation</a> to add a role-binding for my user.</p>
+<p>So, management cluster complete with only a few environment-specific hiccups along the way!</p>
+<h2 id="setting-up-a-tkg-13-workload-cluster-with-identity-management">Setting up a TKG 1.3 workload cluster with identity management</h2>
+<p>Creating a workload cluster was as simple as copying the config that I&rsquo;d just used successfully for the management cluster, changing the CLUSTER_NAME only, and then:</p>
+<pre><code>tanzu cluster create --file ~/.tanzu/tkg/clusterconfigs/workload.yaml
+</code></pre><p>though check the <a href="https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/1.3/vmware-tanzu-kubernetes-grid-13/GUID-tanzu-k8s-clusters-deploy.html">full documentation for details</a>.</p>
+<p>I then used very similar commands to grab an admin kubeconfig (ie. one that is setup with cert-based authentication, not using the identity management) for my new workload cluster:</p>
+<pre><code>tanzu cluster kubeconfig get kubeapps-tkg-13-workload-test --admin
+</code></pre><p>and used that to verify for myself that the Kubernetes api server of the workload cluster in TKG 1.3 no longer sets any of the <code>--oidc-*</code> flags, instead it&rsquo;s Pinniped all the way down. Pinniped is already installed and configured on the workload cluster, so last of all, I created a non-admin kubeconfig (ie. one which will use the identity management):</p>
+<pre><code>tanzu cluster kubeconfig get kubeapps-tkg-13-workload-test --export-file /tmp/id_workload_test_kubeconfig
+</code></pre><p>and then verified that, after creating a role-binding, I am able to use the cluster using my google identity:</p>
+<pre><code>kubectl create clusterrolebinding id-workload-test-rb --clusterrole cluster-admin --user my-user@example.com
+kubectl get pods -A --kubeconfig /tmp/id_workload_test_kubeconfig
+</code></pre><p>Success. Now we&rsquo;re ready to install Kubeapps on the workload cluster&hellip;</p>
+
+
+        
+
+        
+
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="https://liveandletlearn.net/post/kubeapps-on-tanzu-mission-control/" data-toggle="tooltip" data-placement="top" title="Kubeapps on Tanzu Mission Control via Pinniped">&larr; Previous Post</a>
+            </li>
+          
+          
+        </ul>
+      
+
+
+      
+        
+          
+          <div class="disqus-comments">
+            <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "liveandletlearn" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+          </div>
+          
+        
+        
+      
+
+    </div>
+  </div>
+</div>
+
+      
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+                <a href="mailto:absoludity&#43;lll@gmail.com" title="Email me">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://github.com/absoludity" title="GitHub">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://twitter.com/michaelanelson" title="Twitter">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-twitter fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          <li>
+            <a href="" title="RSS">
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              Michael Nelson
+            
+          
+
+          &nbsp;&bull;&nbsp;&copy;
+          
+            2021
+          
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://liveandletlearn.net/">Live and let Learn</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="https://gohugo.io">Hugo v0.69.2</a> powered &nbsp;&bull;&nbsp; Theme <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a> adapted from <a href="https://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer><script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.js" integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/contrib/auto-render.min.js" integrity="sha384-kmZOZB5ObwgQnS/DuDg6TScgOiWWBiVt0plIRkZCmE6rDZGrEOQeHM5PcHi+nyqe" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+<script src="https://liveandletlearn.net/js/main.js"></script><script> renderMathInElement(document.body); </script><script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script><script src="https://liveandletlearn.net/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+
+
+
+    
+  </body>
+</html>
+

@@ -3,6 +3,21 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://liveandletlearn.net/</loc>
+    <lastmod>2021-04-19T06:42:43+10:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://liveandletlearn.net/post/</loc>
+    <lastmod>2021-04-19T06:42:43+10:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://liveandletlearn.net/post/kubeapps-on-tanzu-kubernetes-grid-13/</loc>
+    <lastmod>2021-04-19T06:42:43+10:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://liveandletlearn.net/tags/kubeapps/</loc>
     <lastmod>2021-02-25T11:40:02+11:00</lastmod>
   </url>
@@ -13,17 +28,7 @@
   </url>
   
   <url>
-    <loc>https://liveandletlearn.net/</loc>
-    <lastmod>2021-02-25T11:40:02+11:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://liveandletlearn.net/tags/pinniped/</loc>
-    <lastmod>2021-02-25T11:40:02+11:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://liveandletlearn.net/post/</loc>
     <lastmod>2021-02-25T11:40:02+11:00</lastmod>
   </url>
   
