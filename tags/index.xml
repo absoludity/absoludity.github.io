@@ -8,7 +8,7 @@
     <language>en-us</language>
     <managingEditor>absoludity&#43;lll@gmail.com (Michael Nelson)</managingEditor>
     <webMaster>absoludity&#43;lll@gmail.com (Michael Nelson)</webMaster>
-    <lastBuildDate>Thu, 25 Feb 2021 11:40:02 +1100</lastBuildDate>
+    <lastBuildDate>Mon, 19 Apr 2021 21:39:49 +1000</lastBuildDate>
     
 	<atom:link href="https://liveandletlearn.net/tags/index.xml" rel="self" type="application/rss+xml" />
     
@@ -16,9 +16,36 @@
     <item>
       <title>kubeapps</title>
       <link>https://liveandletlearn.net/tags/kubeapps/</link>
-      <pubDate>Thu, 25 Feb 2021 11:40:02 +1100</pubDate>
+      <pubDate>Mon, 19 Apr 2021 21:39:49 +1000</pubDate>
       <author>absoludity&#43;lll@gmail.com (Michael Nelson)</author>
       <guid>https://liveandletlearn.net/tags/kubeapps/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>tkg</title>
+      <link>https://liveandletlearn.net/tags/tkg/</link>
+      <pubDate>Mon, 19 Apr 2021 21:39:49 +1000</pubDate>
+      <author>absoludity&#43;lll@gmail.com (Michael Nelson)</author>
+      <guid>https://liveandletlearn.net/tags/tkg/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>tutorial</title>
+      <link>https://liveandletlearn.net/tags/tutorial/</link>
+      <pubDate>Mon, 19 Apr 2021 21:39:49 +1000</pubDate>
+      <author>absoludity&#43;lll@gmail.com (Michael Nelson)</author>
+      <guid>https://liveandletlearn.net/tags/tutorial/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>vmware</title>
+      <link>https://liveandletlearn.net/tags/vmware/</link>
+      <pubDate>Mon, 19 Apr 2021 21:39:49 +1000</pubDate>
+      <author>absoludity&#43;lll@gmail.com (Michael Nelson)</author>
+      <guid>https://liveandletlearn.net/tags/vmware/</guid>
       <description></description>
     </item>
     
@@ -37,24 +64,6 @@
       <pubDate>Thu, 25 Feb 2021 11:40:02 +1100</pubDate>
       <author>absoludity&#43;lll@gmail.com (Michael Nelson)</author>
       <guid>https://liveandletlearn.net/tags/tmc/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>tutorial</title>
-      <link>https://liveandletlearn.net/tags/tutorial/</link>
-      <pubDate>Thu, 25 Feb 2021 11:40:02 +1100</pubDate>
-      <author>absoludity&#43;lll@gmail.com (Michael Nelson)</author>
-      <guid>https://liveandletlearn.net/tags/tutorial/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>vmware</title>
-      <link>https://liveandletlearn.net/tags/vmware/</link>
-      <pubDate>Thu, 25 Feb 2021 11:40:02 +1100</pubDate>
-      <author>absoludity&#43;lll@gmail.com (Michael Nelson)</author>
-      <guid>https://liveandletlearn.net/tags/vmware/</guid>
       <description></description>
     </item>
     
@@ -91,15 +100,6 @@
       <pubDate>Sat, 24 Oct 2020 22:20:54 +1100</pubDate>
       <author>absoludity&#43;lll@gmail.com (Michael Nelson)</author>
       <guid>https://liveandletlearn.net/tags/paragliding/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>tkg</title>
-      <link>https://liveandletlearn.net/tags/tkg/</link>
-      <pubDate>Wed, 23 Sep 2020 11:01:36 +1000</pubDate>
-      <author>absoludity&#43;lll@gmail.com (Michael Nelson)</author>
-      <guid>https://liveandletlearn.net/tags/tkg/</guid>
       <description></description>
     </item>
     
