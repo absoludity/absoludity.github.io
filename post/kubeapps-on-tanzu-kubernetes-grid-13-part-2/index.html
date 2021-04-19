@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/WebPage">
+  <head>
+    
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>Kubeaps on Tanzu Kubernetes Grid 1.3 - Live and let Learn</title>
+  <meta name="description" content="This is the second post in a series of two post detailing the steps that I took to install Kubeapps running on a TKG 1.3 cluster on AWS configured to allow user authentication via the TKG identity management:
+ The first post focuses on the TKG 1.3 setup required to get a workload clusters with identity management (using your chosen identity provider), This followup post details the related Kubeapps installation and configuration on the TKG 1.">
+  <meta name="author" content="Michael Nelson"/><script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "WebSite",
+    "name": "Live and let Learn",
+    
+    "url": "https:\/\/liveandletlearn.net\/"
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Organization",
+  "name": "",
+  "url": "https:\/\/liveandletlearn.net\/"
+  
+  
+  
+  
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@id": "https:\/\/liveandletlearn.net\/",
+          "name": "home"
+        }
+    },{
+        "@type": "ListItem",
+        "position": 3,
+        "item": {
+          "@id": "https:\/\/liveandletlearn.net\/post\/kubeapps-on-tanzu-kubernetes-grid-13-part-2\/",
+          "name": "Kubeaps on tanzu kubernetes grid 1.3"
+        }
+    }]
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "author": {
+    "name" : "Michael Nelson"
+  },
+  "headline": "Kubeaps on Tanzu Kubernetes Grid 1.3",
+  "description" : "This is the second post in a series of two post detailing the steps that I took to install Kubeapps running on a TKG 1.3 cluster on AWS configured to allow user authentication via the TKG identity management:\n The first post focuses on the TKG 1.3 setup required to get a workload clusters with identity management (using your chosen identity provider), This followup post details the related Kubeapps installation and configuration on the TKG 1.",
+  "inLanguage" : "en",
+  "wordCount":  914 ,
+  "datePublished" : "2021-04-19T21:39:49",
+  "dateModified" : "2021-04-19T21:39:49",
+  "image" : "https:\/\/liveandletlearn.net\/img\/avatar-icon.png",
+  "keywords" : [ "" ],
+  "mainEntityOfPage" : "https:\/\/liveandletlearn.net\/post\/kubeapps-on-tanzu-kubernetes-grid-13-part-2\/",
+  "publisher" : {
+    "@type": "Organization",
+    "name" : "https:\/\/liveandletlearn.net\/",
+    "logo" : {
+        "@type" : "ImageObject",
+        "url" : "https:\/\/liveandletlearn.net\/img\/avatar-icon.png",
+        "height" :  60 ,
+        "width" :  60
+    }
+  }
+}
+</script>
+
+<meta property="og:title" content="Kubeaps on Tanzu Kubernetes Grid 1.3" />
+<meta property="og:description" content="This is the second post in a series of two post detailing the steps that I took to install Kubeapps running on a TKG 1.3 cluster on AWS configured to allow user authentication via the TKG identity management:
+ The first post focuses on the TKG 1.3 setup required to get a workload clusters with identity management (using your chosen identity provider), This followup post details the related Kubeapps installation and configuration on the TKG 1.">
+<meta property="og:image" content="https://liveandletlearn.net/img/avatar-icon.png" />
+<meta property="og:url" content="https://liveandletlearn.net/post/kubeapps-on-tanzu-kubernetes-grid-13-part-2/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Live and let Learn" />
+
+  <meta name="twitter:title" content="Kubeaps on Tanzu Kubernetes Grid 1.3" />
+  <meta name="twitter:description" content="This is the second post in a series of two post detailing the steps that I took to install Kubeapps running on a TKG 1.3 cluster on AWS configured to allow user authentication via the TKG identity …">
+  <meta name="twitter:image" content="https://liveandletlearn.net/img/avatar-icon.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@michaelanelson" />
+  <meta name="twitter:creator" content="@michaelanelson" />
+  <link href='https://liveandletlearn.net/img/favicon.ico' rel='icon' type='image/x-icon'/>
+  <meta name="generator" content="Hugo 0.69.2" />
+  <link rel="alternate" href="https://liveandletlearn.net/index.xml" type="application/rss+xml" title="Live and let Learn"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"><link rel="stylesheet" href="https://liveandletlearn.net/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" /><link rel="stylesheet" href="https://liveandletlearn.net/css/syntax.css" /><link rel="stylesheet" href="https://liveandletlearn.net/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://liveandletlearn.net/">Live and let Learn</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="Blog" href="/">Blog</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="About" href="/about/">About</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="Tags" href="/tags">Tags</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="Live and let Learn" href="https://liveandletlearn.net/">
+            <img class="avatar-img" src="https://liveandletlearn.net/img/avatar-icon.png" alt="Live and let Learn" />
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-heading">
+              
+                <h1>Kubeaps on Tanzu Kubernetes Grid 1.3</h1>
+              
+              
+              
+              
+                <span class="post-meta">
+  
+  
+  <i class="fas fa-calendar"></i>&nbsp;Posted on April 19, 2021
+  
+  
+  
+  
+    
+      &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;Michael Nelson
+    
+  
+  
+</span>
+
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        <p>This is the second post in a series of two post detailing the steps that I took to install Kubeapps running on a TKG 1.3 cluster on AWS configured to allow user authentication via the TKG identity management:</p>
+<ul>
+<li>The first post focuses on the <a href="/post/kubeapps-on-tanzu-kubernetes-grid-13/">TKG 1.3 setup required to get a workload clusters with identity management</a> (using your chosen identity provider),</li>
+<li>This followup post details the related Kubeapps installation and configuration on the TKG 1.3 workload cluster.</li>
+</ul>
+<p>The details below assume that you&rsquo;ve already successfully created your TKG management and workload clusters configured with identity management and verified that you can authenticate with both clusters using your identity provider (ie. not admin credentials).</p>
+<h2 id="configuring-pinniped-to-trust-your-identity-provider-directly">Configuring Pinniped to trust your identity provider directly</h2>
+<h3 id="some-background-about-pinniped-versions">Some background about Pinniped versions</h3>
+<p>First, query your workload cluster to see whether any JWT Authenticators are already defined and you&rsquo;ll find that there is one which is setup to trust tokens issued by the pinniped-supervisor service on your management cluster:</p>
+<pre><code>kubectl get jwtauthenticators -A --kubeconfig /tmp/id_workload_test_kubeconfig
+
+NAMESPACE            NAME                    ISSUER
+pinniped-concierge   tkg-jwt-authenticator   https://domain-of-pinniped-supervisor-on-mgt-cluster
+</code></pre><p>This is used by pinniped from the <code>kubectl</code> CLI, but it&rsquo;s not (yet) clear to me whether it&rsquo;ll be possible for a web app, such as Kubeapps, to use this issuer as Kubeapps only knows about your client-id and identity provider which issues the JWT token credentials.</p>
+<p>Also, the fact that this existing JWT Authenticator is namespaced (in the <code>pinniped-concierge</code> namespace) shows us that the version of Pinniped running on a TKG 1.3 system is earlier than Pinniped 0.6.0, as <a href="https://github.com/vmware-tanzu/pinniped/releases/tag/v0.6.0">Pinniped 0.6.0 had a backwards incompatible change</a> where JWT Authenticators (along with all Pinniped Concierge APIs) were moved to be cluster-scoped rather than per-namespace. If you explicitly check the deployment, you&rsquo;ll see that it is in fact v0.4.1 of Pinniped:</p>
+<pre><code>    image: projects.registry.vmware.com/tkg/pinniped:v0.4.1_vmware.1
+</code></pre><p>This will have implications for the version of Kubeapps we can use since Kubeapps had to update to support the backwards incompatible change of pinniped 0.6.0 (in v2.3.0 of Kubeapps released as part of the Kubeapps chart v5.4.0), so we&rsquo;ll need to use the prior version.</p>
+<h3 id="create-an-oauth2-client-id-for-kubeapps-to-use">Create an OAuth2 client-id for Kubeapps to use</h3>
+<p>We want to setup Kubeapps with its own OAuth2 client-id, rather than re-using the client-id intended for the kubectl CLI. Do this by going back to your identity provider that you used when setting up your <a href="/post/kubeapps-on-tanzu-kubernetes-grid-13/">TKG 1.3 cluster with identity management</a> and creating a new client-id, noting the id and secret. Don&rsquo;t worry about specifying the callback url just yet, you can leave it blank or enter a dummy one if required, we&rsquo;ll come back and fill this in after installing Kubeapps.</p>
+<h3 id="create-a-pinniped-jwt-authenticator-for-the-new-client-id">Create a Pinniped JWT Authenticator for the new client-id</h3>
+<p>Create a new <code>kubeapps-jwt-authentication</code> JWT Authenticator to tell Pinniped that your workload cluster trusts tokens issued by your identity provider. For me this is a JWT Authenticator with google as the issuer since I&rsquo;m using google for authentication:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="k">apiVersion</span><span class="p">:</span><span class="w"> </span>authentication.concierge.pinniped.dev/v1alpha1<span class="w">
+</span><span class="w"></span><span class="k">kind</span><span class="p">:</span><span class="w"> </span>JWTAuthenticator<span class="w">
+</span><span class="w"></span><span class="k">metadata</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>kubeapps-jwt-authenticator<span class="w">
+</span><span class="w">  </span><span class="k">namespace</span><span class="p">:</span><span class="w"> </span>pinniped-concierge<span class="w">
+</span><span class="w"></span><span class="k">spec</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="k">audience</span><span class="p">:</span><span class="w"> </span>your<span class="w"> </span>client<span class="w"> </span>id<span class="w">
+</span><span class="w">  </span><span class="k">claims</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="k">groups</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;groups&#34;</span><span class="w">
+</span><span class="w">    </span><span class="k">username</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;email&#34;</span><span class="w">
+</span><span class="w">  </span><span class="k">issuer</span><span class="p">:</span><span class="w"> </span>https<span class="p">:</span>//accounts.google.com<span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><p><strong>Note:</strong> I need to check with the pinniped folk whether they are happy for us users to do this, or whether we should be using the supervisor on the management cluster somehow (not sure how we can for a web-app like Kubeapps).</p>
+<h3 id="create-the-configuration-values-for-kubeapps-and-install">Create the configuration values for Kubeapps and install</h3>
+<p>As mentioned, because TKG 1.3 is using an older version of Pinniped, we also need to use an older version of Kubeapps. Additionally, because of an issue we had in our Kubeapps chart, we need to specify the exact image version of our pinniped-proxy to use, as shown below:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="k">frontend</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="k">service</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="k">type</span><span class="p">:</span><span class="w"> </span>LoadBalancer<span class="w">
+</span><span class="w">    </span><span class="k">port</span><span class="p">:</span><span class="w"> </span><span class="m">443</span><span class="w">
+</span><span class="w">    </span><span class="k">annotations</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="k">service.beta.kubernetes.io/aws-load-balancer-backend-protocol</span><span class="p">:</span><span class="w"> </span>http<span class="w">
+</span><span class="w">      </span><span class="c"># Update the cert arn below once added to aws.</span><span class="w">
+</span><span class="w">      </span><span class="c"># service.beta.kubernetes.io/aws-load-balancer-ssl-cert: &lt;aws-arn-for-your-ssl-cert&gt;</span><span class="w">
+</span><span class="w"></span><span class="k">authProxy</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="k">enabled</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="w">  </span><span class="k">provider</span><span class="p">:</span><span class="w"> </span>oidc<span class="w">
+</span><span class="w">  </span><span class="k">clientID</span><span class="p">:</span><span class="w"> </span>your<span class="w"> </span>client<span class="w"> </span>id<span class="w">
+</span><span class="w">  </span><span class="k">clientSecret</span><span class="p">:</span><span class="w"> </span>your<span class="w"> </span>client<span class="w"> </span>secret<span class="w">
+</span><span class="w">  </span><span class="c"># Create a random cookie secret with:</span><span class="w">
+</span><span class="w">  </span><span class="c"># python -c &#39;import os,base64; print(base64.urlsafe_b64encode(os.urandom(16)).decode())&#39;</span><span class="w">
+</span><span class="w">  </span><span class="k">cookieSecret</span><span class="p">:</span><span class="w"> </span>your<span class="w"> </span>cookie<span class="w"> </span>secret<span class="w">
+</span><span class="w">  </span><span class="k">additionalFlags</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span>- --oidc-issuer-url=https<span class="p">:</span>//accounts.google.com<span class="w"> </span><span class="c"># or your issuer URL</span><span class="w">
+</span><span class="w">    </span>- --scope=openid<span class="w"> </span>email<span class="w">
+</span><span class="w"></span><span class="k">pinnipedProxy</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="k">enabled</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="w">  </span><span class="k">defaultAuthenticatorName</span><span class="p">:</span><span class="w"> </span>kubeapps-jwt-authenticator<span class="w">
+</span><span class="w">  </span><span class="k">image</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="k">repository</span><span class="p">:</span><span class="w"> </span>bitnami/kubeapps-pinniped-proxy<span class="w">
+</span><span class="w">    </span><span class="c"># Explicitly request the version of pinniped-proxy which supports the pre 0.6.0 version of pinniped.</span><span class="w">
+</span><span class="w">    </span><span class="k">tag</span><span class="p">:</span><span class="w"> </span><span class="m">2.2.1</span>-debian<span class="m">-10</span>-r22<span class="w">
+</span><span class="w"></span><span class="k">clusters</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>default<span class="w">
+</span><span class="w">    </span><span class="k">pinnipedConfig</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="k">enable</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>With this configuration, the specific version of Kubeapps can be installed with:</p>
+<pre><code>kubectl create ns kubeapps
+helm upgrade --install kubeapps bitnami/kubeapps --version=5.3.4 --namespace kubeapps --values ~/path/to/your/above/values.yaml
+</code></pre><p>Note that I&rsquo;ve just used a <code>LoadBalancer</code> service type for the Kubeapps frontend above as I&rsquo;m happy to use the default AWS load balancer DNS address for this test environment, but for anything other than a test environment you&rsquo;d be best using Ingress and a cert-manager-issued TLS cert. To use a <code>LoadBalancer</code> like this in AWS as a TLS endpoint, I needed to do a couple of extra steps in AWS which I&rsquo;ll happily add to an appendix here as soon as someone asks :)</p>
+<h3 id="last-steps-to-enable-your-user-access">Last steps to enable your user access</h3>
+<p>Once you know the address that you&rsquo;ll be using for your test Kubeapps setup, you&rsquo;ll need to go back and update your OAuth2 client details in your identity provider, adding your callback URL as <code>https://your.address.example.com/oauth2/callback</code>.</p>
+<p>You will also need to ensure that the user with which you will be logging in has appropriate RBAC in the cluster to be able to query the API server.</p>
+<pre><code>kubectl create clusterrolebinding id-workload-test-rb --clusterrole cluster-admin --user your.user@example.com
+</code></pre><p>With that, you should be able to login to Kubeapps on your TKG 1.3 workload cluster using that user and deploy some apps! Remember, if you have any issues, please take a look at the <a href="https://github.com/kubeapps/kubeapps/blob/master/docs/user/using-an-OIDC-provider.md#debugging-auth-failures-when-using-oidc">Debugging auth failures when using OIDC</a> section of the documentation and if you&rsquo;re stuck, drop in on the <a href="https://kubernetes.slack.com/archives/C9D3TSUG4">#kubeapps channel on Kubernetes slack</a>.</p>
+
+
+        
+
+        
+
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="https://liveandletlearn.net/post/kubeapps-on-tanzu-kubernetes-grid-13/" data-toggle="tooltip" data-placement="top" title="Tanzu Kubernetes Grid 1.3 with Identity Management">&larr; Previous Post</a>
+            </li>
+          
+          
+        </ul>
+      
+
+
+      
+        
+          
+          <div class="disqus-comments">
+            <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "liveandletlearn" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+          </div>
+          
+        
+        
+      
+
+    </div>
+  </div>
+</div>
+
+      
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+                <a href="mailto:absoludity&#43;lll@gmail.com" title="Email me">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://github.com/absoludity" title="GitHub">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://twitter.com/michaelanelson" title="Twitter">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-twitter fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          <li>
+            <a href="" title="RSS">
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              Michael Nelson
+            
+          
+
+          &nbsp;&bull;&nbsp;&copy;
+          
+            2021
+          
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://liveandletlearn.net/">Live and let Learn</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="https://gohugo.io">Hugo v0.69.2</a> powered &nbsp;&bull;&nbsp; Theme <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a> adapted from <a href="https://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer><script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.js" integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/contrib/auto-render.min.js" integrity="sha384-kmZOZB5ObwgQnS/DuDg6TScgOiWWBiVt0plIRkZCmE6rDZGrEOQeHM5PcHi+nyqe" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+<script src="https://liveandletlearn.net/js/main.js"></script><script> renderMathInElement(document.body); </script><script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script><script src="https://liveandletlearn.net/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+
+
+
+    
+  </body>
+</html>
+

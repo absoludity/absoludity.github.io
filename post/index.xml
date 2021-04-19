@@ -8,10 +8,20 @@
     <language>en-us</language>
     <managingEditor>absoludity&#43;lll@gmail.com (Michael Nelson)</managingEditor>
     <webMaster>absoludity&#43;lll@gmail.com (Michael Nelson)</webMaster>
-    <lastBuildDate>Mon, 19 Apr 2021 06:42:43 +1000</lastBuildDate>
+    <lastBuildDate>Mon, 19 Apr 2021 21:39:49 +1000</lastBuildDate>
     
 	<atom:link href="https://liveandletlearn.net/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Kubeaps on Tanzu Kubernetes Grid 1.3</title>
+      <link>https://liveandletlearn.net/post/kubeapps-on-tanzu-kubernetes-grid-13-part-2/</link>
+      <pubDate>Mon, 19 Apr 2021 21:39:49 +1000</pubDate>
+      <author>absoludity&#43;lll@gmail.com (Michael Nelson)</author>
+      <guid>https://liveandletlearn.net/post/kubeapps-on-tanzu-kubernetes-grid-13-part-2/</guid>
+      <description>This is the second post in a series of two post detailing the steps that I took to install Kubeapps running on a TKG 1.3 cluster on AWS configured to allow user authentication via the TKG identity management:
+ The first post focuses on the TKG 1.3 setup required to get a workload clusters with identity management (using your chosen identity provider), This followup post details the related Kubeapps installation and configuration on the TKG 1.</description>
+    </item>
     
     <item>
       <title>Tanzu Kubernetes Grid 1.3 with Identity Management</title>
