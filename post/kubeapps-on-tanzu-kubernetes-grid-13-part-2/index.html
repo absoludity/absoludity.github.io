@@ -60,7 +60,7 @@
   "headline": "Kubeapps on Tanzu Kubernetes Grid 1.3",
   "description" : "This is the second post in a series of two post detailing the steps that I took to install Kubeapps running on a TKG 1.3 cluster on AWS configured to allow user authentication via the TKG identity management:\n The first post focuses on the TKG 1.3 setup required to get a workload clusters with identity management (using your chosen identity provider), This followup post details the related Kubeapps installation and configuration on the TKG 1.",
   "inLanguage" : "en",
-  "wordCount":  914 ,
+  "wordCount":  891 ,
   "datePublished" : "2021-04-19T21:39:49",
   "dateModified" : "2021-04-19T21:39:49",
   "image" : "https:\/\/liveandletlearn.net\/img\/avatar-icon.png",
@@ -269,6 +269,11 @@
 <li>This followup post details the related Kubeapps installation and configuration on the TKG 1.3 workload cluster.</li>
 </ul>
 <p>The details below assume that you&rsquo;ve already successfully created your TKG management and workload clusters configured with identity management and verified that you can authenticate with both clusters using your identity provider (ie. not admin credentials).</p>
+<p>Here&rsquo;s a brief video overview as well: 
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/5ejTfmnfuQA" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+</p>
 <h2 id="configuring-pinniped-to-trust-your-identity-provider-directly">Configuring Pinniped to trust your identity provider directly</h2>
 <h3 id="some-background-about-pinniped-versions">Some background about Pinniped versions</h3>
 <p>First, query your workload cluster to see whether any JWT Authenticators are already defined and you&rsquo;ll find that there is one which is setup to trust tokens issued by the pinniped-supervisor service on your management cluster:</p>
@@ -312,8 +317,9 @@ pinniped-concierge   tkg-jwt-authenticator   https://domain-of-pinniped-supervis
 </span><span class="w">  </span><span class="k">issuer</span><span class="p">:</span><span class="w"> </span>https<span class="p">:</span>//accounts.google.com<span class="w">
 </span></code></pre></td></tr></table>
 </div>
-</div><p><strong>Note:</strong> I need to check with the pinniped folk whether they are happy for us users to do this, or whether we should be using the supervisor on the management cluster somehow (not sure how we can for a web-app like Kubeapps).</p>
-<h3 id="create-the-configuration-values-for-kubeapps-and-install">Create the configuration values for Kubeapps and install</h3>
+</div><p>Apply the JWTAuthenticator on your workload cluster with:</p>
+<pre><code>kubectl apply -f ~/path/to/your/kubeapps-jwt-authenicator.yaml
+</code></pre><h3 id="create-the-configuration-values-for-kubeapps-and-install">Create the configuration values for Kubeapps and install</h3>
 <p>As mentioned, because TKG 1.3 is using an older version of Pinniped, we also need to use an older version of Kubeapps. Additionally, because of an issue we had in our Kubeapps chart, we need to specify the exact image version of our pinniped-proxy to use, as shown below:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
