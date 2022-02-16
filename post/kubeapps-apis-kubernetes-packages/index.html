@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/WebPage">
+  <head>
+    
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>Kubeapps APIs - a plugable system supporting different Kubernetes packages - Live and let Learn</title>
+  <meta name="description" content="The recent release of Kubeapps marks a milestone for the Kubeapps team in that we are no longer restricted to presenting a catalog of only Helm packages in our UI and, behind the scenes, we&rsquo;ve addressed a long-standing security issue to remove the reverse proxy to the Kubernetes API server that our UI depended on until now. We&rsquo;ve done a few overviews of the new Kubeapps APIs service which makes this possible (see Kubeapps APIs: Beyond Helm, or a demo with Kubeapps with Flux and Carvel, or the TanzuTV episode 74 where Antonio gives an in-depth demo of the Carvel support), but I&rsquo;d like to write something a little more detailed about the choices we made as well as some of the implementation details.">
+  <meta name="author" content="Michael Nelson"/><script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "WebSite",
+    "name": "Live and let Learn",
+    
+    "url": "https:\/\/liveandletlearn.net\/"
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Organization",
+  "name": "",
+  "url": "https:\/\/liveandletlearn.net\/"
+  
+  
+  
+  
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@id": "https:\/\/liveandletlearn.net\/",
+          "name": "home"
+        }
+    },{
+        "@type": "ListItem",
+        "position": 3,
+        "item": {
+          "@id": "https:\/\/liveandletlearn.net\/post\/kubeapps-apis-kubernetes-packages\/",
+          "name": "Kubeapps a p is a plugable system supporting different kubernetes packages"
+        }
+    }]
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "author": {
+    "name" : "Michael Nelson"
+  },
+  "headline": "Kubeapps APIs - a plugable system supporting different Kubernetes packages",
+  "description" : "The recent release of Kubeapps marks a milestone for the Kubeapps team in that we are no longer restricted to presenting a catalog of only Helm packages in our UI and, behind the scenes, we\x26rsquo;ve addressed a long-standing security issue to remove the reverse proxy to the Kubernetes API server that our UI depended on until now. We\x26rsquo;ve done a few overviews of the new Kubeapps APIs service which makes this possible (see Kubeapps APIs: Beyond Helm, or a demo with Kubeapps with Flux and Carvel, or the TanzuTV episode 74 where Antonio gives an in-depth demo of the Carvel support), but I\x26rsquo;d like to write something a little more detailed about the choices we made as well as some of the implementation details.",
+  "inLanguage" : "en",
+  "wordCount":  2468 ,
+  "datePublished" : "2022-02-16T10:22:30",
+  "dateModified" : "2022-02-16T10:22:30",
+  "image" : "https:\/\/liveandletlearn.net\/img\/avatar-icon.png",
+  "keywords" : [ "kubeapps, vmware" ],
+  "mainEntityOfPage" : "https:\/\/liveandletlearn.net\/post\/kubeapps-apis-kubernetes-packages\/",
+  "publisher" : {
+    "@type": "Organization",
+    "name" : "https:\/\/liveandletlearn.net\/",
+    "logo" : {
+        "@type" : "ImageObject",
+        "url" : "https:\/\/liveandletlearn.net\/img\/avatar-icon.png",
+        "height" :  60 ,
+        "width" :  60
+    }
+  }
+}
+</script>
+
+<meta property="og:title" content="Kubeapps APIs - a plugable system supporting different Kubernetes packages" />
+<meta property="og:description" content="The recent release of Kubeapps marks a milestone for the Kubeapps team in that we are no longer restricted to presenting a catalog of only Helm packages in our UI and, behind the scenes, we&rsquo;ve addressed a long-standing security issue to remove the reverse proxy to the Kubernetes API server that our UI depended on until now. We&rsquo;ve done a few overviews of the new Kubeapps APIs service which makes this possible (see Kubeapps APIs: Beyond Helm, or a demo with Kubeapps with Flux and Carvel, or the TanzuTV episode 74 where Antonio gives an in-depth demo of the Carvel support), but I&rsquo;d like to write something a little more detailed about the choices we made as well as some of the implementation details.">
+<meta property="og:image" content="https://liveandletlearn.net/img/avatar-icon.png" />
+<meta property="og:url" content="https://liveandletlearn.net/post/kubeapps-apis-kubernetes-packages/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Live and let Learn" />
+
+  <meta name="twitter:title" content="Kubeapps APIs - a plugable system supporting different Kubernetes …" />
+  <meta name="twitter:description" content="The recent release of Kubeapps marks a milestone for the Kubeapps team in that we are no longer restricted to presenting a catalog of only Helm packages in our UI and, behind the scenes, we&rsquo;ve …">
+  <meta name="twitter:image" content="https://liveandletlearn.net/img/avatar-icon.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@michaelanelson" />
+  <meta name="twitter:creator" content="@michaelanelson" />
+  <link href='https://liveandletlearn.net/img/favicon.ico' rel='icon' type='image/x-icon'/>
+  <meta name="generator" content="Hugo 0.69.2" />
+  <link rel="alternate" href="https://liveandletlearn.net/index.xml" type="application/rss+xml" title="Live and let Learn"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"><link rel="stylesheet" href="https://liveandletlearn.net/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" /><link rel="stylesheet" href="https://liveandletlearn.net/css/syntax.css" /><link rel="stylesheet" href="https://liveandletlearn.net/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://liveandletlearn.net/">Live and let Learn</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="Blog" href="/">Blog</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="About" href="/about/">About</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="Tags" href="/tags">Tags</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="Live and let Learn" href="https://liveandletlearn.net/">
+            <img class="avatar-img" src="https://liveandletlearn.net/img/avatar-icon.png" alt="Live and let Learn" />
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-heading">
+              
+                <h1>Kubeapps APIs - a plugable system supporting different Kubernetes packages</h1>
+              
+              
+              
+              
+                <span class="post-meta">
+  
+  
+  <i class="fas fa-calendar"></i>&nbsp;Posted on February 16, 2022
+  
+  
+  
+  
+    
+      &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;Michael Nelson
+    
+  
+  
+</span>
+
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        <p>The recent release of Kubeapps marks a milestone for the Kubeapps team in that we are <strong>no longer restricted to presenting a catalog of only Helm packages</strong> in our UI and, behind the scenes, we&rsquo;ve addressed a <a href="https://github.com/kubeapps/kubeapps/issues/3896">long-standing security issue</a> to <strong>remove the reverse proxy to the Kubernetes API server</strong> that our UI depended on until now. We&rsquo;ve done a few overviews of the new <strong>Kubeapps APIs</strong> service which makes this possible (see <a href="https://www.youtube.com/watch?v=_4F5uE0ikF8">Kubeapps APIs: Beyond Helm</a>, or a <a href="https://www.youtube.com/watch?v=ICEGPvHAiYY">demo with Kubeapps with Flux and Carvel</a>, or the <a href="https://www.youtube.com/watch?v=rS2AhcIPQEs">TanzuTV episode 74</a> where Antonio gives an in-depth demo of the Carvel support), but I&rsquo;d like to write something a little more detailed about the choices we made as well as some of the implementation details.</p>
+<p>First, there were two main issues that we aimed to solve with the Kubeapps APIs service:</p>
+<h3 id="1-enable-plugable-support-for-presenting-catalogs-of-different-kubernetes-packaging-formats-for-installation">1. Enable plugable support for presenting catalogs of different Kubernetes packaging formats for installation</h3>
+<p>That is, we wanted to move from the situation where Kubeapps is tightly couple to the Helm packaging system:</p>
+<p><img src="/img/kubeapps-apis-kubernetes-packages/kubeapps-helm-only.png" alt="Kubeapps coupled to Helm"></p>
+<p>to an API backend that can query different packaging systems in a standard way using a plugable architecture:</p>
+<p><img src="/img/kubeapps-apis-kubernetes-packages/kubeapps-plugable.png" alt="Kubeapps coupled to Helm"></p>
+<h3 id="2-remove-the-long-standing-requirement-for-the-kubeapps-ui-to-talk-directly-with-the-kubernetes-api-server">2. Remove the long-standing requirement for the Kubeapps UI to talk directly with the Kubernetes API server</h3>
+<p>That is, we wanted to move from this situation where the client code running in a browser needs to query the Kubernetes API server directly:</p>
+<p><img src="/img/kubeapps-apis-kubernetes-packages/kubeapps-direct-api-server.png" alt="Kubeapps UI talking directly to Kubernetes API server"></p>
+<p>to an API backend that can be queried by the user for only the data required to use Kubeapps:</p>
+<p><img src="/img/kubeapps-apis-kubernetes-packages/kubeapps-via-resources.png" alt="Kubeapps UI gathering data via the resources plugin"></p>
+<h2 id="a-grpc-based-api-server">A gRPC-based API server</h2>
+<p>We chose to use <a href="https://grpc.io/">gRPC/protobuf</a> to manage our API definitions and implementations together with the <a href="https://buf.build/">buf.build</a> tool for lint and other niceties. In that regard, it&rsquo;s a pretty standard stack using:</p>
+<ul>
+<li><a href="https://grpc-ecosystem.github.io/grpc-gateway/">grpc-gateway</a> to enable an RESTful JSON version of our API (we don&rsquo;t use this in our client, but not everyone uses gRPC either, so wanted to ensure the API was accessible to others who wanted to use it)</li>
+<li>Improbable&rsquo;s <a href="https://github.com/improbable-eng/grpc-web">grpc-web</a> to enable TypeScript gRPC client generation as well as translating gRPC-web requests into plain gRPC calls in the backend (rather than requiring something heavier like <a href="https://grpc.io/docs/platforms/web/basics/#configure-the-envoy-proxy">Envoy</a> to do the translation),</li>
+<li>We multiplex on a single port to serve gRPC, gRPC-web as well as JSON HTTP requests.</li>
+</ul>
+<p>What is more interesting, in my opinion, is how we used gRPC/protobuf to enable a <strong>plugable core packages interface that can be queried by the UI to return a combination of packages from different backends</strong>, such as Helm, Flux or Carvel. But before we get there, let&rsquo;s briefly look at the dynamic loading of plugins as well as the authorization strategy.</p>
+<h3 id="dynamic-loading-of-plugins-during-startup">Dynamic loading of plugins during startup</h3>
+<p>A plugin for the Kubeapps APIs service is just a standard <a href="https://pkg.go.dev/plugin">Go plugin</a> that exports a specific function with the signature:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-golang" data-lang="golang"><span class="kd">func</span> <span class="nf">RegisterWithGRPCServer</span><span class="p">(</span>
+    <span class="nx">s</span> <span class="nx">grpc</span><span class="p">.</span><span class="nx">ServiceRegistrar</span><span class="p">,</span>
+    <span class="nx">configGetter</span> <span class="nx">core</span><span class="p">.</span><span class="nx">KubernetesConfigGetter</span><span class="p">,</span>
+    <span class="nx">clustersConfig</span> <span class="nx">kube</span><span class="p">.</span><span class="nx">ClustersConfig</span><span class="p">,</span>
+    <span class="nx">pluginConfigPath</span> <span class="kt">string</span><span class="p">,</span>
+<span class="p">)</span> <span class="p">(</span><span class="kd">interface</span><span class="p">{},</span> <span class="kt">error</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>This allows the main <code>kubeapps-apis</code> service to load any plugins found in the specified plugin directories dynamically when the service starts up and call their <code>RegisterWithGRPCServer</code> functions. So for example, as you might expect, we have a <code>helm/v1alpha1</code> plugin that provides a helm catalog and the ability to install helm packages, as well as a <code>resources/v1alpha1</code> plugin which can be enabled to provide some access to Kubernetes resources, such as the resources related to an installed package (assuming the requestor has the correct RBAC) - more on that later.</p>
+<h3 id="authenticationauthorization">Authentication/Authorization</h3>
+<p>Authentication-wise, we continue to rely on the OIDC standard so that every request that arrives at the Kubeapps APIs server must include a token to identify the user. This token is then relayed with requests to the Kubernetes API service on the users&rsquo; behalf, ensuring that all use of the Kubernetes API server is with the users&rsquo; configured RBAC. Each plugin receives a <code>core.KubernetesConfigGetter</code> function when being registered, which handles creating the required Kubernetes config for a given request context, so the plugin doesn&rsquo;t need to care about the details.</p>
+<p>Note that although we don&rsquo;t support its use in anything other than a demo environment, a service account token can be used instead of a valid OIDC <code>id_token</code> to authenticate requests.</p>
+<h2 id="enabling-different-implementations-of-a-core-packages-plugin">Enabling different implementations of a core packages plugin</h2>
+<p>Where things become interesting is with the requirement to <strong>support different Kubernetes packaging formats</strong> via this plugable system and <strong>present them consistently to a UI</strong> like the Kubeapps dashboard.</p>
+<p>To achieve this, we defined a core packages API ( <code>core.packages.v1alpha1</code>) with an interface which any plugin can choose to implement. This interface consists of methods common to querying for and installing Kubernetes packages, such as <code>GetAvailablePackages</code> or <code>CreateInstalledPackage</code>. You can view the full protobuf definition of this interface in the <a href="https://github.com/kubeapps/kubeapps/blob/v2.4.3/cmd/kubeapps-apis/proto/kubeappsapis/core/packages/v1alpha1/packages.proto">packages.proto</a> file, but as an example, the <code>GetAvailablePackageDetail</code> RPC is defined as:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-protobuf" data-lang="protobuf">  <span class="k">rpc</span> <span class="n">GetAvailablePackageDetail</span><span class="p">(</span><span class="n">GetAvailablePackageDetailRequest</span><span class="p">)</span> <span class="k">returns</span> <span class="p">(</span><span class="n">GetAvailablePackageDetailResponse</span><span class="p">)</span> <span class="p">{</span><span class="err">
+</span><span class="err"></span>    <span class="k">option</span> <span class="p">(</span><span class="n">google.api.http</span><span class="p">)</span> <span class="o">=</span> <span class="p">{</span><span class="err">
+</span><span class="err"></span>      <span class="n">get</span><span class="o">:</span> <span class="s">&#34;/core/packages/v1alpha1/availablepackages/plugin/{available_package_ref.plugin.name}/{available_package_ref.plugin.version}/c/{available_package_ref.context.cluster}/ns/{available_package_ref.context.namespace}/{available_package_ref.identifier}&#34;</span><span class="err">
+</span><span class="err"></span>    <span class="p">};</span><span class="err">
+</span><span class="err"></span>  <span class="p">}</span><span class="err">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>where the request looks like:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-protobuf" data-lang="protobuf"><span class="c1">// GetAvailablePackageDetailRequest
+</span><span class="c1">//
+</span><span class="c1">// Request for GetAvailablePackageDetail
+</span><span class="c1"></span><span class="kd">message</span> <span class="nc">GetAvailablePackageDetailRequest</span> <span class="p">{</span><span class="err">
+</span><span class="err"></span>  <span class="c1">// The information required to uniquely
+</span><span class="c1"></span>  <span class="c1">// identify an available package
+</span><span class="c1"></span>  <span class="n">AvailablePackageReference</span> <span class="n">available_package_ref</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span><span class="err">
+</span><span class="err">
+</span><span class="err"></span>  <span class="c1">// Optional specific version (or version reference) to request.
+</span><span class="c1"></span>  <span class="c1">// By default the latest version (or latest version matching the reference)
+</span><span class="c1"></span>  <span class="c1">// will be returned.
+</span><span class="c1"></span>  <span class="kt">string</span> <span class="n">pkg_version</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span><span class="err">
+</span><span class="err"></span><span class="p">}</span><span class="err">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>Similar to the normal Go idiom for <a href="https://go.dev/doc/effective_go#interfaces">satisfying an interface</a>, a Kubeapps APIs plugin satisfies the core packages interface if it implements all the methods of the core packages interface. So when the <code>kubeapps-apis</code> service&rsquo;s plugin server has registered all plugins, it subsequently iterates the set of plugins to see which of those plugins satisfy the target core packages interface, returning a slice of packaging plugins satisfying the interface:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-golang" data-lang="golang"><span class="c1">// GetPluginsSatisfyingInterface returns the registered plugins which satisfy a
+</span><span class="c1">// particular interface. Currently this is used to return the plugins that satisfy
+</span><span class="c1">// the core.packaging interface for the core packaging server.
+</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">s</span> <span class="o">*</span><span class="nx">pluginsServer</span><span class="p">)</span> <span class="nf">GetPluginsSatisfyingInterface</span><span class="p">(</span><span class="nx">targetInterface</span> <span class="nx">reflect</span><span class="p">.</span><span class="nx">Type</span><span class="p">)</span> <span class="p">[]</span><span class="nx">PluginWithServer</span> <span class="p">{</span>
+	<span class="nx">satisfiedPlugins</span> <span class="o">:=</span> <span class="p">[]</span><span class="nx">PluginWithServer</span><span class="p">{}</span>
+	<span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">pluginSrv</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">s</span><span class="p">.</span><span class="nx">pluginsWithServers</span> <span class="p">{</span>
+		<span class="c1">// The following check if the service implements an interface is what
+</span><span class="c1"></span>		<span class="c1">// grpc-go itself does, see:
+</span><span class="c1"></span>		<span class="c1">// https://github.com/grpc/grpc-go/blob/v1.38.0/server.go#L621
+</span><span class="c1"></span>		<span class="nx">serverType</span> <span class="o">:=</span> <span class="nx">reflect</span><span class="p">.</span><span class="nf">TypeOf</span><span class="p">(</span><span class="nx">pluginSrv</span><span class="p">.</span><span class="nx">Server</span><span class="p">)</span>
+
+		<span class="k">if</span> <span class="nx">serverType</span><span class="p">.</span><span class="nf">Implements</span><span class="p">(</span><span class="nx">targetInterface</span><span class="p">)</span> <span class="p">{</span>
+			<span class="nx">satisfiedPlugins</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">satisfiedPlugins</span><span class="p">,</span> <span class="nx">pluginSrv</span><span class="p">)</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+	<span class="k">return</span> <span class="nx">satisfiedPlugins</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Of course, all plugins register their own gRPC servers and so the RPC calls they define can be queried independently, but having a core packages interface and keeping a record of which plugins happen to satisfy the core packages interface allows us to ensure that <strong>all plugins that support a different Kubernetes package format have a standard base API</strong> for interacting with those packages (they can define other RPC functions of course), and importantly, the Kubeapps APIs services&rsquo; core packages implementation can act as a gateway for all interactions, aggregating results for queries and generally proxying to the corresponding plugin.</p>
+<h2 id="aggregating-results-from-different-packaging-plugins">Aggregating results from different packaging plugins</h2>
+<p>Part of the goal of enabling plugable support for different packaging systems is to ensure that a UI like the Kubeapps dashboard can use a single client to present a catalog of apps for install, regardless of whether they come from a standard Helm repository, or a flux-based Helm repository, or Carvel package resources on the cluster. With some caveats, this is what we have achieved with the latest Kubeapps release:</p>
+<p>TODO: screenshot</p>
+<p>This is possible because the implementation of the core packages API aggregates from and delegates to the packaging-specific implementations. For example, the <a href="https://github.com/kubeapps/kubeapps/blob/v2.4.3/cmd/kubeapps-apis/core/packages/v1alpha1/packages.go#L136-L166">core packages implementation of <code>GetAvailablePackageDetail</code></a> can simply delegate to the relevant plugin:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-golang" data-lang="golang"><span class="c1">// GetAvailablePackageDetail returns the package details based on the request.
+</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">s</span> <span class="nx">packagesServer</span><span class="p">)</span> <span class="nf">GetAvailablePackageDetail</span><span class="p">(</span><span class="nx">ctx</span> <span class="nx">context</span><span class="p">.</span><span class="nx">Context</span><span class="p">,</span> <span class="nx">request</span> <span class="o">*</span><span class="nx">packages</span><span class="p">.</span><span class="nx">GetAvailablePackageDetailRequest</span><span class="p">)</span> <span class="p">(</span><span class="o">*</span><span class="nx">packages</span><span class="p">.</span><span class="nx">GetAvailablePackageDetailResponse</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+	<span class="nx">contextMsg</span> <span class="o">:=</span> <span class="nx">fmt</span><span class="p">.</span><span class="nf">Sprintf</span><span class="p">(</span><span class="s">&#34;(cluster=%q, namespace=%q)&#34;</span><span class="p">,</span> <span class="nx">request</span><span class="p">.</span><span class="nf">GetAvailablePackageRef</span><span class="p">().</span><span class="nf">GetContext</span><span class="p">().</span><span class="nf">GetCluster</span><span class="p">(),</span> <span class="nx">request</span><span class="p">.</span><span class="nf">GetAvailablePackageRef</span><span class="p">().</span><span class="nf">GetContext</span><span class="p">().</span><span class="nf">GetNamespace</span><span class="p">())</span>
+	<span class="nx">log</span><span class="p">.</span><span class="nf">Infof</span><span class="p">(</span><span class="s">&#34;+core GetAvailablePackageDetail %s&#34;</span><span class="p">,</span> <span class="nx">contextMsg</span><span class="p">)</span>
+
+	<span class="k">if</span> <span class="nx">request</span><span class="p">.</span><span class="nf">GetAvailablePackageRef</span><span class="p">().</span><span class="nf">GetPlugin</span><span class="p">()</span> <span class="o">==</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="k">return</span> <span class="kc">nil</span><span class="p">,</span> <span class="nx">status</span><span class="p">.</span><span class="nf">Errorf</span><span class="p">(</span><span class="nx">codes</span><span class="p">.</span><span class="nx">InvalidArgument</span><span class="p">,</span> <span class="s">&#34;Unable to retrieve the plugin (missing AvailablePackageRef.Plugin)&#34;</span><span class="p">)</span>
+	<span class="p">}</span>
+
+	<span class="c1">// Retrieve the plugin with server matching the requested plugin name
+</span><span class="c1"></span>	<span class="nx">pluginWithServer</span> <span class="o">:=</span> <span class="nx">s</span><span class="p">.</span><span class="nf">getPluginWithServer</span><span class="p">(</span><span class="nx">request</span><span class="p">.</span><span class="nx">AvailablePackageRef</span><span class="p">.</span><span class="nx">Plugin</span><span class="p">)</span>
+	<span class="k">if</span> <span class="nx">pluginWithServer</span> <span class="o">==</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="k">return</span> <span class="kc">nil</span><span class="p">,</span> <span class="nx">status</span><span class="p">.</span><span class="nf">Errorf</span><span class="p">(</span><span class="nx">codes</span><span class="p">.</span><span class="nx">Internal</span><span class="p">,</span> <span class="s">&#34;Unable to get the plugin %v&#34;</span><span class="p">,</span> <span class="nx">request</span><span class="p">.</span><span class="nx">AvailablePackageRef</span><span class="p">.</span><span class="nx">Plugin</span><span class="p">)</span>
+	<span class="p">}</span>
+
+	<span class="c1">// Get the response from the requested plugin
+</span><span class="c1"></span>	<span class="nx">response</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">pluginWithServer</span><span class="p">.</span><span class="nx">server</span><span class="p">.</span><span class="nf">GetAvailablePackageDetail</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span> <span class="nx">request</span><span class="p">)</span>
+	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="k">return</span> <span class="kc">nil</span><span class="p">,</span> <span class="nx">status</span><span class="p">.</span><span class="nf">Errorf</span><span class="p">(</span><span class="nx">status</span><span class="p">.</span><span class="nf">Convert</span><span class="p">(</span><span class="nx">err</span><span class="p">).</span><span class="nf">Code</span><span class="p">(),</span> <span class="s">&#34;Unable to get the available package detail for the package %q using the plugin %q: %v&#34;</span><span class="p">,</span> <span class="nx">request</span><span class="p">.</span><span class="nx">AvailablePackageRef</span><span class="p">.</span><span class="nx">Identifier</span><span class="p">,</span> <span class="nx">request</span><span class="p">.</span><span class="nx">AvailablePackageRef</span><span class="p">.</span><span class="nx">Plugin</span><span class="p">.</span><span class="nx">Name</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+	<span class="p">}</span>
+
+	<span class="c1">// Validate the plugin response
+</span><span class="c1"></span>	<span class="k">if</span> <span class="nx">response</span><span class="p">.</span><span class="nf">GetAvailablePackageDetail</span><span class="p">().</span><span class="nf">GetAvailablePackageRef</span><span class="p">()</span> <span class="o">==</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="k">return</span> <span class="kc">nil</span><span class="p">,</span> <span class="nx">status</span><span class="p">.</span><span class="nf">Errorf</span><span class="p">(</span><span class="nx">codes</span><span class="p">.</span><span class="nx">Internal</span><span class="p">,</span> <span class="s">&#34;Invalid available package detail response from the plugin %v: %v&#34;</span><span class="p">,</span> <span class="nx">pluginWithServer</span><span class="p">.</span><span class="nx">plugin</span><span class="p">.</span><span class="nx">Name</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+	<span class="p">}</span>
+
+	<span class="c1">// Build the response
+</span><span class="c1"></span>	<span class="k">return</span> <span class="o">&amp;</span><span class="nx">packages</span><span class="p">.</span><span class="nx">GetAvailablePackageDetailResponse</span><span class="p">{</span>
+		<span class="nx">AvailablePackageDetail</span><span class="p">:</span> <span class="nx">response</span><span class="p">.</span><span class="nx">AvailablePackageDetail</span><span class="p">,</span>
+	<span class="p">},</span> <span class="kc">nil</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Similar implementations of querying functions like <code>GetAvailablePackageSummaries</code> in the same file collect the relevant available package summaries from each packaging plugin and return the aggregated results. So our Kubeapps UI (or any UI using the client) can benefit from using the single <em>core</em> packages client to query and interact with packages from <em>different</em> packaging systems, such as Carvel and Flux.</p>
+<p>It is worth noting that a plugin that satisfies the core packages interface isn&rsquo;t restricted to <em>only</em> those methods. Similar to go interfaces, the plugin is free to implement other functionality in addition to the interface requirements. The Helm plugin uses this to include additional functionality for rolling back an installed package - something which is not necessary for Carvel or Flux. This extra functionality is available on the Helm-specific gRPC client.</p>
+<h3 id="caveats">Caveats</h3>
+<p>Although the current Kubeapps UI does indeed benefit from this core client and interacts with the packages from different packaging systems in a uniform way, we still have some exceptions to this. For example, Flux and Carvel require selecting a service account to be associated with the installed package. Rather than the plugin providing additional schema or field data for creating a package (something we plan to add in the future), we&rsquo;ve currently included the service account field based on the plugin name.</p>
+<p>It&rsquo;s also worth noting that we tried and were unable to include any streaming gRPC calls on the core packages interface. While two separate packages can define the same interface (with the same methods, return types etc.), <code>grpc-go</code> generates package-specific types for streamed responses, which makes it impossible for one packages&rsquo; implementation of a streaming RPC to match another one, such as the core interface. It is not impossible to work around this, but so far we&rsquo;ve used streaming responses on other non-packages plugins, such as the resources plugin for reporting on the Kubernetes resources related to an installed package.</p>
+<h2 id="accessing-k8s-resources-without-exposing-the-kubernetes-api-server">Accessing K8s resources without exposing the Kubernetes API server</h2>
+<p>Prior to this release, the Kubeapps dashboard required access to the Kubernetes API to be able to query and display the Kubernetes resources related to an installed package, as well as other functionality such as creating secrets or simply determining whether the user is authenticated (only with the users&rsquo; credential, of course). As a result, the Kubeapps frontend service has included a reverse proxy to the Kubernetes API since the very beginning. A major goal for the new <code>kubeapps-apis</code> service was to remove this reverse proxying of the Kubernetes API.</p>
+<p>This was achieved with the current release by the creation of the <code>resources/v1alpha1</code> plugin, which provides a number of specific functions related to Kubernetes resources that are required by UIs such as the Kubeapps dashboard. For example, rather than being able to query (or update) resources via the Kubernetes API, the <code>resources/v1alpha1</code> plugin provides a <a href="https://github.com/kubeapps/kubeapps/blob/v2.4.3/cmd/kubeapps-apis/proto/kubeappsapis/plugins/resources/v1alpha1/resources.proto#L18"><code>GetResources</code> method that streams the resources</a> (or a subset thereof) for a specific installed package only:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-protobuf" data-lang="protobuf"><span class="c1">// GetResourcesRequest
+</span><span class="c1">//
+</span><span class="c1">// Request for GetResources that specifies the resource references to get or watch.
+</span><span class="c1"></span><span class="kd">message</span> <span class="nc">GetResourcesRequest</span> <span class="p">{</span><span class="err">
+</span><span class="err"></span>    <span class="c1">// InstalledPackageRef
+</span><span class="c1"></span>    <span class="c1">//
+</span><span class="c1"></span>    <span class="c1">// The installed package reference for which the resources are being fetched.
+</span><span class="c1"></span>    <span class="n">kubeappsapis.core.packages.v1alpha1.InstalledPackageReference</span> <span class="n">installed_package_ref</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span><span class="err">
+</span><span class="err">
+</span><span class="err"></span>    <span class="c1">// ResourceRefs
+</span><span class="c1"></span>    <span class="c1">//
+</span><span class="c1"></span>    <span class="c1">// The references to the resources that are to be fetched or watched.
+</span><span class="c1"></span>    <span class="c1">// If empty, all resources for the installed package are returned when only
+</span><span class="c1"></span>    <span class="c1">// getting the resources. It must be populated to watch resources to avoid
+</span><span class="c1"></span>    <span class="c1">// watching all resources unnecessarily.
+</span><span class="c1"></span>    <span class="k">repeated</span> <span class="n">kubeappsapis.core.packages.v1alpha1.ResourceRef</span> <span class="n">resource_refs</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span><span class="err">
+</span><span class="err">
+</span><span class="err"></span>    <span class="c1">// Watch
+</span><span class="c1"></span>    <span class="c1">//
+</span><span class="c1"></span>    <span class="c1">// When true, this will cause the stream to remain open with updated
+</span><span class="c1"></span>    <span class="c1">// resources being sent as events are received from the Kubernetes API
+</span><span class="c1"></span>    <span class="c1">// server.
+</span><span class="c1"></span>    <span class="kt">bool</span> <span class="n">watch</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span><span class="err">
+</span><span class="err"></span><span class="p">}</span><span class="err">
+</span></code></pre></td></tr></table>
+</div>
+</div><p>This enables a client such as the Kubeapps UI to request to watch a set of resources referenced by an installed package with a single request, with updates being returned any resources in that set changes, which is much more efficient for the browser client than a watch request per resources sent previously sent to the Kubernetes API. Of course the implementation of the resources plugin still needs to issue a separate watch request per resource to the Kubernetes API, but it&rsquo;s much less of a problem than it is to do so from a web browser. Furthermore, it is much simpler to reason about with go channels since the messages from separate go channels of resource updates can be <a href="https://github.com/kubeapps/kubeapps/blob/v2.4.3/cmd/kubeapps-apis/plugins/resources/v1alpha1/server.go#L236-L241">merged into a single watcher</a> with which to send data:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-golang" data-lang="golang"><span class="c1">// Otherwise, if requested to watch the resources, merge the watchers
+</span><span class="c1">// into a single resourceWatcher and stream the data as it arrives.
+</span><span class="c1"></span><span class="nx">resourceWatcher</span> <span class="o">:=</span> <span class="nf">mergeWatchers</span><span class="p">(</span><span class="nx">watchers</span><span class="p">)</span>
+<span class="k">for</span> <span class="nx">e</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">resourceWatcher</span><span class="p">.</span><span class="nf">ResultChan</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nf">sendResourceData</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">ResourceRef</span><span class="p">,</span> <span class="nx">e</span><span class="p">.</span><span class="nx">Object</span><span class="p">,</span> <span class="nx">stream</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>See the <a href="https://github.com/kubeapps/kubeapps/blob/v2.4.3/cmd/kubeapps-apis/plugins/resources/v1alpha1/server.go#L298-L335"><code>mergeWatchers</code> function</a> for details of how the channel results are merged, which is itself inspired by the <a href="https://go.dev/blog/pipelines">fan-in example from the go blog</a>.</p>
+<p>The resources plugin doesn&rsquo;t care which packaging system is used behind the scenes, all it needs to know is which packaging plugin is used so that it can verify the Kubernetes references for the installed package. In this way, the Kubeapps dashboard UI can present the Kubernetes resources for an installed package without caring which packaging system is involved.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>The design and implementation of the Kubeapps APIs service has provided Kubeapps with a way forward to support different package formats into the future, beginning with Carvel and Flux, rather than being relevant only in a Helm-based world. We still have work to do to support custom fields in a generic way for the UI, as well as adding an <a href="https://github.com/kubeapps/kubeapps/issues/3496">API for package repositories</a> and pagination for aggregated results, but with the Kubeapps APIs service in the current release, we have achieved our initial goals to add basic support for Carvel and Flux in addition to the existing Helm support while also removing the dependence of our browser-based Kubeapps client on a proxied connection to the Kubernetes API service. Here&rsquo;s to a more inclusive and secure path forward for Kubeapps!</p>
+
+
+        
+          <div class="blog-tags">
+            
+              <a href="https://liveandletlearn.net//tags/kubeapps/">kubeapps</a>&nbsp;
+            
+              <a href="https://liveandletlearn.net//tags/vmware/">vmware</a>&nbsp;
+            
+          </div>
+        
+
+        
+
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="https://liveandletlearn.net/post/kubeapps-on-tanzu-kubernetes-grid-13-part-2/" data-toggle="tooltip" data-placement="top" title="Kubeapps on Tanzu Kubernetes Grid 1.3">&larr; Previous Post</a>
+            </li>
+          
+          
+        </ul>
+      
+
+
+      
+        
+          
+          <div class="disqus-comments">
+            <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "liveandletlearn" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+          </div>
+          
+        
+        
+      
+
+    </div>
+  </div>
+</div>
+
+      
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+                <a href="mailto:absoludity&#43;lll@gmail.com" title="Email me">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://github.com/absoludity" title="GitHub">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://twitter.com/michaelanelson" title="Twitter">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-twitter fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          <li>
+            <a href="" title="RSS">
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              Michael Nelson
+            
+          
+
+          &nbsp;&bull;&nbsp;&copy;
+          
+            2022
+          
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://liveandletlearn.net/">Live and let Learn</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="https://gohugo.io">Hugo v0.69.2</a> powered &nbsp;&bull;&nbsp; Theme <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a> adapted from <a href="https://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer><script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.js" integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/contrib/auto-render.min.js" integrity="sha384-kmZOZB5ObwgQnS/DuDg6TScgOiWWBiVt0plIRkZCmE6rDZGrEOQeHM5PcHi+nyqe" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+<script src="https://liveandletlearn.net/js/main.js"></script><script> renderMathInElement(document.body); </script><script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script><script src="https://liveandletlearn.net/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+
+
+
+    
+  </body>
+</html>
+
