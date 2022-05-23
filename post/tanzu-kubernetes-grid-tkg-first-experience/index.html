@@ -46,7 +46,7 @@ Enter VMware Tanzu Kubernetes Grid (TGK): an &ldquo;Enterprise-ready Kubernetes 
         "position": 3,
         "item": {
           "@id": "https:\/\/liveandletlearn.net\/post\/tanzu-kubernetes-grid-tkg-first-experience\/",
-          "name": "V mware tanzu kubernetes grid ( t k g) with open i d connect first experience"
+          "name": "Vmware tanzu kubernetes grid ( tkg) with open ID connect first experience"
         }
     }]
 }
@@ -58,7 +58,7 @@ Enter VMware Tanzu Kubernetes Grid (TGK): an &ldquo;Enterprise-ready Kubernetes 
     "name" : "Michael Nelson"
   },
   "headline": "VMware Tanzu Kubernetes Grid (TKG) with OpenID Connect - First Experience",
-  "description" : "Andres and I have been doing quite a bit of feature work in Kubeapps over the past months at VMware and one of the key features that I\x26rsquo;ve been working on personally is enabling Kubeapps users to deploy applications not only on the cluster on which Kubeapps is installed, but to multiple other clusters as well.\nEnter VMware Tanzu Kubernetes Grid (TGK): an \x26ldquo;Enterprise-ready Kubernetes runtime which streamlines operations across multi-cloud infrastructure\x26rdquo;, so naturally I was keen to test out running Kubeapps on TKG and deploying applications to a set of TKG-managed clusters.",
+  "description" : "Andres and I have been doing quite a bit of feature work in Kubeapps over the past months at VMware and one of the key features that I\u0026rsquo;ve been working on personally is enabling Kubeapps users to deploy applications not only on the cluster on which Kubeapps is installed, but to multiple other clusters as well.\nEnter VMware Tanzu Kubernetes Grid (TGK): an \u0026ldquo;Enterprise-ready Kubernetes runtime which streamlines operations across multi-cloud infrastructure\u0026rdquo;, so naturally I was keen to test out running Kubeapps on TKG and deploying applications to a set of TKG-managed clusters.",
   "inLanguage" : "en",
   "wordCount":  2165 ,
   "datePublished" : "2020-09-22T10:01:03",
@@ -94,7 +94,7 @@ Enter VMware Tanzu Kubernetes Grid (TGK): an &ldquo;Enterprise-ready Kubernetes 
   <meta name="twitter:site" content="@michaelanelson" />
   <meta name="twitter:creator" content="@michaelanelson" />
   <link href='https://liveandletlearn.net/img/favicon.ico' rel='icon' type='image/x-icon'/>
-  <meta name="generator" content="Hugo 0.69.2" />
+  <meta name="generator" content="Hugo 0.98.0" />
   <link rel="alternate" href="https://liveandletlearn.net/index.xml" type="application/rss+xml" title="Live and let Learn"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"><link rel="stylesheet" href="https://liveandletlearn.net/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
@@ -236,7 +236,7 @@ Enter VMware Tanzu Kubernetes Grid (TGK): an &ldquo;Enterprise-ready Kubernetes 
                 <span class="post-meta">
   
   
-  <i class="fas fa-calendar"></i>&nbsp;Posted on September 22, 2020
+  <i class="fas fa-calendar"></i>&nbsp;
   
   
   
@@ -276,7 +276,7 @@ running Kubeapps on TKG and deploying applications to a set of TKG-managed clust
 <p>Enter <a href="https://github.com/vrabbi">Scott Rosenberg</a> from a VMware partner company called
 <a href="https://www.terasky.com/">Terasky</a>, who has been doing a lot of helpful early
 testing of the multicluster support in Kubeapps. Scott suggested that it&rsquo;d be
-awesome if <a href="https://github.com/kubeapps/kubeapps/issues/1942">Kubeapps could be installed on the TKG management
+awesome if <a href="https://github.com/vmware-tanzu/kubeapps/issues/1942">Kubeapps could be installed on the TKG management
 cluster as infrastructure</a> while configured
 so that users can only deploy apps to the workload clusters.</p>
 <p>This series of two post details the steps that I took to make that happen with the latest Kubeapps running on a TKG
@@ -314,13 +314,13 @@ Essentially this was just taking a backup copy of my generated TKG config
 before editing the main config file as per the <a href="https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/1.1/vmware-tanzu-kubernetes-grid-11/GUID-tanzu-k8s-clusters-create.html#aws-vpc">excellent documentation</a>:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">cp ~/.tkg/config.yaml ~/.tkg/config-orig.yaml
-vim ~/.tkg/config.yaml
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">cp ~/.tkg/config.yaml ~/.tkg/config-orig.yaml
+</span></span><span class="line"><span class="cl">vim ~/.tkg/config.yaml
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="using-the-tkg-extension-bundle-for-openid-connect-authentication">Using the TKG extension bundle for OpenID Connect authentication</h2>
 <p>One of the nice things about TKG is that VMware provides a bundle of
@@ -355,15 +355,15 @@ AWS</a>. This is quite long and currently quite fiddly - in the future I imagine
 </ul>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nb">export</span> <span class="nv">CLIENT_ID_FROM_GOOGLE</span><span class="o">=</span>whateverValueGoogleGivesYou
-<span class="nb">echo</span> <span class="nv">$CLIENT_ID_FROM_GOOGLE</span> <span class="p">|</span> base64
-<span class="nv">d2hhdGV2ZXJWYWx1ZUdvb2dsZUdpdmVzWW91Cg</span><span class="o">==</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">CLIENT_ID_FROM_GOOGLE</span><span class="o">=</span>whateverValueGoogleGivesYou
+</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="nv">$CLIENT_ID_FROM_GOOGLE</span> <span class="p">|</span> base64
+</span></span><span class="line"><span class="cl"><span class="nv">d2hhdGV2ZXJWYWx1ZUdvb2dsZUdpdmVzWW91Cg</span><span class="o">==</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><ul>
 <li>You will also need to <a href="https://developers.google.com/identity/protocols/oauth2/openid-connect#setredirecturi">set a redirect URL</a> while setting up your credentials. For this you will need to use the hostname of the Dex services loadbalancer as per step 4 and append the path <code>/callback</code> using the <code>https</code> protocol, as this is where Dex is configured by default to receive redirects from the auth provider. For example, <code>https://abc123abc123abc123abc123abc123.us-east-2.elb.amazonaws.com/callback</code>, where <code>abc123abc123abc123abc123abc123.us-east-2.elb.amazonaws.com</code> is the value you obtain in step 4.</li>
@@ -373,7 +373,7 @@ AWS</a>. This is quite long and currently quite fiddly - in the future I imagine
 <p>I was then able to <a href="https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/1.1/vmware-tanzu-kubernetes-grid-11/GUID-manage-instance-deploy-oidc-cluster.html">configure and deploy an authentication-enabled (OIDC-enabled) cluster with TKG</a> with only one small hiccup. When I got to step 5 where you test creating the oidc-enabled cluster, I saw the following error:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -382,28 +382,28 @@ AWS</a>. This is quite long and currently quite fiddly - in the future I imagine
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">$ tkg create cluster my-oidc-cluster --plan<span class="o">=</span>oidc
-Logs of the <span class="nb">command</span> execution can also be found at: /tmp/tkg-20200910T110807050315191.log
-Validating configuration...
-
-Error: : unable to get cluster configuration: unable to get template: failed to <span class="nb">read</span> <span class="s2">&#34;cluster-template-oidc.yaml&#34;</span> from provider<span class="err">&#39;</span>s repository <span class="s2">&#34;infrastructure-aws&#34;</span>: failed to <span class="nb">read</span> file <span class="s2">&#34;/home/homedir/.tkg/providers/infrastructure-aws/v0.5.4/cluster-template-oidc.yaml&#34;</span> from <span class="nb">local</span> release v0.5.4
-
-Detailed log about the failure can be found at: /tmp/tkg-20200910T110807050315191.log
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ tkg create cluster my-oidc-cluster --plan<span class="o">=</span>oidc
+</span></span><span class="line"><span class="cl">Logs of the <span class="nb">command</span> execution can also be found at: /tmp/tkg-20200910T110807050315191.log
+</span></span><span class="line"><span class="cl">Validating configuration...
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Error: : unable to get cluster configuration: unable to get template: failed to <span class="nb">read</span> <span class="s2">&#34;cluster-template-oidc.yaml&#34;</span> from provider<span class="err">&#39;</span>s repository <span class="s2">&#34;infrastructure-aws&#34;</span>: failed to <span class="nb">read</span> file <span class="s2">&#34;/home/homedir/.tkg/providers/infrastructure-aws/v0.5.4/cluster-template-oidc.yaml&#34;</span> from <span class="nb">local</span> release v0.5.4
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Detailed log about the failure can be found at: /tmp/tkg-20200910T110807050315191.log
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>This appears to be because in Step 1, the instruction creates the file as:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">mv tkg-extensions-v1.1.0/authentication/dex/aws/cluster-template-oidc.yaml ~/.tkg/providers/infrastructure-aws/v0.5.3/cluster-template-oidc.yaml
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">mv tkg-extensions-v1.1.0/authentication/dex/aws/cluster-template-oidc.yaml ~/.tkg/providers/infrastructure-aws/v0.5.3/cluster-template-oidc.yaml
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>where as it appears to be needed in the <code>v0.5.4</code> directory instead (I assume a newer version than was available when the docs were created):</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -414,16 +414,16 @@ Detailed log about the failure can be found at: /tmp/tkg-20200910T11080705031519
 </span><span class="lnt">9
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">$ mv ~/.tkg/providers/infrastructure-aws/v0.5.3/cluster-template-oidc.yaml ~/.tkg/providers/infrastructure-aws/v0.5.4/
-
-$ tkg create cluster my-oidc-cluster --plan<span class="o">=</span>oidc
-Logs of the <span class="nb">command</span> execution can also be found at: /tmp/tkg-20200910T110925661328540.log
-Validating configuration...
-Creating workload cluster <span class="s1">&#39;my-oidc-cluster&#39;</span>...
-Waiting <span class="k">for</span> cluster to be initialized...
-...
-<span class="o">(</span>everything worked<span class="o">)</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ mv ~/.tkg/providers/infrastructure-aws/v0.5.3/cluster-template-oidc.yaml ~/.tkg/providers/infrastructure-aws/v0.5.4/
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">$ tkg create cluster my-oidc-cluster --plan<span class="o">=</span>oidc
+</span></span><span class="line"><span class="cl">Logs of the <span class="nb">command</span> execution can also be found at: /tmp/tkg-20200910T110925661328540.log
+</span></span><span class="line"><span class="cl">Validating configuration...
+</span></span><span class="line"><span class="cl">Creating workload cluster <span class="s1">&#39;my-oidc-cluster&#39;</span>...
+</span></span><span class="line"><span class="cl">Waiting <span class="k">for</span> cluster to be initialized...
+</span></span><span class="line"><span class="cl">...
+</span></span><span class="line"><span class="cl"><span class="o">(</span>everything worked<span class="o">)</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>Continue on to configure your <code>kubectl</code> config and install <code>cert-manager</code> and we&rsquo;re ready to add Kubeapps to the management cluster!</p>
 <h3 id="testing-the-oidc-enabled-cluster-with-gangway">Testing the OIDC-enabled cluster with Gangway</h3>
@@ -437,11 +437,11 @@ Waiting <span class="k">for</span> cluster to be initialized...
 <p>Following the instructions to <a href="https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/1.1/vmware-tanzu-kubernetes-grid-11/GUID-manage-instance-gangway-aws.html">Enable Gangway on my OIDC-enabled cluster</a> failed for me at step 3. I was unable to get the hostname of the Gangway service load balancer because a hostname was never appearing in the output of <code>kubectl get svc gangwaysvc -n tanzu-system-auth</code>. When running <code>kubectl describe svc gangwaysvc -n tanzu-system-auth</code> I would see the warning:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">  Warning  SyncLoadBalancerFailed  2s <span class="o">(</span>x8 over 10m<span class="o">)</span>  service-controller  Error syncing load balancer: failed to ensure load balancer: could not find any suitable subnets <span class="k">for</span> creating the ELB
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  Warning  SyncLoadBalancerFailed  2s <span class="o">(</span>x8 over 10m<span class="o">)</span>  service-controller  Error syncing load balancer: failed to ensure load balancer: could not find any suitable subnets <span class="k">for</span> creating the ELB
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>Translation: AWS is unable to find a suitable subnet (of the VPC) within which it can create the Elastic Load Balancers. Why? So as far as I can tell, this is because I had a VPC created automatically when creating my management cluster - which importantly created and tagged a public and private subnet for use by that cluster - but I then updated my config so that subsequent workload clusters would share the VPC with its public and private subnets, without updating the tags for the subnet to indicate that it can be used for my workload cluster.</p>
 <p>To fix this, navigate to the list of subnets for the region you&rsquo;re working in, for example, for us-east-1 you will find the list at <a href="https://console.aws.amazon.com/vpc/home?region=us-east-1#subnets:sort=desc:tag:Name">https://console.aws.amazon.com/vpc/home?region=us-east-1#subnets:sort=desc:tag:Name</a>. In this list you will see a <code>-public</code> and <code>-private</code> subnet prefixed by the name of your management cluster, for example, in my case I see:</p>
@@ -452,11 +452,11 @@ Waiting <span class="k">for</span> cluster to be initialized...
 <p>With the Dex service bounced after updating the config, we can verify the OIDC login is working by following the documentation <a href="https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/1.1/vmware-tanzu-kubernetes-grid-11/GUID-manage-instance-connect-oidc-cluster.html">Access the OIDC-Enabled Cluster with your IDP credentials</a>. Note that currently step 3 assumes you are deploying on vSphere. To get the DNS entry for the Gangway service, you will instead need to:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">kubectl -n tanzu-system-auth get svc
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">kubectl -n tanzu-system-auth get svc
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>and then access that service at <code>https://&lt;Gangway LB DNS&gt;</code></p>
 <p>If everything works as expected then our TKG environment is now correctly configured with Dex on the management cluster as the Identity Provider trusted by the workload clusters, and we&rsquo;re ready to  install Kubeapps on the management cluster!</p>
@@ -464,11 +464,11 @@ Waiting <span class="k">for</span> cluster to be initialized...
 <p>Before we start with the Kubeapps installation, let&rsquo;s create a second OIDC-enabled workload cluster, which is now a one-liner, with:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">tkg create cluster my-second-cluster --plan<span class="o">=</span>oidc
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">tkg create cluster my-second-cluster --plan<span class="o">=</span>oidc
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>The only thing to be careful of here is that you&rsquo;re running this command in the same shell where you <a href="https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/1.1/vmware-tanzu-kubernetes-grid-11/GUID-manage-instance-deploy-oidc-cluster.html">created the first workload cluster</a>. Follow the steps on that page to get the admin credentials, but there&rsquo;s no need to followup with the other tasks (we don&rsquo;t need cert-manager, nor do we need Gangway installed on the cluster - we know the OIDC configuration is correct now).</p>
 <p>We&rsquo;ll re-edit the Dex configuration later with a static client for this second workload cluster.</p>
@@ -516,7 +516,7 @@ Waiting <span class="k">for</span> cluster to be initialized...
           <div class="disqus-comments">
             <div id="disqus_thread"></div>
 <script type="application/javascript">
-    var disqus_config = function () {
+    window.disqus_config = function () {
     
     
     
@@ -605,7 +605,7 @@ Waiting <span class="k">for</span> cluster to be initialized...
         </p>
         
         <p class="credits theme-by text-muted">
-          <a href="https://gohugo.io">Hugo v0.69.2</a> powered &nbsp;&bull;&nbsp; Theme <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a> adapted from <a href="https://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a>
+          <a href="https://gohugo.io">Hugo v0.98.0</a> powered &nbsp;&bull;&nbsp; Theme <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a> adapted from <a href="https://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a>
           
         </p>
       </div>

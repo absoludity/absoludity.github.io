@@ -60,7 +60,7 @@
   "headline": "Kubeapps on Tanzu Kubernetes Grid 1.3",
   "description" : "This is the second post in a series of two post detailing the steps that I took to install Kubeapps running on a TKG 1.3 cluster on AWS configured to allow user authentication via the TKG identity management:\n The first post focuses on the TKG 1.3 setup required to get a workload clusters with identity management (using your chosen identity provider), This followup post details the related Kubeapps installation and configuration on the TKG 1.",
   "inLanguage" : "en",
-  "wordCount":  891 ,
+  "wordCount":  900 ,
   "datePublished" : "2021-04-19T21:39:49",
   "dateModified" : "2021-04-19T21:39:49",
   "image" : "https:\/\/liveandletlearn.net\/img\/avatar-icon.png",
@@ -94,7 +94,7 @@
   <meta name="twitter:site" content="@michaelanelson" />
   <meta name="twitter:creator" content="@michaelanelson" />
   <link href='https://liveandletlearn.net/img/favicon.ico' rel='icon' type='image/x-icon'/>
-  <meta name="generator" content="Hugo 0.69.2" />
+  <meta name="generator" content="Hugo 0.98.0" />
   <link rel="alternate" href="https://liveandletlearn.net/index.xml" type="application/rss+xml" title="Live and let Learn"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"><link rel="stylesheet" href="https://liveandletlearn.net/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
@@ -236,7 +236,7 @@
                 <span class="post-meta">
   
   
-  <i class="fas fa-calendar"></i>&nbsp;Posted on April 19, 2021
+  <i class="fas fa-calendar"></i>&nbsp;
   
   
   
@@ -277,13 +277,13 @@
 <h2 id="configuring-pinniped-to-trust-your-identity-provider-directly">Configuring Pinniped to trust your identity provider directly</h2>
 <h3 id="some-background-about-pinniped-versions">Some background about Pinniped versions</h3>
 <p>First, query your workload cluster to see whether any JWT Authenticators are already defined and you&rsquo;ll find that there is one which is setup to trust tokens issued by the pinniped-supervisor service on your management cluster:</p>
-<pre><code>kubectl get jwtauthenticators -A --kubeconfig /tmp/id_workload_test_kubeconfig
+<pre tabindex="0"><code>kubectl get jwtauthenticators -A --kubeconfig /tmp/id_workload_test_kubeconfig
 
 NAMESPACE            NAME                    ISSUER
 pinniped-concierge   tkg-jwt-authenticator   https://domain-of-pinniped-supervisor-on-mgt-cluster
 </code></pre><p>This is used by pinniped from the <code>kubectl</code> CLI, but it&rsquo;s not (yet) clear to me whether it&rsquo;ll be possible for a web app, such as Kubeapps, to use this issuer as Kubeapps only knows about your client-id and identity provider which issues the JWT token credentials.</p>
 <p>Also, the fact that this existing JWT Authenticator is namespaced (in the <code>pinniped-concierge</code> namespace) shows us that the version of Pinniped running on a TKG 1.3 system is earlier than Pinniped 0.6.0, as <a href="https://github.com/vmware-tanzu/pinniped/releases/tag/v0.6.0">Pinniped 0.6.0 had a backwards incompatible change</a> where JWT Authenticators (along with all Pinniped Concierge APIs) were moved to be cluster-scoped rather than per-namespace. If you explicitly check the deployment, you&rsquo;ll see that it is in fact v0.4.1 of Pinniped:</p>
-<pre><code>    image: projects.registry.vmware.com/tkg/pinniped:v0.4.1_vmware.1
+<pre tabindex="0"><code>    image: projects.registry.vmware.com/tkg/pinniped:v0.4.1_vmware.1
 </code></pre><p>This will have implications for the version of Kubeapps we can use since Kubeapps had to update to support the backwards incompatible change of pinniped 0.6.0 (in v2.3.0 of Kubeapps released as part of the Kubeapps chart v5.4.0), so we&rsquo;ll need to use the prior version.</p>
 <h3 id="create-an-oauth2-client-id-for-kubeapps-to-use">Create an OAuth2 client-id for Kubeapps to use</h3>
 <p>We want to setup Kubeapps with its own OAuth2 client-id, rather than re-using the client-id intended for the kubectl CLI. Do this by going back to your identity provider that you used when setting up your <a href="/post/kubeapps-on-tanzu-kubernetes-grid-13/">TKG 1.3 cluster with identity management</a> and creating a new client-id, noting the id and secret. Don&rsquo;t worry about specifying the callback url just yet, you can leave it blank or enter a dummy one if required, we&rsquo;ll come back and fill this in after installing Kubeapps.</p>
@@ -291,7 +291,7 @@ pinniped-concierge   tkg-jwt-authenticator   https://domain-of-pinniped-supervis
 <p>Create a new <code>kubeapps-jwt-authentication</code> JWT Authenticator to tell Pinniped that your workload cluster trusts tokens issued by your identity provider. For me this is a JWT Authenticator with google as the issuer since I&rsquo;m using google for authentication:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -304,26 +304,26 @@ pinniped-concierge   tkg-jwt-authenticator   https://domain-of-pinniped-supervis
 </span><span class="lnt">11
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="k">apiVersion</span><span class="p">:</span><span class="w"> </span>authentication.concierge.pinniped.dev/v1alpha1<span class="w">
-</span><span class="w"></span><span class="k">kind</span><span class="p">:</span><span class="w"> </span>JWTAuthenticator<span class="w">
-</span><span class="w"></span><span class="k">metadata</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>kubeapps-jwt-authenticator<span class="w">
-</span><span class="w">  </span><span class="k">namespace</span><span class="p">:</span><span class="w"> </span>pinniped-concierge<span class="w">
-</span><span class="w"></span><span class="k">spec</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="k">audience</span><span class="p">:</span><span class="w"> </span>your<span class="w"> </span>client<span class="w"> </span>id<span class="w">
-</span><span class="w">  </span><span class="k">claims</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="k">groups</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;groups&#34;</span><span class="w">
-</span><span class="w">    </span><span class="k">username</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;email&#34;</span><span class="w">
-</span><span class="w">  </span><span class="k">issuer</span><span class="p">:</span><span class="w"> </span>https<span class="p">:</span>//accounts.google.com<span class="w">
-</span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">authentication.concierge.pinniped.dev/v1alpha1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">JWTAuthenticator</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">kubeapps-jwt-authenticator</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l">pinniped-concierge</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">audience</span><span class="p">:</span><span class="w"> </span><span class="l">your client id</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">claims</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">groups</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;groups&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">username</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;email&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">issuer</span><span class="p">:</span><span class="w"> </span><span class="l">https://accounts.google.com</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>Apply the JWTAuthenticator on your workload cluster with:</p>
-<pre><code>kubectl apply -f ~/path/to/your/kubeapps-jwt-authenicator.yaml
+<pre tabindex="0"><code>kubectl apply -f ~/path/to/your/kubeapps-jwt-authenicator.yaml
 </code></pre><h3 id="create-the-configuration-values-for-kubeapps-and-install">Create the configuration values for Kubeapps and install</h3>
 <p>As mentioned, because TKG 1.3 is using an older version of Pinniped, we also need to use an older version of Kubeapps. Additionally, because of an issue we had in our Kubeapps chart, we need to specify the exact image version of our pinniped-proxy to use, as shown below:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -355,47 +355,47 @@ pinniped-concierge   tkg-jwt-authenticator   https://domain-of-pinniped-supervis
 </span><span class="lnt">30
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="k">frontend</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="k">service</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="k">type</span><span class="p">:</span><span class="w"> </span>LoadBalancer<span class="w">
-</span><span class="w">    </span><span class="k">port</span><span class="p">:</span><span class="w"> </span><span class="m">443</span><span class="w">
-</span><span class="w">    </span><span class="k">annotations</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span><span class="k">service.beta.kubernetes.io/aws-load-balancer-backend-protocol</span><span class="p">:</span><span class="w"> </span>http<span class="w">
-</span><span class="w">      </span><span class="c"># Update the cert arn below once added to aws.</span><span class="w">
-</span><span class="w">      </span><span class="c"># service.beta.kubernetes.io/aws-load-balancer-ssl-cert: &lt;aws-arn-for-your-ssl-cert&gt;</span><span class="w">
-</span><span class="w"></span><span class="k">authProxy</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="k">enabled</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
-</span><span class="w">  </span><span class="k">provider</span><span class="p">:</span><span class="w"> </span>oidc<span class="w">
-</span><span class="w">  </span><span class="k">clientID</span><span class="p">:</span><span class="w"> </span>your<span class="w"> </span>client<span class="w"> </span>id<span class="w">
-</span><span class="w">  </span><span class="k">clientSecret</span><span class="p">:</span><span class="w"> </span>your<span class="w"> </span>client<span class="w"> </span>secret<span class="w">
-</span><span class="w">  </span><span class="c"># Create a random cookie secret with:</span><span class="w">
-</span><span class="w">  </span><span class="c"># python -c &#39;import os,base64; print(base64.urlsafe_b64encode(os.urandom(16)).decode())&#39;</span><span class="w">
-</span><span class="w">  </span><span class="k">cookieSecret</span><span class="p">:</span><span class="w"> </span>your<span class="w"> </span>cookie<span class="w"> </span>secret<span class="w">
-</span><span class="w">  </span><span class="k">additionalFlags</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span>- --oidc-issuer-url=https<span class="p">:</span>//accounts.google.com<span class="w"> </span><span class="c"># or your issuer URL</span><span class="w">
-</span><span class="w">    </span>- --scope=openid<span class="w"> </span>email<span class="w">
-</span><span class="w"></span><span class="k">pinnipedProxy</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="k">enabled</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
-</span><span class="w">  </span><span class="k">defaultAuthenticatorName</span><span class="p">:</span><span class="w"> </span>kubeapps-jwt-authenticator<span class="w">
-</span><span class="w">  </span><span class="k">image</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="k">repository</span><span class="p">:</span><span class="w"> </span>bitnami/kubeapps-pinniped-proxy<span class="w">
-</span><span class="w">    </span><span class="c"># Explicitly request the version of pinniped-proxy which supports the pre 0.6.0 version of pinniped.</span><span class="w">
-</span><span class="w">    </span><span class="k">tag</span><span class="p">:</span><span class="w"> </span><span class="m">2.2.1</span>-debian<span class="m">-10</span>-r22<span class="w">
-</span><span class="w"></span><span class="k">clusters</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>default<span class="w">
-</span><span class="w">    </span><span class="k">pinnipedConfig</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span><span class="k">enable</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
-</span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">frontend</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">service</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l">LoadBalancer</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="m">443</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">annotations</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">service.beta.kubernetes.io/aws-load-balancer-backend-protocol</span><span class="p">:</span><span class="w"> </span><span class="l">http</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="c"># Update the cert arn below once added to aws.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="c"># service.beta.kubernetes.io/aws-load-balancer-ssl-cert: &lt;aws-arn-for-your-ssl-cert&gt;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">authProxy</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">provider</span><span class="p">:</span><span class="w"> </span><span class="l">oidc</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">clientID</span><span class="p">:</span><span class="w"> </span><span class="l">your client id</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">clientSecret</span><span class="p">:</span><span class="w"> </span><span class="l">your client secret</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="c"># Create a random cookie secret with:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="c"># python -c &#39;import os,base64; print(base64.urlsafe_b64encode(os.urandom(16)).decode())&#39;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">cookieSecret</span><span class="p">:</span><span class="w"> </span><span class="l">your cookie secret</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">additionalFlags</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span>- --<span class="l">oidc-issuer-url=https://accounts.google.com</span><span class="w"> </span><span class="c"># or your issuer URL</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span>- --<span class="l">scope=openid email</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">pinnipedProxy</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">defaultAuthenticatorName</span><span class="p">:</span><span class="w"> </span><span class="l">kubeapps-jwt-authenticator</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">image</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">repository</span><span class="p">:</span><span class="w"> </span><span class="l">bitnami/kubeapps-pinniped-proxy</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c"># Explicitly request the version of pinniped-proxy which supports the pre 0.6.0 version of pinniped.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">tag</span><span class="p">:</span><span class="w"> </span><span class="m">2.2.1</span>-<span class="l">debian-10-r22</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">clusters</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">default</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">pinnipedConfig</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">enable</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>With this configuration, the specific version of Kubeapps can be installed with:</p>
-<pre><code>kubectl create ns kubeapps
+<pre tabindex="0"><code>kubectl create ns kubeapps
 helm upgrade --install kubeapps bitnami/kubeapps --version=5.3.4 --namespace kubeapps --values ~/path/to/your/above/values.yaml
 </code></pre><p>Note that I&rsquo;ve just used a <code>LoadBalancer</code> service type for the Kubeapps frontend above as I&rsquo;m happy to use the default AWS load balancer DNS address for this test environment, but for anything other than a test environment you&rsquo;d be best using Ingress and a cert-manager-issued TLS cert. To use a <code>LoadBalancer</code> like this in AWS as a TLS endpoint, I needed to do a couple of extra steps in AWS which I&rsquo;ll happily add to an appendix here as soon as someone asks :)</p>
 <h3 id="last-steps-to-enable-your-user-access">Last steps to enable your user access</h3>
 <p>Once you know the address that you&rsquo;ll be using for your test Kubeapps setup, you&rsquo;ll need to go back and update your OAuth2 client details in your identity provider, adding your callback URL as <code>https://your.address.example.com/oauth2/callback</code>.</p>
 <p>You will also need to ensure that the user with which you will be logging in has appropriate RBAC in the cluster to be able to query the API server.</p>
-<pre><code>kubectl create clusterrolebinding id-workload-test-rb --clusterrole cluster-admin --user your.user@example.com
-</code></pre><p>With that, you should be able to login to Kubeapps on your TKG 1.3 workload cluster using that user and deploy some apps! Remember, if you have any issues, please take a look at the <a href="https://github.com/kubeapps/kubeapps/blob/master/docs/user/using-an-OIDC-provider.md#debugging-auth-failures-when-using-oidc">Debugging auth failures when using OIDC</a> section of the documentation and if you&rsquo;re stuck, drop in on the <a href="https://kubernetes.slack.com/archives/C9D3TSUG4">#kubeapps channel on Kubernetes slack</a>.</p>
+<pre tabindex="0"><code>kubectl create clusterrolebinding id-workload-test-rb --clusterrole cluster-admin --user your.user@example.com
+</code></pre><p>With that, you should be able to login to Kubeapps on your TKG 1.3 workload cluster using that user and deploy some apps! Remember, if you have any issues, please take a look at the <a href="https://github.com/vmware-tanzu/kubeapps/blob/master/docs/user/using-an-OIDC-provider.md#debugging-auth-failures-when-using-oidc">Debugging auth failures when using OIDC</a> section of the documentation and if you&rsquo;re stuck, drop in on the <a href="https://kubernetes.slack.com/archives/C9D3TSUG4">#kubeapps channel on Kubernetes slack</a>.</p>
 
 
         
@@ -439,7 +439,7 @@ helm upgrade --install kubeapps bitnami/kubeapps --version=5.3.4 --namespace kub
           <div class="disqus-comments">
             <div id="disqus_thread"></div>
 <script type="application/javascript">
-    var disqus_config = function () {
+    window.disqus_config = function () {
     
     
     
@@ -528,7 +528,7 @@ helm upgrade --install kubeapps bitnami/kubeapps --version=5.3.4 --namespace kub
         </p>
         
         <p class="credits theme-by text-muted">
-          <a href="https://gohugo.io">Hugo v0.69.2</a> powered &nbsp;&bull;&nbsp; Theme <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a> adapted from <a href="https://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a>
+          <a href="https://gohugo.io">Hugo v0.98.0</a> powered &nbsp;&bull;&nbsp; Theme <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a> adapted from <a href="https://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a>
           
         </p>
       </div>

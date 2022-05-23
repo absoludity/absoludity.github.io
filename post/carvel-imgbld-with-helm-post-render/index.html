@@ -59,7 +59,7 @@ As an example of that composability, I found I can deploy a helm chart using a s
     "name" : "Michael Nelson"
   },
   "headline": "Carvel kbld With Helm Post Render",
-  "description" : "For the past couple of years I\x26rsquo;ve been working on the Kubeapps project, which until recently has been a UI dashboard for the Helm project - providing a simple, web-based UI to deploy applications on Kubernetes.\nI\x26rsquo;m currently looking at generalising Kubeapps to support other Kubernetes packages formats, including Carvel from VMware of course. So I set out today to start learning more about Carvel, which in contrast to more monolithic tools like Helm, provides \x26ldquo;a set of single-purpose, composable tools that aid in your application building, configuration and deployment to Kubernetes\x26rdquo;.\nAs an example of that composability, I found I can deploy a helm chart using a set of immutable images by utilizing Helm\x26rsquo;s new-ish support for post rendering of a chart. Here\x26rsquo;s how\x26hellip;\n",
+  "description" : "For the past couple of years I\u0026rsquo;ve been working on the Kubeapps project, which until recently has been a UI dashboard for the Helm project - providing a simple, web-based UI to deploy applications on Kubernetes.\nI\u0026rsquo;m currently looking at generalising Kubeapps to support other Kubernetes packages formats, including Carvel from VMware of course. So I set out today to start learning more about Carvel, which in contrast to more monolithic tools like Helm, provides \u0026ldquo;a set of single-purpose, composable tools that aid in your application building, configuration and deployment to Kubernetes\u0026rdquo;.\nAs an example of that composability, I found I can deploy a helm chart using a set of immutable images by utilizing Helm\u0026rsquo;s new-ish support for post rendering of a chart. Here\u0026rsquo;s how\u0026hellip;\n",
   "inLanguage" : "en",
   "wordCount":  682 ,
   "datePublished" : "2021-02-02T15:24:29",
@@ -96,7 +96,7 @@ As an example of that composability, I found I can deploy a helm chart using a s
   <meta name="twitter:site" content="@michaelanelson" />
   <meta name="twitter:creator" content="@michaelanelson" />
   <link href='https://liveandletlearn.net/img/favicon.ico' rel='icon' type='image/x-icon'/>
-  <meta name="generator" content="Hugo 0.69.2" />
+  <meta name="generator" content="Hugo 0.98.0" />
   <link rel="alternate" href="https://liveandletlearn.net/index.xml" type="application/rss+xml" title="Live and let Learn"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"><link rel="stylesheet" href="https://liveandletlearn.net/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
@@ -238,7 +238,7 @@ As an example of that composability, I found I can deploy a helm chart using a s
                 <span class="post-meta">
   
   
-  <i class="fas fa-calendar"></i>&nbsp;Posted on February 2, 2021
+  <i class="fas fa-calendar"></i>&nbsp;
   
   
   
@@ -272,7 +272,7 @@ As an example of that composability, I found I can deploy a helm chart using a s
 <p>Create a temporary directory to work in and pull the latest Kubeapps Helm chart to use for the demonstration.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -281,20 +281,20 @@ As an example of that composability, I found I can deploy a helm chart using a s
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">$ mkdir /tmp/imgbld-helm-test <span class="o">&amp;&amp;</span> <span class="nb">cd</span> /tmp/imgbld-helm-test
-$ helm pull bitnami/kubeapps
-$ ls -la
-total <span class="m">576</span>
-drwxrwxr-x  <span class="m">2</span> michael michael   <span class="m">4096</span> Feb  <span class="m">2</span> 15:35 .
-drwxrwxrwt <span class="m">29</span> root    root    <span class="m">507904</span> Feb  <span class="m">2</span> 15:36 ..
--rw-r--r--  <span class="m">1</span> michael michael  <span class="m">73071</span> Feb  <span class="m">2</span> 15:35 kubeapps-5.0.0.tgz
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ mkdir /tmp/imgbld-helm-test <span class="o">&amp;&amp;</span> <span class="nb">cd</span> /tmp/imgbld-helm-test
+</span></span><span class="line"><span class="cl">$ helm pull bitnami/kubeapps
+</span></span><span class="line"><span class="cl">$ ls -la
+</span></span><span class="line"><span class="cl">total <span class="m">576</span>
+</span></span><span class="line"><span class="cl">drwxrwxr-x  <span class="m">2</span> michael michael   <span class="m">4096</span> Feb  <span class="m">2</span> 15:35 .
+</span></span><span class="line"><span class="cl">drwxrwxrwt <span class="m">29</span> root    root    <span class="m">507904</span> Feb  <span class="m">2</span> 15:36 ..
+</span></span><span class="line"><span class="cl">-rw-r--r--  <span class="m">1</span> michael michael  <span class="m">73071</span> Feb  <span class="m">2</span> 15:35 kubeapps-5.0.0.tgz
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="generate-an-image-lock-file-with-kbld">Generate an image lock file with kbld</h2>
 <p>The <a href="https://carvel.dev/kbld/">kbld</a> tool is one of the Carvel set which finds all image references in your Kubernetes config and produces an image lock file so that the mutable tags often found in Kubernetes configs (especially those produced by Helm charts) can be switched for immutable references. To do this, we&rsquo;ll use the template output of the helm chart and pass that to <code>kbld</code> with the arg to create an image lock file:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -311,28 +311,28 @@ drwxrwxrwt <span class="m">29</span> root    root    <span class="m">507904</spa
 </span><span class="lnt">15
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">$ helm template ./kubeapps-5.0.0.tgz <span class="p">|</span> kbld -f - --imgpkg-lock-output ./kubeapps-5.0.0-images.yml
-...
-Succeeded
-
-$ head ./kubeapps-5.0.0-images.yml
----
-apiVersion: imgpkg.carvel.dev/v1alpha1
-images:
-- annotations:
-    kbld.carvel.dev/id: docker.io/bitnami/kubeapps-apprepository-controller:2.0.1-scratch-r0
-  image: index.docker.io/bitnami/kubeapps-apprepository-controller@sha256:7e66a2432ca21fd6acb895b7fa71a49bc2626333342c2187f54c4a9b672e7905
-- annotations:
-    kbld.carvel.dev/id: docker.io/bitnami/kubeapps-asset-syncer:2.0.1-scratch-r0
-  image: index.docker.io/bitnami/kubeapps-asset-syncer@sha256:358ad22ef9d5fdbd1c3e34c0e8f61b153ed4d796c83ca3689799f7f604cd74db
-- annotations:
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ helm template ./kubeapps-5.0.0.tgz <span class="p">|</span> kbld -f - --imgpkg-lock-output ./kubeapps-5.0.0-images.yml
+</span></span><span class="line"><span class="cl">...
+</span></span><span class="line"><span class="cl">Succeeded
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">$ head ./kubeapps-5.0.0-images.yml
+</span></span><span class="line"><span class="cl">---
+</span></span><span class="line"><span class="cl">apiVersion: imgpkg.carvel.dev/v1alpha1
+</span></span><span class="line"><span class="cl">images:
+</span></span><span class="line"><span class="cl">- annotations:
+</span></span><span class="line"><span class="cl">    kbld.carvel.dev/id: docker.io/bitnami/kubeapps-apprepository-controller:2.0.1-scratch-r0
+</span></span><span class="line"><span class="cl">  image: index.docker.io/bitnami/kubeapps-apprepository-controller@sha256:7e66a2432ca21fd6acb895b7fa71a49bc2626333342c2187f54c4a9b672e7905
+</span></span><span class="line"><span class="cl">- annotations:
+</span></span><span class="line"><span class="cl">    kbld.carvel.dev/id: docker.io/bitnami/kubeapps-asset-syncer:2.0.1-scratch-r0
+</span></span><span class="line"><span class="cl">  image: index.docker.io/bitnami/kubeapps-asset-syncer@sha256:358ad22ef9d5fdbd1c3e34c0e8f61b153ed4d796c83ca3689799f7f604cd74db
+</span></span><span class="line"><span class="cl">- annotations:
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>Note that because Helm charts contain conditionals which can potentially include other services, you may need to run the above helm command with specific options to get all the images for your chart (or manually add other references to the resulting image lock file).</p>
 <p>I also then manually edited the image lockfile so that I can test whether I can use the lock file to switch to arbitrary images of my choice, by setting one of the references to a non-existent docker registry <code>doesnt.exist.example.com</code>:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -345,55 +345,55 @@ images:
 </span><span class="lnt">11
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-yaml" data-lang="yaml">---<span class="w">
-</span><span class="w"></span><span class="k">apiVersion</span><span class="p">:</span><span class="w"> </span>imgpkg.carvel.dev/v1alpha1<span class="w">
-</span><span class="w"></span><span class="k">images</span><span class="p">:</span><span class="w">
-</span><span class="w"></span>- <span class="k">annotations</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="k">kbld.carvel.dev/id</span><span class="p">:</span><span class="w"> </span>docker.io/bitnami/kubeapps-apprepository-controller<span class="p">:</span><span class="m">2.0.1</span>-scratch-r0<span class="w">
-</span><span class="w">  </span><span class="k">image</span><span class="p">:</span><span class="w"> </span>doesnt.exist.example.com/bitnami/kubeapps-apprepository-controller@sha256<span class="p">:</span>7e66a2432ca21fd6acb895b7fa71a49bc2626333342c2187f54c4a9b672e7905<span class="w">
-</span><span class="w"></span>- <span class="k">annotations</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="k">kbld.carvel.dev/id</span><span class="p">:</span><span class="w"> </span>docker.io/bitnami/kubeapps-asset-syncer<span class="p">:</span><span class="m">2.0.1</span>-scratch-r0<span class="w">
-</span><span class="w">  </span><span class="k">image</span><span class="p">:</span><span class="w"> </span>index.docker.io/bitnami/kubeapps-asset-syncer@sha256<span class="p">:</span>358ad22ef9d5fdbd1c3e34c0e8f61b153ed4d796c83ca3689799f7f604cd74db<span class="w">
-</span><span class="w"></span>- <span class="k">annotations</span><span class="p">:</span><span class="w">
-</span><span class="w"></span>...<span class="w">
-</span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nn">---</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">imgpkg.carvel.dev/v1alpha1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">images</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span>- <span class="nt">annotations</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">kbld.carvel.dev/id</span><span class="p">:</span><span class="w"> </span><span class="l">docker.io/bitnami/kubeapps-apprepository-controller:2.0.1-scratch-r0</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l">doesnt.exist.example.com/bitnami/kubeapps-apprepository-controller@sha256:7e66a2432ca21fd6acb895b7fa71a49bc2626333342c2187f54c4a9b672e7905</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span>- <span class="nt">annotations</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">kbld.carvel.dev/id</span><span class="p">:</span><span class="w"> </span><span class="l">docker.io/bitnami/kubeapps-asset-syncer:2.0.1-scratch-r0</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l">index.docker.io/bitnami/kubeapps-asset-syncer@sha256:358ad22ef9d5fdbd1c3e34c0e8f61b153ed4d796c83ca3689799f7f604cd74db</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span>- <span class="nt">annotations</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nn">...</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="create-a-wrapper-for-kbld-to-be-used-by-helm">Create a wrapper for kbld to be used by Helm</h2>
 <p><a href="https://helm.sh/docs/topics/advanced/#post-rendering">Helm&rsquo;s support for a post-rendering tool</a> requires a single command that takes the templated config as standard input and returns the templated config to standard output. To ensure we can pass <code>kbld</code> as a command as the post-renderer that does this, as well as also includes the image lock file images, I created the following tiny wrapper and made it executable:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">$ cat ./kbld-stdin
-<span class="c1">#!/usr/bin/bash</span>
-kbld -f ./kubeapps-5.0.0-images.yml -f -
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ cat ./kbld-stdin
+</span></span><span class="line"><span class="cl"><span class="c1">#!/usr/bin/bash</span>
+</span></span><span class="line"><span class="cl">kbld -f ./kubeapps-5.0.0-images.yml -f -
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="deploy-the-chart-via-kbld">Deploy the chart via <code>kbld</code></h2>
 <p>With that setup, we&rsquo;re ready to go! I can deploy my chart using <code>kbld</code> as a post-renderer to switch in the images from my image lock file:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">$ helm install kubeapps ./kubeapps-5.0.0.tgz --namespace kubeapps --post-renderer ./kbld-stdin
-...
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ helm install kubeapps ./kubeapps-5.0.0.tgz --namespace kubeapps --post-renderer ./kbld-stdin
+</span></span><span class="line"><span class="cl">...
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>I can then verify that the deployment included the correct images from my lockfile:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">$ kubectl -n kubeapps get deployment kubeapps-internal-apprepository-controller -o <span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.spec.template.spec.containers[].image}&#39;</span>
-doesnt.exist.example.com/bitnami/kubeapps-apprepository-controller@sha256:7e66a2432ca21fd6acb895b7fa71a49bc2626333342c2187f54c4a9b672e7905
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ kubectl -n kubeapps get deployment kubeapps-internal-apprepository-controller -o <span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.spec.template.spec.containers[].image}&#39;</span>
+</span></span><span class="line"><span class="cl">doesnt.exist.example.com/bitnami/kubeapps-apprepository-controller@sha256:7e66a2432ca21fd6acb895b7fa71a49bc2626333342c2187f54c4a9b672e7905
+</span></span></code></pre></td></tr></table>
 </div>
 </div><h2 id="implications">Implications</h2>
 <p>This is pretty neat because it means not only can I deploy my Helm chart locally with a specific set of immutable images, but also that:</p>
@@ -443,7 +443,7 @@ doesnt.exist.example.com/bitnami/kubeapps-apprepository-controller@sha256:7e66a2
           <div class="disqus-comments">
             <div id="disqus_thread"></div>
 <script type="application/javascript">
-    var disqus_config = function () {
+    window.disqus_config = function () {
     
     
     
@@ -532,7 +532,7 @@ doesnt.exist.example.com/bitnami/kubeapps-apprepository-controller@sha256:7e66a2
         </p>
         
         <p class="credits theme-by text-muted">
-          <a href="https://gohugo.io">Hugo v0.69.2</a> powered &nbsp;&bull;&nbsp; Theme <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a> adapted from <a href="https://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a>
+          <a href="https://gohugo.io">Hugo v0.98.0</a> powered &nbsp;&bull;&nbsp; Theme <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a> adapted from <a href="https://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a>
           
         </p>
       </div>

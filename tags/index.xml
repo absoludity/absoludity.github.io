@@ -8,15 +8,20 @@
     <language>en-us</language>
     <managingEditor>absoludity&#43;lll@gmail.com (Michael Nelson)</managingEditor>
     <webMaster>absoludity&#43;lll@gmail.com (Michael Nelson)</webMaster>
-    <lastBuildDate>Wed, 16 Feb 2022 10:22:30 +1100</lastBuildDate>
-    
-	<atom:link href="https://liveandletlearn.net/tags/index.xml" rel="self" type="application/rss+xml" />
-    
+    <lastBuildDate>Fri, 20 May 2022 15:38:13 +1000</lastBuildDate><atom:link href="https://liveandletlearn.net/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>golang</title>
+      <link>https://liveandletlearn.net/tags/golang/</link>
+      <pubDate>Fri, 20 May 2022 15:38:13 +1000</pubDate>
+      <author>absoludity&#43;lll@gmail.com (Michael Nelson)</author>
+      <guid>https://liveandletlearn.net/tags/golang/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>kubeapps</title>
       <link>https://liveandletlearn.net/tags/kubeapps/</link>
-      <pubDate>Wed, 16 Feb 2022 10:22:30 +1100</pubDate>
+      <pubDate>Fri, 20 May 2022 15:38:13 +1000</pubDate>
       <author>absoludity&#43;lll@gmail.com (Michael Nelson)</author>
       <guid>https://liveandletlearn.net/tags/kubeapps/</guid>
       <description></description>
@@ -25,7 +30,7 @@
     <item>
       <title>vmware</title>
       <link>https://liveandletlearn.net/tags/vmware/</link>
-      <pubDate>Wed, 16 Feb 2022 10:22:30 +1100</pubDate>
+      <pubDate>Fri, 20 May 2022 15:38:13 +1000</pubDate>
       <author>absoludity&#43;lll@gmail.com (Michael Nelson)</author>
       <guid>https://liveandletlearn.net/tags/vmware/</guid>
       <description></description>

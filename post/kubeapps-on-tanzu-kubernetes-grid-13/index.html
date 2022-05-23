@@ -58,7 +58,7 @@ Recently TKG 1.3 was released and the identity management support in TKG has cha
     "name" : "Michael Nelson"
   },
   "headline": "Tanzu Kubernetes Grid 1.3 with Identity Management",
-  "description" : "Way back in 2020 I\x26rsquo;d detailed how I\x26rsquo;d setup a Tanzu Kubernetes Grid 1.1 management cluster with OpenID Connect support (for single sign-on) before installing Kubeapps with single sign-on on that management cluster.\nRecently TKG 1.3 was released and the identity management support in TKG has changed significantly, so it\x26rsquo;s time to see what\x26rsquo;s different when setting up a TKG cluster with identity management as well as how we can run Kubeapps on TKG 1.",
+  "description" : "Way back in 2020 I\u0026rsquo;d detailed how I\u0026rsquo;d setup a Tanzu Kubernetes Grid 1.1 management cluster with OpenID Connect support (for single sign-on) before installing Kubeapps with single sign-on on that management cluster.\nRecently TKG 1.3 was released and the identity management support in TKG has changed significantly, so it\u0026rsquo;s time to see what\u0026rsquo;s different when setting up a TKG cluster with identity management as well as how we can run Kubeapps on TKG 1.",
   "inLanguage" : "en",
   "wordCount":  1513 ,
   "datePublished" : "2021-04-19T06:42:43",
@@ -94,7 +94,7 @@ Recently TKG 1.3 was released and the identity management support in TKG has cha
   <meta name="twitter:site" content="@michaelanelson" />
   <meta name="twitter:creator" content="@michaelanelson" />
   <link href='https://liveandletlearn.net/img/favicon.ico' rel='icon' type='image/x-icon'/>
-  <meta name="generator" content="Hugo 0.69.2" />
+  <meta name="generator" content="Hugo 0.98.0" />
   <link rel="alternate" href="https://liveandletlearn.net/index.xml" type="application/rss+xml" title="Live and let Learn"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"><link rel="stylesheet" href="https://liveandletlearn.net/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
@@ -236,7 +236,7 @@ Recently TKG 1.3 was released and the identity management support in TKG has cha
                 <span class="post-meta">
   
   
-  <i class="fas fa-calendar"></i>&nbsp;Posted on April 19, 2021
+  <i class="fas fa-calendar"></i>&nbsp;
   
   
   
@@ -281,7 +281,7 @@ cluster on AWS configured to allow users to access via the configured identity m
 <p>I initially had errors when trying to create a management cluster on AWS, both via the <code>--ui</code> as well as via the console. It turned out that even though I&rsquo;d used the ui installer and selected the &ldquo;Automate creation of AWS CloudFormation stack&rdquo; checkbox, the required profiles still did not exist, so my (later) console-based install attempts would fail with:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -297,39 +297,39 @@ cluster on AWS configured to allow users to access via the configured identity m
 </span><span class="lnt">14
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="o">[</span>cluster control plane is still being initialized, cluster infrastructure is still being provisioned<span class="o">]</span>, retrying
-cluster creation failed, reason:<span class="s1">&#39;InstanceProvisionFailed @ Machine/kubeapps-tkg-13-2-test-control-plane-x2sw2&#39;</span>, message:<span class="s1">&#39;1 of 2 completed&#39;</span>
-
-
-Failure <span class="k">while</span> deploying management cluster, Here are some steps to investigate the cause:
-
-Debug:
-    kubectl get po,deploy,cluster,kubeadmcontrolplane,machine,machinedeployment -A --kubeconfig /home/michael/.kube-tkg/tmp/config_RaAxrTtO
-    kubectl logs deployment.apps/&lt;deployment-name&gt; -n &lt;deployment-namespace&gt; manager --kubeconfig /home/michael/.kube-tkg/tmp/config_RaAxrTtO
-
-To clean up the resources created by the management cluster:
-          tanzu management-cluster delete
-Error: unable to <span class="nb">set</span> up management cluster: unable to <span class="nb">wait</span> <span class="k">for</span> cluster and get the cluster kubeconfig: error waiting <span class="k">for</span> cluster to be provisioned <span class="o">(</span>this may take a
- few minutes<span class="o">)</span>: cluster creation failed, reason:<span class="s1">&#39;InstanceProvisionFailed @ Machine/kubeapps-tkg-13-2-test-control-plane-x2sw2&#39;</span>, message:<span class="s1">&#39;1 of 2 completed&#39;</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="o">[</span>cluster control plane is still being initialized, cluster infrastructure is still being provisioned<span class="o">]</span>, retrying
+</span></span><span class="line"><span class="cl">cluster creation failed, reason:<span class="s1">&#39;InstanceProvisionFailed @ Machine/kubeapps-tkg-13-2-test-control-plane-x2sw2&#39;</span>, message:<span class="s1">&#39;1 of 2 completed&#39;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Failure <span class="k">while</span> deploying management cluster, Here are some steps to investigate the cause:
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Debug:
+</span></span><span class="line"><span class="cl">    kubectl get po,deploy,cluster,kubeadmcontrolplane,machine,machinedeployment -A --kubeconfig /home/michael/.kube-tkg/tmp/config_RaAxrTtO
+</span></span><span class="line"><span class="cl">    kubectl logs deployment.apps/&lt;deployment-name&gt; -n &lt;deployment-namespace&gt; manager --kubeconfig /home/michael/.kube-tkg/tmp/config_RaAxrTtO
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">To clean up the resources created by the management cluster:
+</span></span><span class="line"><span class="cl">          tanzu management-cluster delete
+</span></span><span class="line"><span class="cl">Error: unable to <span class="nb">set</span> up management cluster: unable to <span class="nb">wait</span> <span class="k">for</span> cluster and get the cluster kubeconfig: error waiting <span class="k">for</span> cluster to be provisioned <span class="o">(</span>this may take a
+</span></span><span class="line"><span class="cl"> few minutes<span class="o">)</span>: cluster creation failed, reason:<span class="s1">&#39;InstanceProvisionFailed @ Machine/kubeapps-tkg-13-2-test-control-plane-x2sw2&#39;</span>, message:<span class="s1">&#39;1 of 2 completed&#39;</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>Checking the logs as suggested indicated that the expected AWS InstanceProfiles didn&rsquo;t exist:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">kubectl logs deployment.apps/capa-controller-manager -n capa-system manager --kubeconfig /home/michael/.kube-tkg/tmp/config_RaAxrTtO
-...
-E0414 04:01:43.434245       <span class="m">1</span> controller.go:257<span class="o">]</span> controller-runtime/controller <span class="s2">&#34;msg&#34;</span><span class="o">=</span><span class="s2">&#34;Reconciler error&#34;</span> <span class="s2">&#34;error&#34;</span><span class="o">=</span><span class="s2">&#34;failed to create AWSMachine instance: failed to run instance: InvalidParameterValue: Value (control-plane.tkg.cloud.vmware.com) for parameter iamInstanceProfile.name is invalid. Invalid IAM Instance Profile name\n\tstatus code: 400, request id: ff25f867-8d16-49ef-bb9e-cc745ecd3b0c&#34;</span> <span class="s2">&#34;controller&#34;</span><span class="o">=</span><span class="s2">&#34;awsmachine&#34;</span> <span class="s2">&#34;name&#34;</span><span class="o">=</span><span class="s2">&#34;kubeapps-tkg-13-2-test-control-plane-drhmh&#34;</span> <span class="s2">&#34;namespace&#34;</span><span class="o">=</span><span class="s2">&#34;tkg-system&#34;</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">kubectl logs deployment.apps/capa-controller-manager -n capa-system manager --kubeconfig /home/michael/.kube-tkg/tmp/config_RaAxrTtO
+</span></span><span class="line"><span class="cl">...
+</span></span><span class="line"><span class="cl">E0414 04:01:43.434245       <span class="m">1</span> controller.go:257<span class="o">]</span> controller-runtime/controller <span class="s2">&#34;msg&#34;</span><span class="o">=</span><span class="s2">&#34;Reconciler error&#34;</span> <span class="s2">&#34;error&#34;</span><span class="o">=</span><span class="s2">&#34;failed to create AWSMachine instance: failed to run instance: InvalidParameterValue: Value (control-plane.tkg.cloud.vmware.com) for parameter iamInstanceProfile.name is invalid. Invalid IAM Instance Profile name\n\tstatus code: 400, request id: ff25f867-8d16-49ef-bb9e-cc745ecd3b0c&#34;</span> <span class="s2">&#34;controller&#34;</span><span class="o">=</span><span class="s2">&#34;awsmachine&#34;</span> <span class="s2">&#34;name&#34;</span><span class="o">=</span><span class="s2">&#34;kubeapps-tkg-13-2-test-control-plane-drhmh&#34;</span> <span class="s2">&#34;namespace&#34;</span><span class="o">=</span><span class="s2">&#34;tkg-system&#34;</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>Sure enough, if I then checked what <code>InstanceProfiles</code> exist within my account, I could see that similar but not the same profiles existed:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -337,19 +337,19 @@ E0414 04:01:43.434245       <span class="m">1</span> controller.go:257<span clas
 </span><span class="lnt">6
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">aws --profile my-profile iam list-instance-profiles <span class="p">|</span> jq <span class="s2">&#34;.InstanceProfiles[] | .InstanceProfileName&#34;</span>
-<span class="s2">&#34;control-plane.cluster-api-provider-aws.sigs.k8s.io&#34;</span>
-<span class="s2">&#34;controllers.cluster-api-provider-aws.sigs.k8s.io&#34;</span>
-...
-<span class="s2">&#34;nodes.cluster-api-provider-aws.sigs.k8s.io&#34;</span>
-...
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">aws --profile my-profile iam list-instance-profiles <span class="p">|</span> jq <span class="s2">&#34;.InstanceProfiles[] | .InstanceProfileName&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="s2">&#34;control-plane.cluster-api-provider-aws.sigs.k8s.io&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="s2">&#34;controllers.cluster-api-provider-aws.sigs.k8s.io&#34;</span>
+</span></span><span class="line"><span class="cl">...
+</span></span><span class="line"><span class="cl"><span class="s2">&#34;nodes.cluster-api-provider-aws.sigs.k8s.io&#34;</span>
+</span></span><span class="line"><span class="cl">...
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>For example, the error was because the InstanceProfile <code>control-plane.tkg.cloud.vmware.com</code> did not exist, whereas <code>control-plane.cluster-api-provider-aws.sigs.k8s.io</code> <em>did</em> exist. It turns out the existing <code>InstanceProfiles</code> were from last year when I installed TKG 1.1 and the required ones for 1.3 were, for reasons still not known to me, not yet present. A helpful TKG expert pointed me to the manual TKG 1.3 management cluster install on AWS instructions, specifically the <a href="https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/1.3/vmware-tanzu-kubernetes-grid-13/GUID-mgmt-clusters-config-aws.html#create-an-aws-cloudformation-stack-1">instructions to create the CloudFormation stack on AWS</a>.</p>
 <p>When following those instructions, I had to include the <code>AWS_REGION</code> env var even though it was specified in my aws credentials file, but it did the trick:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -361,28 +361,28 @@ E0414 04:01:43.434245       <span class="m">1</span> controller.go:257<span clas
 </span><span class="lnt">10
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nv">AWS_PROFILE</span><span class="o">=</span>my-profile <span class="nv">AWS_REGION</span><span class="o">=</span>us-east-1 tanzu management-cluster permissions aws <span class="nb">set</span>
-
-Creating AWS CloudFormation Stack
-
-Following resources are in the stack:
-
-Resource                  <span class="p">|</span>Type                                                                <span class="p">|</span>Status
-AWS::IAM::InstanceProfile <span class="p">|</span>control-plane.tkg.cloud.vmware.com                                  <span class="p">|</span>CREATE_COMPLETE
-AWS::IAM::InstanceProfile <span class="p">|</span>controllers.tkg.cloud.vmware.com                                    <span class="p">|</span>CREATE_COMPLETE
-...
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nv">AWS_PROFILE</span><span class="o">=</span>my-profile <span class="nv">AWS_REGION</span><span class="o">=</span>us-east-1 tanzu management-cluster permissions aws <span class="nb">set</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Creating AWS CloudFormation Stack
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Following resources are in the stack:
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Resource                  <span class="p">|</span>Type                                                                <span class="p">|</span>Status
+</span></span><span class="line"><span class="cl">AWS::IAM::InstanceProfile <span class="p">|</span>control-plane.tkg.cloud.vmware.com                                  <span class="p">|</span>CREATE_COMPLETE
+</span></span><span class="line"><span class="cl">AWS::IAM::InstanceProfile <span class="p">|</span>controllers.tkg.cloud.vmware.com                                    <span class="p">|</span>CREATE_COMPLETE
+</span></span><span class="line"><span class="cl">...
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>With the correct profiles created, I was then able to get a management cluster running, though with a small issue.</p>
 <h3 id="tagging-an-aws-subnet">Tagging an AWS subnet</h3>
 <p>While following the <a href="https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/1.3/vmware-tanzu-kubernetes-grid-13/GUID-mgmt-clusters-configure-id-mgmt.html">configuring identity management after management cluster deployment doc</a> I noticed that although my management cluster was created, some of the services were unable to be setup as load balancers:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">  Warning  SyncLoadBalancerFailed  4m36s <span class="o">(</span>x13 over 39m<span class="o">)</span>  service-controller  Error syncing load balancer: failed to ensure load balancer: could not find any suitable subnets <span class="k">for</span> creating the ELB
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">  Warning  SyncLoadBalancerFailed  4m36s <span class="o">(</span>x13 over 39m<span class="o">)</span>  service-controller  Error syncing load balancer: failed to ensure load balancer: could not find any suitable subnets <span class="k">for</span> creating the ELB
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>I&rsquo;d hit this before when trying TKG 1.1 and once again, the reason it happened was that I&rsquo;d initially selected the UI option for the TKG installer to create a new VPC, but after my initial install failed, I&rsquo;d chosen to re-use that VPC (actually re-using the complete cluster config other than changing the name) when retrying, which meant that VPC subnets were not tagged with my new cluster name.</p>
 <p>To fix this, I again navigated to the list of subnets for the region, for example, for us-east-1 you will find the list at <a href="https://console.aws.amazon.com/vpc/home?region=us-east-1#subnets:sort=desc:tag:Name">https://console.aws.amazon.com/vpc/home?region=us-east-1#subnets:sort=desc:tag:Name</a>. In this list you will see a <code>-public</code> and <code>-private</code> subnet prefixed by the name of your management cluster, for example, in my case I see:</p>
@@ -392,40 +392,40 @@ AWS::IAM::InstanceProfile <span class="p">|</span>controllers.tkg.cloud.vmware.c
 <p>With the load balancer now set I was able to continue following the <a href="https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/1.3/vmware-tanzu-kubernetes-grid-13/GUID-mgmt-clusters-configure-id-mgmt.html">configuration of identity management after management cluster deployment documentation</a> and update the callbacks in my identity provider, but I was unable to generate a kubeconfig for use with my configured identity provider, instead getting the error:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">tanzu management-cluster kubeconfig get --export-file /tmp/id_mgmt_test_kubeconfig
-
-Error: failed to get pinniped-info from cluster: failed to get pinniped-info from the cluster
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">tanzu management-cluster kubeconfig get --export-file /tmp/id_mgmt_test_kubeconfig
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Error: failed to get pinniped-info from cluster: failed to get pinniped-info from the cluster
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>Checking the pinniped pods showed that pinniped runs a post-deploy job which depends on the pinniped supervisor load balancer being available, which in my case, had not been available at the time the job ran due to the missing subnet tags identified above. So this post-deploy job had exceeded the backoff limit (of 6 failures) while I as fixing the subnet tag and was no longer retrying.</p>
 <p>To fix this, I edited the job to have a larger backoff limit (of 7), waited a few minutes and saw the job then complete successfully:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">pinniped-post-deploy-job-ver-1-w5q8g   0/1     Error       <span class="m">0</span>          66m
-pinniped-post-deploy-job-ver-2-t2fc2   0/1     Completed   <span class="m">0</span>          86s
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">pinniped-post-deploy-job-ver-1-w5q8g   0/1     Error       <span class="m">0</span>          66m
+</span></span><span class="line"><span class="cl">pinniped-post-deploy-job-ver-2-t2fc2   0/1     Completed   <span class="m">0</span>          86s
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>I was then able to successfully authenticate via kubectl using my google account identity, following the instructions at the end of the <a href="https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/1.3/vmware-tanzu-kubernetes-grid-13/GUID-mgmt-clusters-configure-id-mgmt.html">configuration of identity management after management cluster deployment documentation</a> to add a role-binding for my user.</p>
 <p>So, management cluster complete with only a few environment-specific hiccups along the way!</p>
 <h2 id="setting-up-a-tkg-13-workload-cluster-with-identity-management">Setting up a TKG 1.3 workload cluster with identity management</h2>
 <p>Creating a workload cluster was as simple as copying the config that I&rsquo;d just used successfully for the management cluster, changing the CLUSTER_NAME only, and then:</p>
-<pre><code>tanzu cluster create --file ~/.tanzu/tkg/clusterconfigs/workload.yaml
+<pre tabindex="0"><code>tanzu cluster create --file ~/.tanzu/tkg/clusterconfigs/workload.yaml
 </code></pre><p>though check the <a href="https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/1.3/vmware-tanzu-kubernetes-grid-13/GUID-tanzu-k8s-clusters-deploy.html">full documentation for details</a>.</p>
 <p>I then used very similar commands to grab an admin kubeconfig (ie. one that is setup with cert-based authentication, not using the identity management) for my new workload cluster:</p>
-<pre><code>tanzu cluster kubeconfig get kubeapps-tkg-13-workload-test --admin
+<pre tabindex="0"><code>tanzu cluster kubeconfig get kubeapps-tkg-13-workload-test --admin
 </code></pre><p>and used that to verify for myself that the Kubernetes api server of the workload cluster in TKG 1.3 no longer sets any of the <code>--oidc-*</code> flags, instead it&rsquo;s Pinniped all the way down. Pinniped is already installed and configured on the workload cluster, so last of all, I created a non-admin kubeconfig (ie. one which will use the identity management):</p>
-<pre><code>tanzu cluster kubeconfig get kubeapps-tkg-13-workload-test --export-file /tmp/id_workload_test_kubeconfig
+<pre tabindex="0"><code>tanzu cluster kubeconfig get kubeapps-tkg-13-workload-test --export-file /tmp/id_workload_test_kubeconfig
 </code></pre><p>and then verified that, after creating a role-binding, I am able to use the cluster using my google identity:</p>
-<pre><code>kubectl create clusterrolebinding id-workload-test-rb --clusterrole cluster-admin --user my-user@example.com
+<pre tabindex="0"><code>kubectl create clusterrolebinding id-workload-test-rb --clusterrole cluster-admin --user my-user@example.com
 kubectl get pods -A --kubeconfig /tmp/id_workload_test_kubeconfig
 </code></pre><p>Success. Now we&rsquo;re ready to install Kubeapps on the workload cluster&hellip;</p>
 
@@ -471,7 +471,7 @@ kubectl get pods -A --kubeconfig /tmp/id_workload_test_kubeconfig
           <div class="disqus-comments">
             <div id="disqus_thread"></div>
 <script type="application/javascript">
-    var disqus_config = function () {
+    window.disqus_config = function () {
     
     
     
@@ -560,7 +560,7 @@ kubectl get pods -A --kubeconfig /tmp/id_workload_test_kubeconfig
         </p>
         
         <p class="credits theme-by text-muted">
-          <a href="https://gohugo.io">Hugo v0.69.2</a> powered &nbsp;&bull;&nbsp; Theme <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a> adapted from <a href="https://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a>
+          <a href="https://gohugo.io">Hugo v0.98.0</a> powered &nbsp;&bull;&nbsp; Theme <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a> adapted from <a href="https://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a>
           
         </p>
       </div>

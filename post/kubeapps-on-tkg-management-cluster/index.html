@@ -46,7 +46,7 @@ The first post described setting up your VMware TKG management cluster with two 
         "position": 3,
         "item": {
           "@id": "https:\/\/liveandletlearn.net\/post\/kubeapps-on-tkg-management-cluster\/",
-          "name": "Kubeapps on a t k g management cluster"
+          "name": "Kubeapps on a tkg management cluster"
         }
     }]
 }
@@ -60,7 +60,7 @@ The first post described setting up your VMware TKG management cluster with two 
   "headline": "Kubeapps on a TKG Management Cluster",
   "description" : "This is part two of a series detailing the steps required to run Kubeapps on a VMware TKG management cluster (on AWS) configured to allow users to deploy applications to multiple workload clusters, using the new multicluster support in Kubeapps. Though details will differ, a similar configuration works on other non-TKG multicluster setups as well.\nThe first post described setting up your VMware TKG management cluster with two OpenIDConnect-enabled workload clusters.",
   "inLanguage" : "en",
-  "wordCount":  857 ,
+  "wordCount":  863 ,
   "datePublished" : "2020-09-23T11:01:36",
   "dateModified" : "2020-09-23T11:01:36",
   "image" : "https:\/\/liveandletlearn.net\/img\/avatar-icon.png",
@@ -94,7 +94,7 @@ The first post described setting up your VMware TKG management cluster with two 
   <meta name="twitter:site" content="@michaelanelson" />
   <meta name="twitter:creator" content="@michaelanelson" />
   <link href='https://liveandletlearn.net/img/favicon.ico' rel='icon' type='image/x-icon'/>
-  <meta name="generator" content="Hugo 0.69.2" />
+  <meta name="generator" content="Hugo 0.98.0" />
   <link rel="alternate" href="https://liveandletlearn.net/index.xml" type="application/rss+xml" title="Live and let Learn"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"><link rel="stylesheet" href="https://liveandletlearn.net/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
@@ -236,7 +236,7 @@ The first post described setting up your VMware TKG management cluster with two 
                 <span class="post-meta">
   
   
-  <i class="fas fa-calendar"></i>&nbsp;Posted on September 23, 2020
+  <i class="fas fa-calendar"></i>&nbsp;
   
   
   
@@ -274,18 +274,18 @@ workload clusters, using the new multicluster support in Kubeapps. Though detail
 <p>We&rsquo;ll need two random values for the client and cookie secret required as part of Kubeapps&rsquo; oauth2-proxy configuration, so generate these values with:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nv">kubeappsClientSecret</span><span class="o">=</span><span class="k">$(</span>openssl rand -base64 32<span class="k">)</span> <span class="o">&amp;&amp;</span> <span class="nb">echo</span> <span class="nv">$kubeappsClientSecret</span>
-<span class="nv">kubeappsCookieSecret</span><span class="o">=</span><span class="k">$(</span>openssl rand -base64 32<span class="k">)</span> <span class="o">&amp;&amp;</span> <span class="nb">echo</span> <span class="nv">$kubeappsCookieSecret</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nv">kubeappsClientSecret</span><span class="o">=</span><span class="k">$(</span>openssl rand -base64 32<span class="k">)</span> <span class="o">&amp;&amp;</span> <span class="nb">echo</span> <span class="nv">$kubeappsClientSecret</span>
+</span></span><span class="line"><span class="cl"><span class="nv">kubeappsCookieSecret</span><span class="o">=</span><span class="k">$(</span>openssl rand -base64 32<span class="k">)</span> <span class="o">&amp;&amp;</span> <span class="nb">echo</span> <span class="nv">$kubeappsCookieSecret</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>Next, create a <code>kubeapps-tkg-values.yaml</code> file with the following contents, substituting in the same values from earlier steps:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -321,79 +321,77 @@ workload clusters, using the new multicluster support in Kubeapps. Though detail
 </span><span class="lnt">34
 </span><span class="lnt">35
 </span><span class="lnt">36
-</span><span class="lnt">37
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="c"># Ensure that Kubeapps is reachable externally via the frontend svc as an ELB</span><span class="w">
-</span><span class="w"></span><span class="c"># currently without TLS.</span><span class="w">
-</span><span class="w"></span><span class="k">frontend</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="k">service</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="k">annotations</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span><span class="k">service.beta.kubernetes.io/aws-load-balancer-backend-protocol</span><span class="p">:</span><span class="w"> </span>http<span class="w">
-</span><span class="w">    </span><span class="k">port</span><span class="p">:</span><span class="w"> </span><span class="m">80</span><span class="w">
-</span><span class="w">    </span><span class="k">type</span><span class="p">:</span><span class="w"> </span>LoadBalancer<span class="w">
-</span><span class="w">
-</span><span class="w"></span><span class="c"># Setup the oauth2-proxy running on the frontend to handle the OIDC authentication</span><span class="w">
-</span><span class="w"></span><span class="c"># for us.</span><span class="w">
-</span><span class="w"></span><span class="k">authProxy</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="k">enabled</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
-</span><span class="w">  </span><span class="k">provider</span><span class="p">:</span><span class="w"> </span>oidc<span class="w">
-</span><span class="w">  </span><span class="k">clientID</span><span class="p">:</span><span class="w"> </span>kubeapps-oauth2-proxy<span class="w">
-</span><span class="w">  </span><span class="k">clientSecret</span><span class="p">:</span><span class="w"> </span>KUBEAPPS_CLIENT_SECRET<span class="w">
-</span><span class="w">  </span><span class="k">cookieSecret</span><span class="p">:</span><span class="w"> </span>KUBEAPPS_COOKIE_SECRET<span class="w">
-</span><span class="w">  </span><span class="k">additionalFlags</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span>- --oidc-issuer-url=https<span class="p">:</span>//DEX_SVC_LB_HOSTNAME<span class="w">
-</span><span class="w">    </span><span class="c"># IMPORTANT: We are overwriting the scope option to include the workload clusters&#39; clientids in the audience.</span><span class="w">
-</span><span class="w">    </span>- --scope=openid<span class="w"> </span>email<span class="w"> </span>groups<span class="w"> </span>audience<span class="p">:</span>server<span class="p">:</span>client_id<span class="p">:</span>my-oidc-cluster<span class="w"> </span>audience<span class="p">:</span>server<span class="p">:</span>client_id<span class="p">:</span>second-oidc-cluster<span class="w">
-</span><span class="w">    </span><span class="c"># TODO: Update to provide the dex ca via --provider-ca-file and mounting etc.</span><span class="w">
-</span><span class="w">    </span>- --ssl-insecure-skip-verify=<span class="kc">true</span><span class="w">
-</span><span class="w">    </span><span class="c"># Since Kubeapps is running without TLS, can&#39;t use secure cookies</span><span class="w">
-</span><span class="w">    </span>- --cookie-secure=<span class="kc">false</span><span class="w">
-</span><span class="w">    </span><span class="c"># If you need to access the actual token in the frontend for testing, uncomment the following.</span><span class="w">
-</span><span class="w">    </span><span class="c"># - --set-authorization-header=true</span><span class="w">
-</span><span class="w">
-</span><span class="w"></span><span class="c"># Configure the two workload clusters</span><span class="w">
-</span><span class="w"></span><span class="k">clusters</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>my-oidc-cluster<span class="w">
-</span><span class="w">    </span><span class="k">apiServiceURL</span><span class="p">:</span><span class="w"> </span>https<span class="p">:</span>//DNS_OF_FIRST_WORKLOAD_CLUSTER_API_SERVER<span class="p">:</span><span class="m">6443</span><span class="w">
-</span><span class="w">    </span><span class="k">certificateAuthorityData</span><span class="p">:</span><span class="w"> </span>CA_DATA_FOR_FIRST_WORKLOAD_CLUSTER_API_SERVER<span class="w">
-</span><span class="w">  </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>second-oidc-cluster<span class="w">
-</span><span class="w">    </span><span class="k">apiServiceURL</span><span class="p">:</span><span class="w"> </span>https<span class="p">:</span>//DNS_OF_SECOND_WORKLOAD_CLUSTER_API_SERVER<span class="p">:</span><span class="m">6443</span><span class="w">
-</span><span class="w">    </span><span class="k">certificateAuthorityData</span><span class="p">:</span><span class="w"> </span>CA_DATA_FOR_SECOND_WORKLOAD_CLUSTER_API_SERVER<span class="w">
-</span><span class="w">
-</span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="c"># Ensure that Kubeapps is reachable externally via the frontend svc as an ELB</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c"># currently without TLS.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">frontend</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">service</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">annotations</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">service.beta.kubernetes.io/aws-load-balancer-backend-protocol</span><span class="p">:</span><span class="w"> </span><span class="l">http</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="m">80</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l">LoadBalancer</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c"># Setup the oauth2-proxy running on the frontend to handle the OIDC authentication</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c"># for us.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">authProxy</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">provider</span><span class="p">:</span><span class="w"> </span><span class="l">oidc</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">clientID</span><span class="p">:</span><span class="w"> </span><span class="l">kubeapps-oauth2-proxy</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">clientSecret</span><span class="p">:</span><span class="w"> </span><span class="l">KUBEAPPS_CLIENT_SECRET</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">cookieSecret</span><span class="p">:</span><span class="w"> </span><span class="l">KUBEAPPS_COOKIE_SECRET</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">additionalFlags</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span>- --<span class="l">oidc-issuer-url=https://DEX_SVC_LB_HOSTNAME</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c"># IMPORTANT: We are overwriting the scope option to include the workload clusters&#39; clientids in the audience.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span>- --<span class="l">scope=openid email groups audience:server:client_id:my-oidc-cluster audience:server:client_id:second-oidc-cluster</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c"># TODO: Update to provide the dex ca via --provider-ca-file and mounting etc.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span>- --<span class="l">ssl-insecure-skip-verify=true</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c"># Since Kubeapps is running without TLS, can&#39;t use secure cookies</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span>- --<span class="l">cookie-secure=false</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c"># If you need to access the actual token in the frontend for testing, uncomment the following.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c"># - --set-authorization-header=true</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c"># Configure the two workload clusters</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">clusters</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">my-oidc-cluster</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">apiServiceURL</span><span class="p">:</span><span class="w"> </span><span class="l">https://DNS_OF_FIRST_WORKLOAD_CLUSTER_API_SERVER:6443</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">certificateAuthorityData</span><span class="p">:</span><span class="w"> </span><span class="l">CA_DATA_FOR_FIRST_WORKLOAD_CLUSTER_API_SERVER</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">second-oidc-cluster</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">apiServiceURL</span><span class="p">:</span><span class="w"> </span><span class="l">https://DNS_OF_SECOND_WORKLOAD_CLUSTER_API_SERVER:6443</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">certificateAuthorityData</span><span class="p">:</span><span class="w"> </span><span class="l">CA_DATA_FOR_SECOND_WORKLOAD_CLUSTER_API_SERVER</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>As noted in the comments there, the most important part for the <code>authProxy</code> is the <code>--scope</code> argument which requests not only the normal <code>openid email groups</code> scopes but also requests that the workload client ids be included in the audience of our <code>kubeapps-oauth2-proxy</code> token. More about this below.</p>
 <p>For the <code>apiServiceURL</code> and <code>certificateAuthorityData</code> values for Kubeapps&rsquo; <code>clusters</code> configuration, you have this data all in your kubeconfig, so grab it from there:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">less <span class="nv">$KUBECONFIG</span>
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">less <span class="nv">$KUBECONFIG</span>
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>With the kube-context set for the management cluster, we create a namespace for Kubeapps and install away!</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">kubectl create ns kubeapps
-
-helm install --namespace kubeapps kubeapps bitnami/kubeapps --values ~/path/to/your/kubeapps-tkg-values.yaml
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">kubectl create ns kubeapps
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">helm install --namespace kubeapps kubeapps bitnami/kubeapps --values ~/path/to/your/kubeapps-tkg-values.yaml
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>Once the pods are all up and running, check for the frontend loadbalancer domain name given by AWS:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">kubectl -n kubeapps get svc kubeapps
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">kubectl -n kubeapps get svc kubeapps
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>and open it up in a browser to verify that you can see kubeapps at that address. Note that logging in wil result in a bad request until we update Dex&rsquo;s configuration.</p>
 <h2 id="configuring-a-kubeapps-client-for-dex">Configuring a Kubeapps client for Dex</h2>
@@ -401,16 +399,16 @@ helm install --namespace kubeapps kubeapps bitnami/kubeapps --values ~/path/to/y
 <p>So we edit the same Dex configuration file which we previously worked with while setting up the authentication for our TKG clusters:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">vim tkg-extensions-v1.1.0/authentication/dex/aws/oidc/04-cm.yaml
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">vim tkg-extensions-v1.1.0/authentication/dex/aws/oidc/04-cm.yaml
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>and add a second static client for the second workload cluster (the name must match the name of your second workload cluster, but you don&rsquo;t need any other secret or redirect URIs since we didn&rsquo;t install Gangway on the second workload cluster) and a third static client for the <code>kubeapps-oauth2-proxy</code>. Note that the client entry for both clusters are listed as trusted peers of the <code>kubeapps-oauth2-proxy</code> client:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -426,58 +424,56 @@ helm install --namespace kubeapps kubeapps bitnami/kubeapps --values ~/path/to/y
 </span></span><span class="hl"><span class="lnt">14
 </span></span><span class="hl"><span class="lnt">15
 </span></span><span class="hl"><span class="lnt">16
-</span></span><span class="lnt">17
-</span></code></pre></td>
+</span></span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="w">    </span><span class="k">staticClients</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span>- <span class="k">id</span><span class="p">:</span><span class="w"> </span>my-oidc-cluster<span class="w">
-</span><span class="w">      </span><span class="k">redirectURIs</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span>- <span class="s1">&#39;https://&lt;existing value for the DNS of the API server for my-oidc-cluster&gt;/callback&#39;</span><span class="w">
-</span><span class="w">      </span><span class="k">name</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;my-oidc-cluster&#39;</span><span class="w">
-</span><span class="w">      </span><span class="k">secret</span><span class="p">:</span><span class="w"> </span>&lt;existing<span class="w"> </span>value<span class="w"> </span>for<span class="w"> </span>clientSecret<span class="w"> </span>for<span class="w"> </span>my-oidc-cluster<span class="sd">&gt;
-</span><span class="hl"><span class="sd">      trustedPeers:</span><span class="w">
-</span></span><span class="hl"><span class="w">      </span>- kubeapps-oauth2-proxy<span class="w">
-</span></span><span class="hl"><span class="w">    </span>- <span class="k">id</span><span class="p">:</span><span class="w"> </span>second-oidc-cluster<span class="w">
-</span></span><span class="hl"><span class="w">      </span><span class="k">trustedPeers</span><span class="p">:</span><span class="w">
-</span></span><span class="hl"><span class="w">      </span>- kubeapps-oauth2-proxy<span class="w">
-</span></span><span class="hl"><span class="w">    </span>- <span class="k">id</span><span class="p">:</span><span class="w"> </span>kubeapps-oauth2-proxy<span class="w">
-</span></span><span class="hl"><span class="w">      </span><span class="k">redirectURIs</span><span class="p">:</span><span class="w">
-</span></span><span class="hl"><span class="w">      </span>- <span class="s1">&#39;http://&lt;kubeapps frontend dns entry&gt;/oauth2/callback&#39;</span><span class="w">
-</span></span><span class="hl"><span class="w">      </span><span class="k">name</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;Kubeapps on TKG test Login&#39;</span><span class="w">
-</span></span><span class="hl"><span class="w">      </span><span class="k">secret</span><span class="p">:</span><span class="w"> </span>&lt;kubeappsClientSecret<span class="sd">&gt;
-</span></span><span class="sd">
-</span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="w">    </span><span class="nt">staticClients</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span>- <span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l">my-oidc-cluster</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">redirectURIs</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="s1">&#39;https://&lt;existing value for the DNS of the API server for my-oidc-cluster&gt;/callback&#39;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;my-oidc-cluster&#39;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">secret</span><span class="p">:</span><span class="w"> </span><span class="l">&lt;existing value for clientSecret for my-oidc-cluster&gt;</span><span class="w">
+</span></span></span><span class="line hl"><span class="cl"><span class="w">      </span><span class="nt">trustedPeers</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line hl"><span class="cl"><span class="w">      </span>- <span class="l">kubeapps-oauth2-proxy</span><span class="w">
+</span></span></span><span class="line hl"><span class="cl"><span class="w">    </span>- <span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l">second-oidc-cluster</span><span class="w">
+</span></span></span><span class="line hl"><span class="cl"><span class="w">      </span><span class="nt">trustedPeers</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line hl"><span class="cl"><span class="w">      </span>- <span class="l">kubeapps-oauth2-proxy</span><span class="w">
+</span></span></span><span class="line hl"><span class="cl"><span class="w">    </span>- <span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l">kubeapps-oauth2-proxy</span><span class="w">
+</span></span></span><span class="line hl"><span class="cl"><span class="w">      </span><span class="nt">redirectURIs</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line hl"><span class="cl"><span class="w">      </span>- <span class="s1">&#39;http://&lt;kubeapps frontend dns entry&gt;/oauth2/callback&#39;</span><span class="w">
+</span></span></span><span class="line hl"><span class="cl"><span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;Kubeapps on TKG test Login&#39;</span><span class="w">
+</span></span></span><span class="line hl"><span class="cl"><span class="w">      </span><span class="nt">secret</span><span class="p">:</span><span class="w"> </span><span class="l">&lt;kubeappsClientSecret&gt;</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>While editing this file, if you&rsquo;re using Google as your upstream identity provider, I recommend making one further change to ensure dex only allows authentication for emails from a specific domain. In the <code>config</code> section of the <code>oidc</code> connector, uncomment and set the following to match the email domains which you want to allow, for example:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="w">        </span><span class="k">hostedDomains</span><span class="p">:</span><span class="w">
-</span><span class="w">        </span>- vmware.com<span class="w">
-</span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="w">        </span><span class="nt">hostedDomains</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span>- <span class="l">vmware.com</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>Bounce dex by deleting the dex pod after applying the config:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">kubectl apply -f tkg-extensions-v1.1.0/authentication/dex/aws/oidc/04-cm.yaml
-kubectl -n tanzu-system-auth delete po -l <span class="nv">app</span><span class="o">=</span>dex
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">kubectl apply -f tkg-extensions-v1.1.0/authentication/dex/aws/oidc/04-cm.yaml
+</span></span><span class="line"><span class="cl">kubectl -n tanzu-system-auth delete po -l <span class="nv">app</span><span class="o">=</span>dex
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>With this, Dex will successfully authenticate, but Kubeapps still won&rsquo;t let you in because your user doesn&rsquo;t yet have access to the cluster. So switch to the first workload cluster and create the RBAC to give yourself <code>cluster-admin</code>:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-bash" data-lang="bash">kubectl create clusterrolebinding cluster-admin-mnelson --clusterrole<span class="o">=</span>cluster-admin --user<span class="o">=</span>mnelson@bitnami.com
-</code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">kubectl create clusterrolebinding cluster-admin-mnelson --clusterrole<span class="o">=</span>cluster-admin --user<span class="o">=</span>mnelson@bitnami.com
+</span></span></code></pre></td></tr></table>
 </div>
 </div><p>and then repeat after switching context to your second workload cluster.</p>
 <p>When you now login to Kubeapps, you should be presented with the UI including the option to switch between your clusters!</p>
@@ -526,7 +522,7 @@ kubectl -n tanzu-system-auth delete po -l <span class="nv">app</span><span class
           <div class="disqus-comments">
             <div id="disqus_thread"></div>
 <script type="application/javascript">
-    var disqus_config = function () {
+    window.disqus_config = function () {
     
     
     
@@ -615,7 +611,7 @@ kubectl -n tanzu-system-auth delete po -l <span class="nv">app</span><span class
         </p>
         
         <p class="credits theme-by text-muted">
-          <a href="https://gohugo.io">Hugo v0.69.2</a> powered &nbsp;&bull;&nbsp; Theme <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a> adapted from <a href="https://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a>
+          <a href="https://gohugo.io">Hugo v0.98.0</a> powered &nbsp;&bull;&nbsp; Theme <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a> adapted from <a href="https://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a>
           
         </p>
       </div>

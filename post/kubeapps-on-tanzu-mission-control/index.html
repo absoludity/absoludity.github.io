@@ -58,7 +58,7 @@ Particularly, this meant we were unable to demonstrate multi-cluster Kubeapps wi
     "name" : "Michael Nelson"
   },
   "headline": "Kubeapps on Tanzu Mission Control via Pinniped",
-  "description" : "We\x26rsquo;ve been able to run Kubeapps in a multi-cluster setup on various Kubernetes clusters for a while now, but this was dependent on the Kubeapps\x26rsquo; user being authenticated in a way that all the clusters trust. Up until now, this meant having all the clusters configured to trust the same OIDC identity provider, which is not possible in some Kubernetes environments.\nParticularly, this meant we were unable to demonstrate multi-cluster Kubeapps with clusters created by Tanzu Mission Control since we can\x26rsquo;t specify API server options, such as OIDC configuration, when creating a cluster in TMC. But that requirement has now changed thanks to a new project called Pinniped.\n",
+  "description" : "We\u0026rsquo;ve been able to run Kubeapps in a multi-cluster setup on various Kubernetes clusters for a while now, but this was dependent on the Kubeapps\u0026rsquo; user being authenticated in a way that all the clusters trust. Up until now, this meant having all the clusters configured to trust the same OIDC identity provider, which is not possible in some Kubernetes environments.\nParticularly, this meant we were unable to demonstrate multi-cluster Kubeapps with clusters created by Tanzu Mission Control since we can\u0026rsquo;t specify API server options, such as OIDC configuration, when creating a cluster in TMC. But that requirement has now changed thanks to a new project called Pinniped.\n",
   "inLanguage" : "en",
   "wordCount":  600 ,
   "datePublished" : "2021-02-25T11:40:02",
@@ -94,7 +94,7 @@ Particularly, this meant we were unable to demonstrate multi-cluster Kubeapps wi
   <meta name="twitter:site" content="@michaelanelson" />
   <meta name="twitter:creator" content="@michaelanelson" />
   <link href='https://liveandletlearn.net/img/favicon.ico' rel='icon' type='image/x-icon'/>
-  <meta name="generator" content="Hugo 0.69.2" />
+  <meta name="generator" content="Hugo 0.98.0" />
   <link rel="alternate" href="https://liveandletlearn.net/index.xml" type="application/rss+xml" title="Live and let Learn"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"><link rel="stylesheet" href="https://liveandletlearn.net/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
@@ -236,7 +236,7 @@ Particularly, this meant we were unable to demonstrate multi-cluster Kubeapps wi
                 <span class="post-meta">
   
   
-  <i class="fas fa-calendar"></i>&nbsp;Posted on February 25, 2021
+  <i class="fas fa-calendar"></i>&nbsp;
   
   
   
@@ -272,14 +272,14 @@ Particularly, this meant we were unable to demonstrate multi-cluster Kubeapps wi
 </p>
 <h2 id="kubeapps--pinniped">Kubeapps + Pinniped</h2>
 <p>The <a href="https://pinniped.dev">Pinniped project</a>, also from VMware, enables OIDC authentication to a cluster without any configuration of the cluster&rsquo;s API server. It does this by extending the Kubernetes API to include an endpoint that can exchange a valid OIDC <code>id_token</code> for a short-lived cluster certificate that identifies that same user and groups as the original token.</p>
-<p>Pinniped itself is currently focusing on <code>kubectl</code> access to a cluster and is explicitly not (yet) supporting other clients, such as the Kubeapps web application. So we wrote a small service in <a href="https://www.rust-lang.org/">Rust</a> called <a href="https://github.com/kubeapps/kubeapps/blob/master/docs/user/using-an-OIDC-provider-with-pinniped.md"><code>pinniped-proxy</code></a> (I&rsquo;ll post more about that experience separately) which in our stack, ensures that any request from a user directed at an API server has its OIDC credential exchanged for a short-lived cluster certificate from that cluster before continuing on its journey. Note that the resulting certificate does not grant any privileges, it simply contains the same authentication information as the <code>id_token</code> to identify the username and groups associated with the user. The cluster RBAC still decides what that user can and cannot do as always.</p>
-<p>You can read the docs for <a href="https://github.com/kubeapps/kubeapps/blob/master/docs/user/using-an-OIDC-provider-with-pinniped.md">configuring Kubeapps to use an OIDC provider with pinniped</a> in a generic cluster, with the following Tanzu Mission Control specific note.</p>
+<p>Pinniped itself is currently focusing on <code>kubectl</code> access to a cluster and is explicitly not (yet) supporting other clients, such as the Kubeapps web application. So we wrote a small service in <a href="https://www.rust-lang.org/">Rust</a> called <a href="https://github.com/vmware-tanzu/kubeapps/blob/master/docs/user/using-an-OIDC-provider-with-pinniped.md"><code>pinniped-proxy</code></a> (I&rsquo;ll post more about that experience separately) which in our stack, ensures that any request from a user directed at an API server has its OIDC credential exchanged for a short-lived cluster certificate from that cluster before continuing on its journey. Note that the resulting certificate does not grant any privileges, it simply contains the same authentication information as the <code>id_token</code> to identify the username and groups associated with the user. The cluster RBAC still decides what that user can and cannot do as always.</p>
+<p>You can read the docs for <a href="https://github.com/vmware-tanzu/kubeapps/blob/master/docs/user/using-an-OIDC-provider-with-pinniped.md">configuring Kubeapps to use an OIDC provider with pinniped</a> in a generic cluster, with the following Tanzu Mission Control specific note.</p>
 <h2 id="configure-pinniped-on-your-cluster">Configure pinniped on your cluster</h2>
-<p>TMC clusters are created with pinniped already on the cluster and at the time of writing, the version managed by the cluster is fine to use. At some point TMC will be upgrading to pinniped 0.6.0 which has a backwards incompatible change that <a href="https://github.com/kubeapps/kubeapps/issues/2426">currently breaks our pinniped-proxy integration</a>. I&rsquo;ll update this post once we&rsquo;ve adjusted to that change.</p>
+<p>TMC clusters are created with pinniped already on the cluster and at the time of writing, the version managed by the cluster is fine to use. At some point TMC will be upgrading to pinniped 0.6.0 which has a backwards incompatible change that <a href="https://github.com/vmware-tanzu/kubeapps/issues/2426">currently breaks our pinniped-proxy integration</a>. I&rsquo;ll update this post once we&rsquo;ve adjusted to that change.</p>
 <p>The first thing to do is to ensure that the installed pinniped service knows how to verify OIDC <code>id_tokens</code> for your identity provider. You can do this by creating a <code>JWTAuthenticator</code> resource within the same namespace that pinniped is installed - which in the case of TMC&rsquo;s default installation is <code>vmware-system-tmc</code>:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -294,38 +294,38 @@ Particularly, this meant we were unable to demonstrate multi-cluster Kubeapps wi
 </span><span class="lnt">13
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="k">kind</span><span class="p">:</span><span class="w"> </span>JWTAuthenticator<span class="w">
-</span><span class="w"></span><span class="k">apiVersion</span><span class="p">:</span><span class="w"> </span>authentication.concierge.pinniped.dev/v1alpha1<span class="w">
-</span><span class="w"></span><span class="k">metadata</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>jwt-authenticator<span class="w">
-</span><span class="w">  </span><span class="k">namespace</span><span class="p">:</span><span class="w"> </span>vmware-system-tmc<span class="w">
-</span><span class="w"></span><span class="k">spec</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="k">issuer</span><span class="p">:</span><span class="w"> </span>https<span class="p">:</span>//your-oidc-issuer.example.com<span class="w">
-</span><span class="w">  </span><span class="k">audience</span><span class="p">:</span><span class="w"> </span>default<span class="w">
-</span><span class="w">  </span><span class="k">claims</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="k">groups</span><span class="p">:</span><span class="w"> </span>groups<span class="w">
-</span><span class="w">    </span><span class="k">username</span><span class="p">:</span><span class="w"> </span>email<span class="w">
-</span><span class="w">  </span><span class="k">tls</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="k">certificateAuthorityData</span><span class="p">:</span><span class="w"> </span>&lt;your-oidc-issuers-tls-cert-auth-data&gt;<span class="w">
-</span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">JWTAuthenticator</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">authentication.concierge.pinniped.dev/v1alpha1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">jwt-authenticator</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l">vmware-system-tmc</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">issuer</span><span class="p">:</span><span class="w"> </span><span class="l">https://your-oidc-issuer.example.com</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">audience</span><span class="p">:</span><span class="w"> </span><span class="l">default</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">claims</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">groups</span><span class="p">:</span><span class="w"> </span><span class="l">groups</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">username</span><span class="p">:</span><span class="w"> </span><span class="l">email</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">tls</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">certificateAuthorityData</span><span class="p">:</span><span class="w"> </span><span class="l">&lt;your-oidc-issuers-tls-cert-auth-data&gt;</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>This enables pinniped to verify an <code>id_token</code> from your identity provider as being signed correctly. In our <code>values.yaml</code> for Kubeapps, we will need to ensure Kubeapps knows to include the <code>pinniped-proxy</code> service:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="k">pinnipedProxy</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="k">enabled</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
-</span><span class="w">  </span><span class="k">defaultPinnipedNamespace</span><span class="p">:</span><span class="w"> </span>vmware-system-tmc<span class="w">
-</span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">pinnipedProxy</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">defaultPinnipedNamespace</span><span class="p">:</span><span class="w"> </span><span class="l">vmware-system-tmc</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
 </div>
 </div><p>The last line is required here because by default pinniped will be in <code>pinniped-concierge</code> but TMC includes it in its own <code>vmware-system-tmc</code> namespace. Finally, our multi-cluster configuration for Kubeapps needs to identify individually each cluster that is using pinniped. This is because you may have a mixture of clusters, some using pinniped, others may be using OIDC:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -337,19 +337,19 @@ Particularly, this meant we were unable to demonstrate multi-cluster Kubeapps wi
 </span><span class="lnt">10
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="k">clusters</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>tmc-aws<span class="m">-1</span><span class="w">
-</span><span class="w">    </span><span class="k">pinnipedConfig</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span><span class="k">enabled</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
-</span><span class="w">  </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>tmc-aws<span class="m">-1</span><span class="w">
-</span><span class="w">    </span><span class="k">pinnipedConfig</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span><span class="k">enabled</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
-</span><span class="w">    </span><span class="k">apiServiceURL</span><span class="p">:</span><span class="w"> </span>https<span class="p">:</span>//abcd123.elb.amazonaws.com<span class="p">:</span><span class="m">443</span><span class="w">
-</span><span class="w">    </span><span class="k">serviceToken</span><span class="p">:</span><span class="w"> </span>...<span class="w">
-</span><span class="w">    </span><span class="k">certificateAuthorityData</span><span class="p">:</span><span class="w"> </span>...<span class="w">
-</span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">clusters</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">tmc-aws-1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">pinnipedConfig</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">tmc-aws-1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">pinnipedConfig</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">apiServiceURL</span><span class="p">:</span><span class="w"> </span><span class="l">https://abcd123.elb.amazonaws.com:443</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">serviceToken</span><span class="p">:</span><span class="w"> </span><span class="l">...</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">certificateAuthorityData</span><span class="p">:</span><span class="w"> </span><span class="l">...</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
 </div>
-</div><p>The rest of your <code>values.yaml</code> will include the <a href="https://github.com/kubeapps/kubeapps/blob/master/docs/user/using-an-OIDC-provider.md#deploying-an-auth-proxy-to-access-kubeapps">normal OIDC configuration for Kubeapps</a> and you can <code>helm install</code> away. In the demo above I&rsquo;m using VMware&rsquo;s Cloud Services Platform for Single Sign On (SSO) and two TMC clusters in AWS.</p>
+</div><p>The rest of your <code>values.yaml</code> will include the <a href="https://github.com/vmware-tanzu/kubeapps/blob/master/docs/user/using-an-OIDC-provider.md#deploying-an-auth-proxy-to-access-kubeapps">normal OIDC configuration for Kubeapps</a> and you can <code>helm install</code> away. In the demo above I&rsquo;m using VMware&rsquo;s Cloud Services Platform for Single Sign On (SSO) and two TMC clusters in AWS.</p>
 
         
           <div class="blog-tags">
@@ -394,7 +394,7 @@ Particularly, this meant we were unable to demonstrate multi-cluster Kubeapps wi
           <div class="disqus-comments">
             <div id="disqus_thread"></div>
 <script type="application/javascript">
-    var disqus_config = function () {
+    window.disqus_config = function () {
     
     
     
@@ -483,7 +483,7 @@ Particularly, this meant we were unable to demonstrate multi-cluster Kubeapps wi
         </p>
         
         <p class="credits theme-by text-muted">
-          <a href="https://gohugo.io">Hugo v0.69.2</a> powered &nbsp;&bull;&nbsp; Theme <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a> adapted from <a href="https://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a>
+          <a href="https://gohugo.io">Hugo v0.98.0</a> powered &nbsp;&bull;&nbsp; Theme <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a> adapted from <a href="https://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a>
           
         </p>
       </div>

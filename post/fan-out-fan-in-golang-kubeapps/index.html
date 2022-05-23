@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/WebPage">
+  <head>
+    
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>Fan-Out and Fan-In Golang channels in Kubeapps - Live and let Learn</title>
+  <meta name="description" content="During a career as a software engineer, every now and then you come across a design pattern that becomes your darling for a few years following the discovery. Other design patterns are useful, but not so special that you want to tell the world about them.
+Up until recently, my favourite design pattern was the state pattern which allows encapsulating different behaviours (implementations of an interface) in different classes so that an object can delegate its functionality to different state implementations which can be update at runtime. But more recently, while using a lot of concurrency in certain Kubeapps services, I&rsquo;ve fallen in love with another design pattern - the fan-out/fan-in messaging pattern (or a form of it).">
+  <meta name="author" content="Michael Nelson"/><script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "WebSite",
+    "name": "Live and let Learn",
+    
+    "url": "https:\/\/liveandletlearn.net\/"
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Organization",
+  "name": "",
+  "url": "https:\/\/liveandletlearn.net\/"
+  
+  
+  
+  
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@id": "https:\/\/liveandletlearn.net\/",
+          "name": "home"
+        }
+    },{
+        "@type": "ListItem",
+        "position": 3,
+        "item": {
+          "@id": "https:\/\/liveandletlearn.net\/post\/fan-out-fan-in-golang-kubeapps\/",
+          "name": "Fan out and fan in golang channels in kubeapps"
+        }
+    }]
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "author": {
+    "name" : "Michael Nelson"
+  },
+  "headline": "Fan-Out and Fan-In Golang channels in Kubeapps",
+  "description" : "During a career as a software engineer, every now and then you come across a design pattern that becomes your darling for a few years following the discovery. Other design patterns are useful, but not so special that you want to tell the world about them.\nUp until recently, my favourite design pattern was the state pattern which allows encapsulating different behaviours (implementations of an interface) in different classes so that an object can delegate its functionality to different state implementations which can be update at runtime. But more recently, while using a lot of concurrency in certain Kubeapps services, I\u0026rsquo;ve fallen in love with another design pattern - the fan-out\/fan-in messaging pattern (or a form of it).\n",
+  "inLanguage" : "en",
+  "wordCount":  671 ,
+  "datePublished" : "2022-05-20T15:38:13",
+  "dateModified" : "2022-05-20T15:38:13",
+  "image" : "https:\/\/liveandletlearn.net\/img\/avatar-icon.png",
+  "keywords" : [ "kubeapps, vmware, golang" ],
+  "mainEntityOfPage" : "https:\/\/liveandletlearn.net\/post\/fan-out-fan-in-golang-kubeapps\/",
+  "publisher" : {
+    "@type": "Organization",
+    "name" : "https:\/\/liveandletlearn.net\/",
+    "logo" : {
+        "@type" : "ImageObject",
+        "url" : "https:\/\/liveandletlearn.net\/img\/avatar-icon.png",
+        "height" :  60 ,
+        "width" :  60
+    }
+  }
+}
+</script>
+
+<meta property="og:title" content="Fan-Out and Fan-In Golang channels in Kubeapps" />
+<meta property="og:description" content="During a career as a software engineer, every now and then you come across a design pattern that becomes your darling for a few years following the discovery. Other design patterns are useful, but not so special that you want to tell the world about them.
+Up until recently, my favourite design pattern was the state pattern which allows encapsulating different behaviours (implementations of an interface) in different classes so that an object can delegate its functionality to different state implementations which can be update at runtime. But more recently, while using a lot of concurrency in certain Kubeapps services, I&rsquo;ve fallen in love with another design pattern - the fan-out/fan-in messaging pattern (or a form of it).">
+<meta property="og:image" content="https://liveandletlearn.net/img/avatar-icon.png" />
+<meta property="og:url" content="https://liveandletlearn.net/post/fan-out-fan-in-golang-kubeapps/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Live and let Learn" />
+
+  <meta name="twitter:title" content="Fan-Out and Fan-In Golang channels in Kubeapps" />
+  <meta name="twitter:description" content="During a career as a software engineer, every now and then you come across a design pattern that becomes your darling for a few years following the discovery. Other design patterns are useful, but not …">
+  <meta name="twitter:image" content="https://liveandletlearn.net/img/avatar-icon.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@michaelanelson" />
+  <meta name="twitter:creator" content="@michaelanelson" />
+  <link href='https://liveandletlearn.net/img/favicon.ico' rel='icon' type='image/x-icon'/>
+  <meta name="generator" content="Hugo 0.98.0" />
+  <link rel="alternate" href="https://liveandletlearn.net/index.xml" type="application/rss+xml" title="Live and let Learn"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"><link rel="stylesheet" href="https://liveandletlearn.net/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" /><link rel="stylesheet" href="https://liveandletlearn.net/css/syntax.css" /><link rel="stylesheet" href="https://liveandletlearn.net/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://liveandletlearn.net/">Live and let Learn</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="Blog" href="/">Blog</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="About" href="/about/">About</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="Tags" href="/tags">Tags</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="Live and let Learn" href="https://liveandletlearn.net/">
+            <img class="avatar-img" src="https://liveandletlearn.net/img/avatar-icon.png" alt="Live and let Learn" />
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-heading">
+              
+                <h1>Fan-Out and Fan-In Golang channels in Kubeapps</h1>
+              
+              
+              
+              
+                <span class="post-meta">
+  
+  
+  <i class="fas fa-calendar"></i>&nbsp;
+  
+  
+  
+  
+    
+      &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;Michael Nelson
+    
+  
+  
+</span>
+
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        <p>During a career as a software engineer, every now and then you come across a <a href="https://en.wikipedia.org/wiki/Software_design_pattern">design pattern</a> that becomes your darling for a few years following the discovery. Other design patterns are useful, but not so special that you want to tell the world about them.</p>
+<p>Up until recently, my favourite design pattern was the <a href="https://en.wikipedia.org/wiki/State_pattern">state pattern</a> which allows encapsulating different behaviours (implementations of an interface) in different classes so that an object can delegate its functionality to different state implementations which can be update at runtime. But more recently, while using a lot of concurrency in certain <a href="https://github.com/vmware-tanzu/kubeapps/">Kubeapps</a> services, I&rsquo;ve fallen in love with another design pattern - the fan-out/fan-in messaging pattern (or a form of it).</p>
+<h2 id="the-problem">The problem</h2>
+<p>In Kubeapps, we have a <a href="/post/kubeapps-apis-kubernetes-packages/">pluggable API server for supporting different package formats for Kubernetes</a>, allowing users to install, update and delete packages on a cluster with a consistent UX experience across different packaging systems.</p>
+<p><img src="/img/kubeapps-apis-kubernetes-packages/kubeapps-plugable.png" alt="Kubeapps coupled to Helm"></p>
+<p>But how do we handle returning a page of ordered, aggregated available packages from different plugins in a consistent and extensible way, without the client needing to care how the result is composed?</p>
+<p><img src="/img/fan-out-fan-in-golang-kubeapps/available-packages-aggregated.png" alt="Aggregation of available packages"></p>
+<h2 id="the-fan-out">The Fan-Out</h2>
+<p>When a request is received by the core packages API handler for a page of 20 available packages, the handler fans this request out, <a href="https://github.com/vmware-tanzu/kubeapps/blob/6eaeca0d5f23f443af8ed311bbdc225671661c72/cmd/kubeapps-apis/core/packages/v1alpha1/packages_fan_in.go#L169-L224">creating a go-routine for each plugin</a>, where each go-routine sends the results back to the fan-out routine, one at a time, each plugin via its own channel. This allows the fanned-out requests to the plugins to be handled concurrently, looking something like:</p>
+<p><img src="/img/fan-out-fan-in-golang-kubeapps/fan-out.png" alt="The fan-out"></p>
+<p>It&rsquo;s important to note that each channel here is <strong>unbuffered</strong>, so the go-routine created for each plugin will only fetch the next page of results when the current results are exhausted from the channel, and so does only the minimum required amount of work.</p>
+<p>At this point, the fan-out/fan-in routine has three channels of data. How does this help the API handler aggregate ordered data from the configured plugins?</p>
+<h2 id="the-fan-in">The Fan-In</h2>
+<p>Once data is coming in on the input channels, the fan-out/fan-in routine does the following in a loop:</p>
+<ul>
+<li>Ensure it has the latest item from each channel available for comparison,</li>
+<li>Selects the minimum item from those latest available from each channel,</li>
+<li>Sends the selected minimum value down its own channel back to the handler.</li>
+</ul>
+<p>This routine will continue to loop until it has either sent the requested number of items back to the API handler, or it has exhausted all items from all plugins.</p>
+<p>The comparison used to select the minimum is just a string comparison of the related Kubernetes resource <code>Metadata.Name</code>, since this is what the Kubernetes API server returns.</p>
+<h2 id="requesting-further-pages">Requesting further pages</h2>
+<p>With that, the fan-in is able to pass the correct number of aggregated individual items back to the API handler, in order, from the respective plugins which themselves fetch in parallel. It is not overly resource intensive since each plugin is only fetching its own next page of items when required, and importantly, each step is comparatively simple to reason about on its own.</p>
+<p>Finally, to ensure that the client can request a subsequent page of results and continue to receive the correct, ordered, aggregated result from each of the plugins, the aggregated API returns an opaque <code>nextPageToken</code> back to the client. In reality, it&rsquo;s just a JSON-encoded string such as can be seen in the above screenshot of the debugging console: <code>{&quot;helm.packages&quot;:77,&quot;kapp_controller&quot;:13}</code>. When the next request from the client includes this token, the API handler passes each offset to each plugin with when setting up the fan-out, so that each plugin is able to begin at the correct point.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>And that&rsquo;s it! You can read the source for the <a href="https://github.com/vmware-tanzu/kubeapps/blob/f41a14d588662b5c83e22186a10c6aded2f6dd89/cmd/kubeapps-apis/core/packages/v1alpha1/packages.go#L56-L104">API handler for <code>GetAvailablePackagesummaries</code></a> which is kept quite simple, as well as the more substantial code for the <a href="https://github.com/vmware-tanzu/kubeapps/blob/f41a14d588662b5c83e22186a10c6aded2f6dd89/cmd/kubeapps-apis/core/packages/v1alpha1/packages_fan_in.go#L43-L158">fan-out and fan-in with go channels</a>.</p>
+<p>It&rsquo;s so nice to have the primitives of go-routines and channels as part of the core language, and opens up a new set of message-based design patterns to fall in love with in your work!</p>
+
+        
+          <div class="blog-tags">
+            
+              <a href="https://liveandletlearn.net//tags/kubeapps/">kubeapps</a>&nbsp;
+            
+              <a href="https://liveandletlearn.net//tags/vmware/">vmware</a>&nbsp;
+            
+              <a href="https://liveandletlearn.net//tags/golang/">golang</a>&nbsp;
+            
+          </div>
+        
+
+        
+
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="https://liveandletlearn.net/post/kubeapps-apis-kubernetes-packages/" data-toggle="tooltip" data-placement="top" title="Kubeapps APIs - a plugable system supporting different Kubernetes packages">&larr; Previous Post</a>
+            </li>
+          
+          
+        </ul>
+      
+
+
+      
+        
+          
+          <div class="disqus-comments">
+            <div id="disqus_thread"></div>
+<script type="application/javascript">
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "liveandletlearn" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+          </div>
+          
+        
+        
+      
+
+    </div>
+  </div>
+</div>
+
+      
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+                <a href="mailto:absoludity&#43;lll@gmail.com" title="Email me">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://github.com/absoludity" title="GitHub">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://twitter.com/michaelanelson" title="Twitter">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-twitter fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          <li>
+            <a href="" title="RSS">
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              Michael Nelson
+            
+          
+
+          &nbsp;&bull;&nbsp;&copy;
+          
+            2022
+          
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://liveandletlearn.net/">Live and let Learn</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="https://gohugo.io">Hugo v0.98.0</a> powered &nbsp;&bull;&nbsp; Theme <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a> adapted from <a href="https://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer><script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.js" integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/contrib/auto-render.min.js" integrity="sha384-kmZOZB5ObwgQnS/DuDg6TScgOiWWBiVt0plIRkZCmE6rDZGrEOQeHM5PcHi+nyqe" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+<script src="https://liveandletlearn.net/js/main.js"></script><script> renderMathInElement(document.body); </script><script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script><script src="https://liveandletlearn.net/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+
+
+
+    
+  </body>
+</html>
+
