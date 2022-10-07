@@ -8,7 +8,16 @@
     <language>en-us</language>
     <managingEditor>absoludity&#43;lll@gmail.com (Michael Nelson)</managingEditor>
     <webMaster>absoludity&#43;lll@gmail.com (Michael Nelson)</webMaster>
-    <lastBuildDate>Fri, 20 May 2022 15:38:13 +1000</lastBuildDate><atom:link href="https://liveandletlearn.net/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 29 Sep 2022 10:55:50 +1000</lastBuildDate><atom:link href="https://liveandletlearn.net/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>VMware Take 3 Experience With Rust and DBSP</title>
+      <link>https://liveandletlearn.net/post/vmware-take-3-experience-with-rust-and-dbsp/</link>
+      <pubDate>Thu, 29 Sep 2022 10:55:50 +1000</pubDate>
+      <author>absoludity&#43;lll@gmail.com (Michael Nelson)</author>
+      <guid>https://liveandletlearn.net/post/vmware-take-3-experience-with-rust-and-dbsp/</guid>
+      <description>One of the great aspects of working at a larger company like VMware is that there are programs like Take 3, designed to help people who meet certain criteria to take 3 months on a different project to learn new skills in other contexts and bring those skills and experience back to their team - rather than potentially looking elsewhere for a similar learning experience. This post documents my own recent learning experience of an exciting Take3 project at VMware, with the hope that others may be able to take up the opportunity to learn and bring new skills back to their teams.</description>
+    </item>
+    
     <item>
       <title>Fan-Out and Fan-In Golang channels in Kubeapps</title>
       <link>https://liveandletlearn.net/post/fan-out-fan-in-golang-kubeapps/</link>

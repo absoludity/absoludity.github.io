@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/WebPage">
+  <head>
+    
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>VMware Take 3 Experience With Rust and DBSP - Live and let Learn</title>
+  <meta name="description" content="One of the great aspects of working at a larger company like VMware is that there are programs like Take 3, designed to help people who meet certain criteria to take 3 months on a different project to learn new skills in other contexts and bring those skills and experience back to their team - rather than potentially looking elsewhere for a similar learning experience. This post documents my own recent learning experience of an exciting Take3 project at VMware, with the hope that others may be able to take up the opportunity to learn and bring new skills back to their teams.">
+  <meta name="author" content="Michael Nelson"/><script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "WebSite",
+    "name": "Live and let Learn",
+    
+    "url": "https:\/\/liveandletlearn.net\/"
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Organization",
+  "name": "",
+  "url": "https:\/\/liveandletlearn.net\/"
+  
+  
+  
+  
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@id": "https:\/\/liveandletlearn.net\/",
+          "name": "home"
+        }
+    },{
+        "@type": "ListItem",
+        "position": 3,
+        "item": {
+          "@id": "https:\/\/liveandletlearn.net\/post\/vmware-take-3-experience-with-rust-and-dbsp\/",
+          "name": "Vmware take 3 experience with rust and dbsp"
+        }
+    }]
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "author": {
+    "name" : "Michael Nelson"
+  },
+  "headline": "VMware Take 3 Experience With Rust and DBSP",
+  "description" : "One of the great aspects of working at a larger company like VMware is that there are programs like Take 3, designed to help people who meet certain criteria to take 3 months on a different project to learn new skills in other contexts and bring those skills and experience back to their team - rather than potentially looking elsewhere for a similar learning experience. This post documents my own recent learning experience of an exciting Take3 project at VMware, with the hope that others may be able to take up the opportunity to learn and bring new skills back to their teams.",
+  "inLanguage" : "en",
+  "wordCount":  3943 ,
+  "datePublished" : "2022-09-29T10:55:50",
+  "dateModified" : "2022-09-29T10:55:50",
+  "image" : "https:\/\/liveandletlearn.net\/img\/avatar-icon.png",
+  "keywords" : [ "" ],
+  "mainEntityOfPage" : "https:\/\/liveandletlearn.net\/post\/vmware-take-3-experience-with-rust-and-dbsp\/",
+  "publisher" : {
+    "@type": "Organization",
+    "name" : "https:\/\/liveandletlearn.net\/",
+    "logo" : {
+        "@type" : "ImageObject",
+        "url" : "https:\/\/liveandletlearn.net\/img\/avatar-icon.png",
+        "height" :  60 ,
+        "width" :  60
+    }
+  }
+}
+</script>
+
+<meta property="og:title" content="VMware Take 3 Experience With Rust and DBSP" />
+<meta property="og:description" content="One of the great aspects of working at a larger company like VMware is that there are programs like Take 3, designed to help people who meet certain criteria to take 3 months on a different project to learn new skills in other contexts and bring those skills and experience back to their team - rather than potentially looking elsewhere for a similar learning experience. This post documents my own recent learning experience of an exciting Take3 project at VMware, with the hope that others may be able to take up the opportunity to learn and bring new skills back to their teams.">
+<meta property="og:image" content="https://liveandletlearn.net/img/avatar-icon.png" />
+<meta property="og:url" content="https://liveandletlearn.net/post/vmware-take-3-experience-with-rust-and-dbsp/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Live and let Learn" />
+
+  <meta name="twitter:title" content="VMware Take 3 Experience With Rust and DBSP" />
+  <meta name="twitter:description" content="One of the great aspects of working at a larger company like VMware is that there are programs like Take 3, designed to help people who meet certain criteria to take 3 months on a different project to …">
+  <meta name="twitter:image" content="https://liveandletlearn.net/img/avatar-icon.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@michaelanelson" />
+  <meta name="twitter:creator" content="@michaelanelson" />
+  <link href='https://liveandletlearn.net/img/favicon.ico' rel='icon' type='image/x-icon'/>
+  <meta name="generator" content="Hugo 0.99.1" />
+  <link rel="alternate" href="https://liveandletlearn.net/index.xml" type="application/rss+xml" title="Live and let Learn"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"><link rel="stylesheet" href="https://liveandletlearn.net/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" /><link rel="stylesheet" href="https://liveandletlearn.net/css/syntax.css" /><link rel="stylesheet" href="https://liveandletlearn.net/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://liveandletlearn.net/">Live and let Learn</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="Blog" href="/">Blog</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="About" href="/about/">About</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="Tags" href="/tags">Tags</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="Live and let Learn" href="https://liveandletlearn.net/">
+            <img class="avatar-img" src="https://liveandletlearn.net/img/avatar-icon.png" alt="Live and let Learn" />
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-heading">
+              
+                <h1>VMware Take 3 Experience With Rust and DBSP</h1>
+              
+              
+              
+              
+                <span class="post-meta">
+  
+  
+  <i class="fas fa-calendar"></i>&nbsp;
+  
+  
+  
+  
+    
+      &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;Michael Nelson
+    
+  
+  
+</span>
+
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        <p>One of the great aspects of working at a larger company like VMware is that there are programs like <a href="https://www.linkedin.com/feed/update/urn:li:activity:6605138622859534336/">Take 3</a>, designed to help people who meet certain criteria to take <strong>3 months on a different project to learn new skills in other contexts</strong> and bring those skills and experience back to their team - rather than potentially looking elsewhere for a similar learning experience. This post documents <strong>my own recent learning experience of an exciting Take3 project at VMware, with the hope that others may be able to take up the opportunity to learn and bring new skills back to their teams</strong>.</p>
+<p>At the time of writing, I&rsquo;ve been working at Bitnami (pre-acquisition) and then VMware for over five years, with most of that time spent improving and adding features to the excellent <a href="https://kubeapps.dev/">Kubeapps application</a>. Kubeapps is mostly written in <a href="https://go.dev/">Go</a> with <a href="https://reactjs.org/">React</a> for the frontend, but a year or two ago when we needed a new-yet-temporary service for Kubeapps, an authentication proxy to extend the functionality of <a href="https://pinniped.dev/">VMware Pinniped authentication project</a>, we chose a different tool for the job. After some consideration, we designed and implemented the pinniped-proxy service for Kubeapps using the <a href="https://www.rust-lang.org/">Rust language</a> - a language I&rsquo;d played with for a few years and that is widely recognised as having great potential for writing secure software into the future. Not only has our Rust-based pinniped-proxy service fulfilled its purpose ever since, but it also left me with a keen desire to <strong>continue building my skills and fluency with all aspects of the Rust - &ldquo;a language empowering everyone to build reliable and efficient software&rdquo;</strong>.</p>
+<h2 id="a-learning-opportunity">A learning opportunity</h2>
+<p>Right at the time that a few events at work had left me wondering whether it was a good time to look for an opportunity to do so, <a href="https://github.com/ryzhyk">Leonid</a>, a colleague from the VMware Research Group, posted about a Take3 opportunity with the <a href="https://github.com/vmware/database-stream-processor/">Database Stream Processing</a> (DBSP) team within the <a href="https://research.vmware.com/">VMware Research Group</a>. When I saw this project advertised internally, I contacted Leonid straight away as not only was it a Rust codebase but also an interesting project working with a research group that aims to put new research and ideas into the hands of users - something I&rsquo;ve wanted get back to for quite some time.</p>
+<h2 id="database-stream-processing---computing-over-streaming-data">Database Stream Processing - Computing over streaming data</h2>
+<p>As outlined in the <a href="https://github.com/vmware/database-stream-processor/">DBSP Readme</a>,</p>
+<blockquote>
+<p>Computing over streaming data is hard. Streaming computations operate over changing inputs and must continuously update their outputs as new inputs arrive. They must do so in real time, processing new data and producing outputs with a bounded delay.</p>
+</blockquote>
+<p>A simple, relevant example of streaming input is a stream of events comprised of new users, new auctions and new bids on those auctions. The output of the computation might (rarely) be as simple as the same streamed data in a different currency, or a more complicated computation such as a stream of the average selling price for each seller, for their last 10 closed auctions. Given that the input stream can be infinite, <strong>the computation must be bounded in some way</strong>: calculating the average selling price for all sellers for all their auctions through time leads to an infinite storage requirement, so the data is chunked into smaller windows of data (you can read more about <a href="https://nightlies.apache.org/flink/flink-docs-master/docs/dev/datastream/operators/windows/">windows of streamed data in the Apache Flink documenation</a>.</p>
+<p>One major difference that the DBSP project offers is the ability to maintain both the output stream and the intermediate states via <strong>incremental updates, operating only on <em>changes</em> of the data</strong>. For example, rather than maintaining the average selling price for each seller by re-evaluating the set of last 10 closed auctions for each seller as more data arrives, a DBSP operator can add or remove closed auctions from the intermediate calculation only as they change, which in turn enables another chained DBSP operator to output events only when the aggregate changes. Although the example is not perfect (this query can also be done efficiently with existing stream processing applications), the intent is to outline how <strong>DBSP&rsquo;s incremental operators provide an expressive language for complex queries of streamed data to run more efficiently than would otherwise be possible</strong>. Where existing data processing systems require batch mode to execute more complex business logic queries, DBSP promises to do so as a streaming computation.</p>
+<h2 id="benchmarking-dbsp">Benchmarking DBSP</h2>
+<p>The goal of my work with the DBSP project was to investigate and implement the <a href="https://github.com/nexmark/nexmark">Nexmark Benchmark for streaming computations</a> using DBSP, which would also help identify as-yet unimplemented functionality in DBSP. Specifically, my work during the 3 months of the Take3 opportunity can be broken down into roughly four components, which I&rsquo;ll detail separately below:</p>
+<ol>
+<li><a href="#a-rust-nexmark-generator">writing a Rust version of the Nexmark event generator</a>,</li>
+<li><a href="#writing-nexmark-queries">writing the Nexmark queries using DBSP operators</a>,</li>
+<li><a href="#a-benchmark-binary">writing the benchmark binary</a>, and</li>
+<li><a href="#reproducing-flink-nexmark">reproducing the original Nexmark benchmark results and the DBSP results on the same (virtual) hardware</a>.</li>
+</ol>
+<p>The preliminary result was that we could show that DBSP can run the Nexmark Benchmark queries on average nearly 4 times faster with 7 times the throughput per CPU (ie. less CPU cores), using a single machine with 16 cores, rather than a cluster of machines (with 16 cores each, though the Java/Flink benchmark does not utilize all 16).</p>
+<p><img src="https://raw.githubusercontent.com/absoludity/nexmark-flink-dbsp-configuration/main/charts/Nexmark-DBSP-vs-Flink-Elapsed-Time.png" alt="Nexmark Benchmark timings of DBSP vs Flink"></p>
+<h3 id="a-rust-nexmark-generator">1. A Rust Nexmark Event Generator</h3>
+<p>Initially I spent some time investigating whether we could re-use the Java Nexmark source generator, but found it to be a <strong>specific implementation of the Nexmark data source for running against Flink</strong>. That is, although the code includes a <a href="https://github.com/nexmark/nexmark/blob/54974ef36a0d01ef8ebc0b4ba39cfc50136af0f6/nexmark-flink/src/main/java/com/github/nexmark/flink/generator/NexmarkGenerator.java#L175-L212">generic nextEvent implementation</a> that generates a bid, auction or person in the correct proportions, it integrates this generator with <a href="https://github.com/nexmark/nexmark/blob/54974ef36a0d01ef8ebc0b4ba39cfc50136af0f6/nexmark-flink/src/main/java/com/github/nexmark/flink/generator/NexmarkGenerator.java#L20">Flink-specific Java functions</a> and <a href="https://github.com/nexmark/nexmark/blob/master/nexmark-flink/src/main/java/com/github/nexmark/flink/source/NexmarkSourceFunction.java#L40">extends Flink&rsquo;s RichParallelSourceFunction class</a> to provide this generated data specifically to Flink. I spent some time looking for ways that we may be able to use this as an input (including the interesting <a href="https://crates.io/crates/j4rs">JAVA for Rust crate</a>), before looking for any similar Rust implementations. In the same way, the only existing Rust implementation of the Nexmark Source that I could find was specific to the project being benchmarked (in that case, <a href="https://github.com/strymon-system/megaphone/tree/master/nexmark">Megaphone</a>).</p>
+<p>So I began porting the Java implementation to create a generic Rust Nexmark source event generator, with the intention that we could move it to a separate repository and use a gRPC interface or similar so that it&rsquo;s a language-independent Nexmark source. It wasn&rsquo;t a straight port, nor was it always easy to understand the original intention for different parts of the codebase, and sometimes I found what <a href="https://github.com/nexmark/nexmark/issues/30">appear to be small issues</a>, but for the most part it was great to apply and extend my existing Rust skills on a known specification, with very helpful reviews from <a href="https://github.com/ryzhyk">Leonid</a> and <a href="https://github.com/Kixiron">Chase</a> usually resulting in simpler code due to Rust&rsquo;s language features and macros.</p>
+<p>As a simple example, the <a href="https://github.com/nexmark/nexmark/blob/54974ef36a0d01ef8ebc0b4ba39cfc50136af0f6/nexmark-flink/src/main/java/com/github/nexmark/flink/model/Event.java">Java implementation for a Nexmark Event</a> is a class with 3 nullable fields for a possible <code>Person</code>, <code>Auction</code> or <code>Bid</code>, together with a <code>Type</code> enum that specifies <em>which</em> type of event is represented by the object. It then also overrides <code>equals</code>, <code>hashCode</code> and <code>toString</code> with specific implementations. Compare that with the <a href="https://github.com/vmware/database-stream-processor/blob/d796ecb4259470a3a2b81203c10ef5783cf4c685/src/nexmark/model.rs#L65-L72">equivalent Rust implementation</a> which does all of the above in 6 lines by using macros to automatically derive the <code>Eq</code>, <code>Hash</code>, and <code>Debug</code> traits, and uses a <a href="https://doc.rust-lang.org/book/ch06-01-defining-an-enum.html#enum-values">Rust <code>Enum</code> with an associated data</a> rather than a full-blown struct/object:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="sd">/// An event in the auction system, either a (new) `Person`, a (new) `Auction`,
+</span></span></span><span class="line"><span class="cl"><span class="sd">/// or a `Bid`.
+</span></span></span><span class="line"><span class="cl"><span class="sd"></span><span class="cp">#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd, SizeOf)]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">pub</span><span class="w"> </span><span class="k">enum</span> <span class="nc">Event</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">Person</span><span class="p">(</span><span class="n">Person</span><span class="p">),</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">Auction</span><span class="p">(</span><span class="n">Auction</span><span class="p">),</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">Bid</span><span class="p">(</span><span class="n">Bid</span><span class="p">),</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>With a single thread generating the Nexmark events, I could process 1.5M events per second with the <code>q0</code> no-op query, which, interestingly, matched the throughput/elapsed time of the Java implementation (~70s for 100M events):</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">cargo bench --bench nexmark --features with-nexmark -- --query q0 --max-events 100000000 --cpu-cores 8 --num-event-generators 1
+</span></span><span class="line"><span class="cl">...
+</span></span><span class="line"><span class="cl">┌───────┬─────────────┬───────┬─────────┬─────────────────┬──────────────────┬───────────────┬───────────────┬─────────────┬───────────┬────────────────┬─────────────┬─────────────┐
+</span></span><span class="line"><span class="cl">│ Query │ #Events     │ Cores │ Elapsed │ Cores * Elapsed │ Throughput/Cores │ Total Usr CPU │ Total Sys CPU │ Current RSS │ Peak RSS  │ Current Commit │ Peak Commit │ Page Faults │
+</span></span><span class="line"><span class="cl">├───────┼─────────────┼───────┼─────────┼─────────────────┼──────────────────┼───────────────┼───────────────┼─────────────┼───────────┼────────────────┼─────────────┼─────────────┤
+</span></span><span class="line"><span class="cl">│ q0    │ 100,000,000 │ 8     │ 72.602s │ 580.816s        │ 172.172 K/s      │ 114.163s      │ 592.000ms     │ 112.84 MiB  │ 43.85 MiB │ 112.84 MiB     │ 112.88 MiB  │ 0           │
+</span></span><span class="line"><span class="cl">└───────┴─────────────┴───────┴─────────┴─────────────────┴──────────────────┴───────────────┴───────────────┴─────────────┴───────────┴────────────────┴─────────────┴─────────────┘
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>but was clearly bound by the generator thread, with 43.7% of the processing time spent generating the next event, as can be seen by the <a href="https://github.com/flamegraph-rs/flamegraph">flamegraph</a> generated with:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">cargo flamegraph --bench nexmark --features with-nexmark -- --query q0 --max-events <span class="m">500000</span> --cpu-cores <span class="m">8</span> --num-event-generators <span class="m">1</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><a href="/img/vmware-take3/flamegraph-1-generator.svg"><img src="/img/vmware-take3/flamegraph-1-generator.svg" alt="Flamegraph for q0 with single generator"></a></p>
+<p>(Open the flamegraph in a new tab for a larger, interactive flamegraph)</p>
+<p>Clearly the Nexmark Source would need to be multi-threaded to generate events at a sufficient rate, but the events must also be generated in the specified order. I&rsquo;d recently written about using buffered <a href="/post/kubeapps-apis-kubernetes-packages/">Go channels with the Fan-out/Fan-In pattern</a>, and it turns out that we can do the same pattern using <a href="https://doc.rust-lang.org/std/sync/mpsc/">Rust&rsquo;s standard mpsc channels</a> so that a configurable number of generators run, each in their own thread, as shown in the following code which returns a vector of read handles to the buffered channel for each thread, as a good example of Rust&rsquo;s functional language features:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">next_event_rxs</span>: <span class="nb">Vec</span><span class="o">&lt;</span><span class="n">BatchedReceiver</span><span class="o">&lt;</span><span class="n">NextEvent</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="mi">0</span><span class="o">..</span><span class="n">nexmark_config</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">.</span><span class="n">num_event_generators</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">.</span><span class="n">map</span><span class="p">(</span><span class="o">|</span><span class="n">generator_num</span><span class="o">|</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">GeneratorConfig</span>::<span class="n">new</span><span class="p">(</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">nexmark_config</span><span class="p">.</span><span class="n">clone</span><span class="p">(),</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">wallclock_base_time</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="mi">0</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">generator_num</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">})</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">.</span><span class="n">map</span><span class="p">(</span><span class="o">|</span><span class="n">generator_config</span><span class="o">|</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="p">(</span><span class="k">mut</span><span class="w"> </span><span class="n">tx</span><span class="p">,</span><span class="w"> </span><span class="n">rx</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">batched_channel</span><span class="p">(</span><span class="n">buffer_size</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">thread</span>::<span class="n">Builder</span>::<span class="n">new</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">.</span><span class="n">name</span><span class="p">(</span><span class="fm">format!</span><span class="p">(</span><span class="s">&#34;generator-{}&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">generator_config</span><span class="p">.</span><span class="n">first_event_number</span><span class="p">))</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">.</span><span class="n">spawn</span><span class="p">(</span><span class="k">move</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">generator</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="n">NexmarkGenerator</span>::<span class="n">new</span><span class="p">(</span><span class="n">generator_config</span><span class="p">,</span><span class="w"> </span><span class="n">R</span>::<span class="n">default</span><span class="p">(),</span><span class="w"> </span><span class="n">wallclock_base_time</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="k">while</span><span class="w"> </span><span class="kd">let</span><span class="w"> </span><span class="nb">Ok</span><span class="p">(</span><span class="nb">Some</span><span class="p">(</span><span class="n">event</span><span class="p">))</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">generator</span><span class="p">.</span><span class="n">next_event</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="n">tx</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">event</span><span class="p">).</span><span class="n">unwrap</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">tx</span><span class="p">.</span><span class="n">flush</span><span class="p">().</span><span class="n">unwrap</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">})</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">.</span><span class="n">unwrap</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">rx</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">})</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">.</span><span class="n">collect</span><span class="p">();</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>The <code>map</code> of lines 3-10 creates a generator config with the first event number configured to the generator number. Lines 11-26 then map each generator config to spawn a new thread with that config that simply calls <code>next_event()</code> and sends the next event down the channel for that thread. So generator 0 will begin with event 0 followed by event N, 2N, 3N etc., while generator 1 with begin with event 1 followed by 1 + N, 1 + 2N, and so on until each buffer is full. All the Nexmark source then needs to do is start another thread which reads from each channel in a round-robin pattern to send the events in order down the single output channel for the consumer. With this pattern, we can get the elapsed time for processing 100M events down to 18s, with a throughput of 703K events per second on each core.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">cargo bench --bench nexmark --features with-nexmark -- --query q0 --max-events 100000000 --cpu-cores 8 --num-event-generators 8
+</span></span><span class="line"><span class="cl">...
+</span></span><span class="line"><span class="cl">┌───────┬─────────────┬───────┬─────────┬─────────────────┬──────────────────┬───────────────┬───────────────┬─────────────┬────────────┬────────────────┬─────────────┬─────────────┐
+</span></span><span class="line"><span class="cl">│ Query │ #Events     │ Cores │ Elapsed │ Cores * Elapsed │ Throughput/Cores │ Total Usr CPU │ Total Sys CPU │ Current RSS │ Peak RSS   │ Current Commit │ Peak Commit │ Page Faults │
+</span></span><span class="line"><span class="cl">├───────┼─────────────┼───────┼─────────┼─────────────────┼──────────────────┼───────────────┼───────────────┼─────────────┼────────────┼────────────────┼─────────────┼─────────────┤
+</span></span><span class="line"><span class="cl">│ q0    │ 100,000,000 │ 8     │ 17.788s │ 142.304s        │ 702.721 K/s      │ 173.451s      │ 1.045s        │ 720.91 MiB  │ 234.06 MiB │ 720.91 MiB     │ 720.95 MiB  │ 0           │
+</span></span><span class="line"><span class="cl">└───────┴─────────────┴───────┴─────────┴─────────────────┴──────────────────┴───────────────┴───────────────┴─────────────┴────────────┴────────────────┴─────────────┴─────────────┘
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Checking the flamegraph of the same, we see that together the 8 generators are using a similar amount of CPU time (40-45%) as before, but distributed across the 8 threads means that the elapsed time to generate the events is around 1/8th of what it was previously, while other code that previous waited on the source for the next event no longer waits as long.</p>
+<p><a href="/img/vmware-take3/flamegraph-8-generators.svg"><img src="/img/vmware-take3/flamegraph-8-generators.svg" alt="Flamegraph for q0 with 8 generators"></a></p>
+<p>The chart below charts the rate at which events are processed for <code>q0</code> with a growing number of generators, peaking at around 7 or 8 generators:</p>
+<p><img src="/img/vmware-take3/Generated%20Event%20Rate%20vs.%20Number%20of%20sources.svg" alt="Generated event rate vs number of sources"></p>
+<p>Of course, the <a href="https://github.com/vmware/database-stream-processor/blob/d796ecb4259470a3a2b81203c10ef5783cf4c685/src/nexmark/mod.rs#L233-L394">Nexmark source is unit-tested</a> as is the <a href="https://github.com/vmware/database-stream-processor/blob/d796ecb4259470a3a2b81203c10ef5783cf4c685/src/nexmark/generator/mod.rs#L137-L350">generator code</a>, to ensure that the correct events are generated in the expected order. Note that, similar to the original Java implementation, the Nexmark source never floods the process with extra events, but rather, new events are only generated when there is space in each generator&rsquo;s buffered channel. If you&rsquo;ve not used the Fan-out/Fan-In pattern mentioned above, I&rsquo;d encourage you to read <a href="/post/kubeapps-apis-kubernetes-packages/">Fan-out/Fan-In pattern with Go-lang and Kubeapps</a> or watch the 3D demo with the excellent Infinifactory game 
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/hRQpU-w8fEY" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+:</p>
+<h3 id="writing-nexmark-queries">2. Writing the Nexmark queries using DBSP operators</h3>
+<p>While working on the above Nexmark source generator, I also began <strong>learning more about DBSP&rsquo;s operators</strong> and how to use them to replicate similar SQL functionality to write the 22 queries that comprise the complete Nexmark benchmark suite. The task began with simple inner joints and worked towards more complicated queries.</p>
+<h4 id="a-simple-example-nexmark-query-3">A simple example: Nexmark Query 3</h4>
+<p>As an example, the 3rd Nexmark query filters to find seller and auction details for auctions in a certain category sold by sellers living in selected states. So the SQL looks quite straight forward as it is identical to a non-streamed SQL query:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">discard_sink</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">SELECT</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">P</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">P</span><span class="p">.</span><span class="n">city</span><span class="p">,</span><span class="w"> </span><span class="n">P</span><span class="p">.</span><span class="k">state</span><span class="p">,</span><span class="w"> </span><span class="n">A</span><span class="p">.</span><span class="n">id</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">FROM</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">auction</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="k">INNER</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">person</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">P</span><span class="w"> </span><span class="k">on</span><span class="w"> </span><span class="n">A</span><span class="p">.</span><span class="n">seller</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">P</span><span class="p">.</span><span class="n">id</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">WHERE</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">A</span><span class="p">.</span><span class="n">category</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="p">(</span><span class="n">P</span><span class="p">.</span><span class="k">state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;OR&#39;</span><span class="w"> </span><span class="k">OR</span><span class="w"> </span><span class="n">P</span><span class="p">.</span><span class="k">state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;ID&#39;</span><span class="w"> </span><span class="k">OR</span><span class="w"> </span><span class="n">P</span><span class="p">.</span><span class="k">state</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="s1">&#39;CA&#39;</span><span class="p">);</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>The equivalent DBSP query is a little more verbose without its own domain-specific language, but benefits from the full expressiveness of Rust&rsquo;s functional features:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">pub</span><span class="w"> </span><span class="k">fn</span> <span class="nf">q3</span><span class="p">(</span><span class="n">input</span>: <span class="nc">NexmarkStream</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nc">Q3Stream</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// Select auctions of interest and index them by seller id.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">auction_by_seller</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">input</span><span class="p">.</span><span class="n">flat_map_index</span><span class="p">(</span><span class="o">|</span><span class="n">event</span><span class="o">|</span><span class="w"> </span><span class="k">match</span><span class="w"> </span><span class="n">event</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Event</span>::<span class="n">Auction</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">category</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">CATEGORY_OF_INTEREST</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="nb">Some</span><span class="p">((</span><span class="n">a</span><span class="p">.</span><span class="n">seller</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">id</span><span class="p">)),</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">_</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="nb">None</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">});</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// Select people from states of interest and index them by person id.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">person_by_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">input</span><span class="p">.</span><span class="n">flat_map_index</span><span class="p">(</span><span class="o">|</span><span class="n">event</span><span class="o">|</span><span class="w"> </span><span class="k">match</span><span class="w"> </span><span class="n">event</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Event</span>::<span class="n">Person</span><span class="p">(</span><span class="n">p</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="k">match</span><span class="w"> </span><span class="n">STATES_OF_INTEREST</span><span class="p">.</span><span class="n">contains</span><span class="p">(</span><span class="o">&amp;</span><span class="n">p</span><span class="p">.</span><span class="n">state</span><span class="p">.</span><span class="n">as_str</span><span class="p">())</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="kc">true</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="nb">Some</span><span class="p">((</span><span class="n">p</span><span class="p">.</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="n">name</span><span class="p">.</span><span class="n">clone</span><span class="p">(),</span><span class="w"> </span><span class="n">p</span><span class="p">.</span><span class="n">city</span><span class="p">.</span><span class="n">clone</span><span class="p">(),</span><span class="w"> </span><span class="n">p</span><span class="p">.</span><span class="n">state</span><span class="p">.</span><span class="n">clone</span><span class="p">()))),</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="kc">false</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="nb">None</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">},</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">_</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="nb">None</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">});</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// In the future, it won&#39;t be necessary to specify type arguments to join.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">    </span><span class="n">auction_by_seller</span><span class="p">.</span><span class="n">join</span>::<span class="o">&lt;</span><span class="p">(),</span><span class="w"> </span><span class="n">_</span><span class="p">,</span><span class="w"> </span><span class="n">_</span><span class="p">,</span><span class="w"> </span><span class="n">_</span><span class="o">&gt;</span><span class="p">(</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="o">&amp;</span><span class="n">person_by_id</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="o">|</span><span class="n">_seller</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">auction_id</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">city</span><span class="p">,</span><span class="w"> </span><span class="n">state</span><span class="p">)</span><span class="o">|</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">(</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">name</span><span class="p">.</span><span class="n">to_string</span><span class="p">(),</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">city</span><span class="p">.</span><span class="n">to_string</span><span class="p">(),</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">state</span><span class="p">.</span><span class="n">to_string</span><span class="p">(),</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">auction_id</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">},</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>The <code>flat_map_index</code> DBSP stream function takes a closure that receives an event and returns either a 2-tuple of the index value and related values, or <code>None</code>, with the resulting stream emitting the indexed values. So line 3 above creates a stream <code>auction_by_seller</code> of auction ids indexed by the seller id, for only those auctions of the specific category. Similarly, line 9 creates a stream <code>person_by_id</code>, of people&rsquo;s data for those people who live in the specific states. Finally, line 18 performs a join on the two indexed streams, joining on the person id to return the name, city, state and auction id for all people who created an auction with the specified category who also live in one of the specified states.</p>
+<p>Where the Flink cluster of 8 machines takes 76.5s to process 100M events, the DBSP query in rust, running on a single machine but utilizing 8 cores, takes 21.5s.</p>
+<h4 id="a-more-complicated-example-nexmark-query-5">A more complicated example: Nexmark Query 5</h4>
+<p>Let&rsquo;s look at a more complicated query that benefits from DBSP&rsquo;s expressiveness. Below is the Flink SQL query for Nexmark query 5. It is hard to decipher, but the aim is to show the auctions that have had the highest number of bids in the last 10 second window, with a new window created every 2 seconds (ie. if the first window is from 0-10 seconds, the next is from 2-12, then 4-14 etc.):</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">discard_sink</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">SELECT</span><span class="w"> </span><span class="n">AuctionBids</span><span class="p">.</span><span class="n">auction</span><span class="p">,</span><span class="w"> </span><span class="n">AuctionBids</span><span class="p">.</span><span class="n">num</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="p">(</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="k">SELECT</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">     </span><span class="n">B1</span><span class="p">.</span><span class="n">auction</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">     </span><span class="k">count</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">num</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">     </span><span class="n">HOP_START</span><span class="p">(</span><span class="n">B1</span><span class="p">.</span><span class="n">dateTime</span><span class="p">,</span><span class="w"> </span><span class="nb">INTERVAL</span><span class="w"> </span><span class="s1">&#39;2&#39;</span><span class="w"> </span><span class="k">SECOND</span><span class="p">,</span><span class="w"> </span><span class="nb">INTERVAL</span><span class="w"> </span><span class="s1">&#39;10&#39;</span><span class="w"> </span><span class="k">SECOND</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">starttime</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">     </span><span class="n">HOP_END</span><span class="p">(</span><span class="n">B1</span><span class="p">.</span><span class="n">dateTime</span><span class="p">,</span><span class="w"> </span><span class="nb">INTERVAL</span><span class="w"> </span><span class="s1">&#39;2&#39;</span><span class="w"> </span><span class="k">SECOND</span><span class="p">,</span><span class="w"> </span><span class="nb">INTERVAL</span><span class="w"> </span><span class="s1">&#39;10&#39;</span><span class="w"> </span><span class="k">SECOND</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">endtime</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="k">FROM</span><span class="w"> </span><span class="n">bid</span><span class="w"> </span><span class="n">B1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">     </span><span class="n">B1</span><span class="p">.</span><span class="n">auction</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">     </span><span class="n">HOP</span><span class="p">(</span><span class="n">B1</span><span class="p">.</span><span class="n">dateTime</span><span class="p">,</span><span class="w"> </span><span class="nb">INTERVAL</span><span class="w"> </span><span class="s1">&#39;2&#39;</span><span class="w"> </span><span class="k">SECOND</span><span class="p">,</span><span class="w"> </span><span class="nb">INTERVAL</span><span class="w"> </span><span class="s1">&#39;10&#39;</span><span class="w"> </span><span class="k">SECOND</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">AuctionBids</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="p">(</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="k">SELECT</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">     </span><span class="k">max</span><span class="p">(</span><span class="n">CountBids</span><span class="p">.</span><span class="n">num</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">maxn</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">     </span><span class="n">CountBids</span><span class="p">.</span><span class="n">starttime</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">     </span><span class="n">CountBids</span><span class="p">.</span><span class="n">endtime</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="k">FROM</span><span class="w"> </span><span class="p">(</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">     </span><span class="k">SELECT</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">       </span><span class="k">count</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">num</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">       </span><span class="n">HOP_START</span><span class="p">(</span><span class="n">B2</span><span class="p">.</span><span class="n">dateTime</span><span class="p">,</span><span class="w"> </span><span class="nb">INTERVAL</span><span class="w"> </span><span class="s1">&#39;2&#39;</span><span class="w"> </span><span class="k">SECOND</span><span class="p">,</span><span class="w"> </span><span class="nb">INTERVAL</span><span class="w"> </span><span class="s1">&#39;10&#39;</span><span class="w"> </span><span class="k">SECOND</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">starttime</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">       </span><span class="n">HOP_END</span><span class="p">(</span><span class="n">B2</span><span class="p">.</span><span class="n">dateTime</span><span class="p">,</span><span class="w"> </span><span class="nb">INTERVAL</span><span class="w"> </span><span class="s1">&#39;2&#39;</span><span class="w"> </span><span class="k">SECOND</span><span class="p">,</span><span class="w"> </span><span class="nb">INTERVAL</span><span class="w"> </span><span class="s1">&#39;10&#39;</span><span class="w"> </span><span class="k">SECOND</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">endtime</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">     </span><span class="k">FROM</span><span class="w"> </span><span class="n">bid</span><span class="w"> </span><span class="n">B2</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">     </span><span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">       </span><span class="n">B2</span><span class="p">.</span><span class="n">auction</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">       </span><span class="n">HOP</span><span class="p">(</span><span class="n">B2</span><span class="p">.</span><span class="n">dateTime</span><span class="p">,</span><span class="w"> </span><span class="nb">INTERVAL</span><span class="w"> </span><span class="s1">&#39;2&#39;</span><span class="w"> </span><span class="k">SECOND</span><span class="p">,</span><span class="w"> </span><span class="nb">INTERVAL</span><span class="w"> </span><span class="s1">&#39;10&#39;</span><span class="w"> </span><span class="k">SECOND</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">     </span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">CountBids</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">CountBids</span><span class="p">.</span><span class="n">starttime</span><span class="p">,</span><span class="w"> </span><span class="n">CountBids</span><span class="p">.</span><span class="n">endtime</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">MaxBids</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">AuctionBids</span><span class="p">.</span><span class="n">starttime</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">MaxBids</span><span class="p">.</span><span class="n">starttime</span><span class="w"> </span><span class="k">AND</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">AuctionBids</span><span class="p">.</span><span class="n">endtime</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">MaxBids</span><span class="p">.</span><span class="n">endtime</span><span class="w"> </span><span class="k">AND</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">AuctionBids</span><span class="p">.</span><span class="n">num</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">MaxBids</span><span class="p">.</span><span class="n">maxn</span><span class="p">;</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>The <a href="https://github.com/vmware/database-stream-processor/blob/b58321f756efa2f534839ca2c634c614be858eff/src/nexmark/queries/q5.rs#L76-L118">equivalent DBSP code for q5</a> is both shorter (with comments removed) and more expressive - though still complicated due to the nature of the query. Let&rsquo;s take a look step-by-step.</p>
+<p>First, we need to define the 10 second window as the query progresses, so we start by creating a stream of auction ids for bids, indexed by the time of the bid:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">bids_by_time</span>: <span class="nc">Stream</span><span class="o">&lt;</span><span class="n">_</span><span class="p">,</span><span class="w"> </span><span class="n">OrdIndexedZSet</span><span class="o">&lt;</span><span class="kt">u64</span><span class="p">,</span><span class="w"> </span><span class="kt">u64</span><span class="p">,</span><span class="w"> </span><span class="n">_</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">input</span><span class="p">.</span><span class="n">flat_map_index</span><span class="p">(</span><span class="o">|</span><span class="n">event</span><span class="o">|</span><span class="w"> </span><span class="k">match</span><span class="w"> </span><span class="n">event</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">Event</span>::<span class="n">Bid</span><span class="p">(</span><span class="n">b</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="nb">Some</span><span class="p">((</span><span class="n">b</span><span class="p">.</span><span class="n">date_time</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">.</span><span class="n">auction</span><span class="p">)),</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">_</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="nb">None</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">});</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>When doing calculations and aggregates on streaming data, one important point is that data can arrive both late and hence, out of order. For this reason, we don&rsquo;t want to calculate our 10 second window up until the current time, but rather, define a watermark, an interval into the past, at which point we consider all data to have arrived, allowing a consistent calculation. In our case, we have a constant <code>WATERMARK_INTERVAL_SECONDS</code> set to 4 seconds to match the Flink configuration, which we use to define the watermark stream function for any given date time, as 4 seconds in the past:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">watermark</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">bids_by_time</span><span class="p">.</span><span class="n">watermark_monotonic</span><span class="p">(</span><span class="o">|</span><span class="n">date_time</span><span class="o">|</span><span class="w"> </span><span class="n">date_time</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">WATERMARK_INTERVAL_SECONDS</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">1000</span><span class="p">);</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>which we then use to create the window bounds: for each <code>date_time</code> of the watermark, we first floor the number to the nearest two seconds (<code>TUMBLE_SECONDS</code> is set to 2) and use that as the upper bound of the window, with the lower bound being 10 seconds earlier (<code>WINDOW_WIDTH_SECONDS</code> is set to 10):</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">window_bounds</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">watermark</span><span class="p">.</span><span class="n">apply</span><span class="p">(</span><span class="o">|</span><span class="n">watermark</span><span class="o">|</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">watermark_rounded</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">*</span><span class="n">watermark</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">watermark</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="p">(</span><span class="n">TUMBLE_SECONDS</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">1000</span><span class="p">));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">(</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">watermark_rounded</span><span class="p">.</span><span class="n">saturating_sub</span><span class="p">(</span><span class="n">WINDOW_WIDTH_SECONDS</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">1000</span><span class="p">),</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">watermark_rounded</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">});</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>Now we can use our window bounds to limit the indexed bids to those present in the window, giving us a stream of <code>auction_id</code>&rsquo;s from the bids in the defined window only (it&rsquo;s not obvious, but the <code>window</code> function consumes the <code>date_time</code>):</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">windowed_bids</span>: <span class="nc">Stream</span><span class="o">&lt;</span><span class="n">_</span><span class="p">,</span><span class="w"> </span><span class="n">OrdZSet</span><span class="o">&lt;</span><span class="kt">u64</span><span class="p">,</span><span class="w"> </span><span class="n">_</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bids_by_time</span><span class="p">.</span><span class="n">window</span><span class="p">(</span><span class="o">&amp;</span><span class="n">window_bounds</span><span class="p">);</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>Next, we aggregate the auctions - simply counting 1 for each so we have, for each <code>auction_id</code>, how many bids were made during the defined window, then pass this stream into another aggregate, this time creating a stream of the maximum count of bids for the window:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">auction_counts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">windowed_bids</span><span class="p">.</span><span class="n">aggregate_linear</span>::<span class="o">&lt;</span><span class="p">(),</span><span class="w"> </span><span class="n">_</span><span class="p">,</span><span class="w"> </span><span class="n">_</span><span class="o">&gt;</span><span class="p">(</span><span class="o">|&amp;</span><span class="n">_key</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="p">()</span><span class="o">|</span><span class="w"> </span>-&gt; <span class="kt">isize</span> <span class="p">{</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">});</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">max_auction_count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">auction_counts</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">.</span><span class="n">map_index</span><span class="p">(</span><span class="o">|</span><span class="p">(</span><span class="n">_auction</span><span class="p">,</span><span class="w"> </span><span class="n">count</span><span class="p">)</span><span class="o">|</span><span class="w"> </span><span class="p">((),</span><span class="w"> </span><span class="o">*</span><span class="n">count</span><span class="p">))</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">.</span><span class="n">aggregate</span>::<span class="o">&lt;</span><span class="p">(),</span><span class="w"> </span><span class="n">_</span><span class="o">&gt;</span><span class="p">(</span><span class="n">Max</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">.</span><span class="n">map</span><span class="p">(</span><span class="o">|</span><span class="p">((),</span><span class="w"> </span><span class="n">max_count</span><span class="p">)</span><span class="o">|</span><span class="w"> </span><span class="o">*</span><span class="n">max_count</span><span class="p">);</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>then use the maximum count as an index to join and single out the matching auction id with the maximum count (though there may be more than one with the same maximum - see the <code>test_q5::case_3_multiple_auctions_have_same_hotness</code> below):</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">auction_by_count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">auction_counts</span><span class="p">.</span><span class="n">map_index</span><span class="p">(</span><span class="o">|</span><span class="p">(</span><span class="n">auction</span><span class="p">,</span><span class="w"> </span><span class="n">count</span><span class="p">)</span><span class="o">|</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">count</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="n">auction</span><span class="p">));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">max_auction_count</span><span class="p">.</span><span class="n">join</span>::<span class="o">&lt;</span><span class="p">(),</span><span class="w"> </span><span class="n">_</span><span class="p">,</span><span class="w"> </span><span class="n">_</span><span class="p">,</span><span class="w"> </span><span class="n">_</span><span class="o">&gt;</span><span class="p">(</span><span class="o">&amp;</span><span class="n">auction_by_count</span><span class="p">,</span><span class="w"> </span><span class="o">|</span><span class="n">max_count</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="p">(),</span><span class="w"> </span><span class="o">&amp;</span><span class="n">auction</span><span class="o">|</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">(</span><span class="n">auction</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="n">max_count</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="kt">usize</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">})</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>This query, Nexmark query 5, takes 418s to process 100M events on the Flink cluster of 8 machines, whereas DBSP is able to process the 100M on a single machine utilizing 8 cores in 22s, almost keeping up with the input. Note that there is a small difference in the expectations of the query definition, in that, theoretically, Flink is calculating <em>all</em> 10 second windows concurrently, but with the Flink configuration used (in particular, the 4s watermark) previous windows are not changing.</p>
+<h4 id="testing-to-ensure-the-query-results">Testing to ensure the query results</h4>
+<p>That&rsquo;s all well and good, but we need to be sure that the query is in fact giving the expected result. For this reason, each DBSP rust query has unit tests to verify that, given certain input bids at different times, the expected output matches the actual output. For details, see the <a href="https://github.com/vmware/database-stream-processor/blob/b58321f756efa2f534839ca2c634c614be858eff/src/nexmark/queries/q5.rs#L132-L155">query 5 test cases in the project repository</a>. Each test can be run via <code>cargo test</code>:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">cargo <span class="nb">test</span> --features with-nexmark test_q5
+</span></span><span class="line"><span class="cl">    Finished <span class="nb">test</span> <span class="o">[</span>unoptimized + debuginfo<span class="o">]</span> target<span class="o">(</span>s<span class="o">)</span> in 0.09s
+</span></span><span class="line"><span class="cl">     Running unittests src/lib.rs <span class="o">(</span>target/debug/deps/dbsp-09e78f65ba482694<span class="o">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">running <span class="m">4</span> tests
+</span></span><span class="line"><span class="cl"><span class="nb">test</span> nexmark::queries::q5::tests::test_q5::case_3_multiple_auctions_have_same_hotness ... ok
+</span></span><span class="line"><span class="cl"><span class="nb">test</span> nexmark::queries::q5::tests::test_q5::case_2_windows_rounded_to_2_s_boundary ... ok
+</span></span><span class="line"><span class="cl"><span class="nb">test</span> nexmark::queries::q5::tests::test_q5::case_1_latest_bid_determines_window ... ok
+</span></span><span class="line"><span class="cl"><span class="nb">test</span> nexmark::queries::q5::tests::test_q5::case_4_batch_2_updates_hotness_to_new_window ... ok
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Most of the queries were somewhere in between the above two examples in complexity, though some required new DBSP features which <a href="https://github.com/ryzhyk">Leonid</a> added as we went. You can see the <a href="https://github.com/vmware/database-stream-processor/tree/main/src/nexmark/queries">full list of 20 queries (with their tests) in the repository</a>. We skipped one query which was related to logging only (q10) and postponed implementing one other which depends on session windows (q11), for which the DBSP project does not yet have equivalent functionality.</p>
+<h3 id="a-benchmark-binary">3. Creating the Benchmark binary</h3>
+<p>Once the initial Nexmark Source event generator and the first few queries were created, I was able to setup the actual benchmark binary. This turned out to be a good opportunity to work with Rust&rsquo;s procedural macros, as well as learn more about measuring resource usage on linux and interfacing with the C standard library. The end result is a UX using Rust&rsquo;s <code>cargo</code> tooling to run benchmarks, such as the following for running the Nexmark query 5 for 10M events:</p>
+<script id="asciicast-dDnlxMDQcIdNkVoXF874F9rU2" src="https://asciinema.org/a/dDnlxMDQcIdNkVoXF874F9rU2.js" async></script>
+
+<h4 id="rusts-procedural-macros">Rust&rsquo;s procedural macros</h4>
+<p>As soon as I was benchmarking more than one query, I hit the problem that each query function has a different type, since the output stream differs. As a result, I could not create a DBSP circuit able to take arbitrary Nexmark queries, but I could define a <a href="https://doc.rust-lang.org/book/ch19-06-macros.html">procedural macro</a> that produces code for a circuit of arbitrary output type:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="w">    </span><span class="p">(</span><span class="o">@</span><span class="n">circuit</span><span class="w"> </span><span class="cp">$query</span>:<span class="nc">ident</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="o">|</span><span class="n">circuit</span>: <span class="kp">&amp;</span><span class="nc">mut</span><span class="w"> </span><span class="n">Circuit</span><span class="o">&lt;</span><span class="p">()</span><span class="o">&gt;|</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="kd">let</span><span class="w"> </span><span class="p">(</span><span class="n">stream</span><span class="p">,</span><span class="w"> </span><span class="n">input_handle</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">circuit</span><span class="p">.</span><span class="n">add_input_zset</span>::<span class="o">&lt;</span><span class="n">Event</span><span class="p">,</span><span class="w"> </span><span class="kt">isize</span><span class="o">&gt;</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="kd">let</span><span class="w"> </span><span class="n">output</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="cp">$query</span><span class="p">(</span><span class="n">stream</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">output</span><span class="p">.</span><span class="n">inspect</span><span class="p">(</span><span class="k">move</span><span class="w"> </span><span class="o">|</span><span class="n">_zs</span><span class="o">|</span><span class="w"> </span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">input_handle</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">};</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>The above macro takes a single argument as an argument, <code>$query</code>, which is substituted into the code matching that pattern, defining the DBSP circuit and returning the input handle. But even with this macro, one query in particular, <code>q13</code> had not only a different output stream type, but also a different number of inputs to use. Luckily, for Rust&rsquo;s declarative macros, it&rsquo;s simply a case of defining a different pattern with the query already specified to generate the alternate circuit:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="w">    </span><span class="p">(</span><span class="o">@</span><span class="n">circuit</span><span class="w"> </span><span class="n">q13</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="o">|</span><span class="n">circuit</span>: <span class="kp">&amp;</span><span class="nc">mut</span><span class="w"> </span><span class="n">Circuit</span><span class="o">&lt;</span><span class="p">()</span><span class="o">&gt;|</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="kd">let</span><span class="w"> </span><span class="p">(</span><span class="n">stream</span><span class="p">,</span><span class="w"> </span><span class="n">input_handle</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">circuit</span><span class="p">.</span><span class="n">add_input_zset</span>::<span class="o">&lt;</span><span class="n">Event</span><span class="p">,</span><span class="w"> </span><span class="kt">isize</span><span class="o">&gt;</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="kd">let</span><span class="w"> </span><span class="p">(</span><span class="n">side_stream</span><span class="p">,</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">side_input_handle</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">circuit</span><span class="p">.</span><span class="n">add_input_zset</span>::<span class="o">&lt;</span><span class="p">(</span><span class="kt">usize</span><span class="p">,</span><span class="w"> </span><span class="nb">String</span><span class="p">,</span><span class="w"> </span><span class="kt">u64</span><span class="p">),</span><span class="w"> </span><span class="kt">isize</span><span class="o">&gt;</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="kd">let</span><span class="w"> </span><span class="n">output</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">q13</span><span class="p">(</span><span class="n">stream</span><span class="p">,</span><span class="w"> </span><span class="n">side_stream</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">output</span><span class="p">.</span><span class="n">inspect</span><span class="p">(</span><span class="k">move</span><span class="w"> </span><span class="o">|</span><span class="n">_zs</span><span class="o">|</span><span class="w"> </span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="c1">// Ensure the side-input is loaded here so we can return a single input
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">            </span><span class="c1">// handle like the other queries.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">            </span><span class="n">side_input_handle</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="n">q13_side_input</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">input_handle</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">};</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="measuring-memory-and-cpu-usage">Measuring memory and CPU usage</h4>
+<p>Up until the last few weeks, I was using the <a href="https://man7.org/linux/man-pages/man2/getrusage.2.html"><code>C</code> standard library <code>getrusage</code> call</a> to measure the CPU and memory usage of queries. Though this had certain limitations, it enabled statistics for the CPU usage (user and system) as well as memory usage (Max RSS) for one query at a time. Interfacing with the <code>C</code> standard library was also an learning opportunity, as was creating some <code>unsafe</code> Rust code for the benchmark to use. <a href="https://github.com/Kixiron">Chase</a> later updated the memory allocator used in DBSP (and hence the Nexmark benchmark binary) to use Microsoft&rsquo;s <a href="https://github.com/microsoft/mimalloc">mimalloc</a>, which is more performant than the default Rust memory allocator, and updated the calls to <code>getrusage</code> to instead use <code>mimalloc</code>&rsquo;s own statistics support.</p>
+<h3 id="reproducing-flink-nexmark">4. Automating the environments for testing the original Flink Nexmark benchmark results and the DBSP results on the same (virtual) hardware</h3>
+<p>We managed to complete the Nexmark benchmark functionality and associated changes to DBSP with around one week left of my Take3 adventure. So Leonid&rsquo;s suggestion was to see if we could setup a Flink cluster to run the original Java Nexmark benchmark suite and then run the DBSP benchmark on <em>one</em> of those machines, so the comparison would be running on the same hardware (even though DBSP requires only one machine).</p>
+<p>I didn&rsquo;t want to do the setup ad-hoc and not be able to have someone else reproduce the results easily, so decided to do this using Ansible to configure the machines so the Flink benchmark can be run with a few simple commands. The end result is the <a href="https://github.com/absoludity/nexmark-flink-dbsp-configuration">Nexmark Flink DBSP Configuration repository</a> which can be used to do all the installation and configuration required for running both the Flink and DBSP benchmarks.</p>
+<p>As outlined in the <a href="https://github.com/absoludity/nexmark-flink-dbsp-configuration#nexmark-flink-result">repository&rsquo;s Readme section for the Flink result</a>, I was able to reproduce the throughput of the original results for each query with the configured Flink cluster of 8 worker instances and one leader:</p>
+<p><img src="/img/vmware-take3/Nexmark-Throughput-Flink-Orig-vs-Ec2.png" alt="Flink throughput - original vs ec2"></p>
+<p>but I could not resolve an issue where I would see queries completed in terms of the data processed and CPU usage (which I could watch via <code>htop</code> on workers) while the Flink leader did not acknowledge them as complete until some seconds later, which exaggerated the elapsed time on my Flink cluster.</p>
+<p>Nonetheless, having a similar throughput to the original results enabled me to then run the DBSP benchmark on a single instance of the same type (an ec2 <code>m5ad.4xlarge</code> instance which has 64Gb RAM, 16vCPU, and 2x300GB SSD), comparing both the elapsed time for each query as well as the throughput per core:</p>
+<p><img src="/img/vmware-take3/Nexmark-DBSP-vs-Flink-Elapsed-Time.png" alt="Flink vs DBSP - Elapsed time">
+<img src="/img/vmware-take3/Nexmark-DBSP-vs-Flink-Throughput.png" alt="Flink vs DBSP - Throughput per core"></p>
+<h2 id="conclusion">Conclusion</h2>
+<p>All in all, thanks to the support from Leonid and the DBSP team, as well as my own manager <a href="https://github.com/ppbaena">Pepe</a>, the Take3 has been a wonderful learning experience that has helped me refine and build my existing Rust skills and fluency as well as meaningfully contribute to a current research project. As it turns out, the original functionality for which we created the <code>pinniped-proxy</code> in Kubeapps with Rust - the ability to authenticate users of web applications - has recently been <a href="https://pinniped.dev/docs/howto/configure-auth-for-webapps/">added to the VMware Pinniped service</a>. So one of my first tasks back on the Kubeapps team may be to update our proxy to use the new authentication functionality.</p>
+
+
+        
+
+        
+
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="https://liveandletlearn.net/post/fan-out-fan-in-golang-kubeapps/" data-toggle="tooltip" data-placement="top" title="Fan-Out and Fan-In Golang channels in Kubeapps">&larr; Previous Post</a>
+            </li>
+          
+          
+        </ul>
+      
+
+
+      
+        
+          
+          <div class="disqus-comments">
+            <div id="disqus_thread"></div>
+<script type="application/javascript">
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "liveandletlearn" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+          </div>
+          
+        
+        
+      
+
+    </div>
+  </div>
+</div>
+
+      
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+                <a href="mailto:absoludity&#43;lll@gmail.com" title="Email me">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://github.com/absoludity" title="GitHub">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://twitter.com/michaelanelson" title="Twitter">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-twitter fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          <li>
+            <a href="" title="RSS">
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              Michael Nelson
+            
+          
+
+          &nbsp;&bull;&nbsp;&copy;
+          
+            2022
+          
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://liveandletlearn.net/">Live and let Learn</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="https://gohugo.io">Hugo v0.99.1</a> powered &nbsp;&bull;&nbsp; Theme <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a> adapted from <a href="https://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer><script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.js" integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/contrib/auto-render.min.js" integrity="sha384-kmZOZB5ObwgQnS/DuDg6TScgOiWWBiVt0plIRkZCmE6rDZGrEOQeHM5PcHi+nyqe" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+<script src="https://liveandletlearn.net/js/main.js"></script><script> renderMathInElement(document.body); </script><script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script><script src="https://liveandletlearn.net/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+
+
+
+    
+  </body>
+</html>
+

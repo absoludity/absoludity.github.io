@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://liveandletlearn.net/</loc>
+    <lastmod>2022-09-29T10:55:50+10:00</lastmod>
+  </url><url>
+    <loc>https://liveandletlearn.net/post/</loc>
+    <lastmod>2022-09-29T10:55:50+10:00</lastmod>
+  </url><url>
+    <loc>https://liveandletlearn.net/post/vmware-take-3-experience-with-rust-and-dbsp/</loc>
+    <lastmod>2022-09-29T10:55:50+10:00</lastmod>
+  </url><url>
     <loc>https://liveandletlearn.net/post/fan-out-fan-in-golang-kubeapps/</loc>
     <lastmod>2022-05-20T15:38:13+10:00</lastmod>
   </url><url>
@@ -9,12 +18,6 @@
     <lastmod>2022-05-20T15:38:13+10:00</lastmod>
   </url><url>
     <loc>https://liveandletlearn.net/tags/kubeapps/</loc>
-    <lastmod>2022-05-20T15:38:13+10:00</lastmod>
-  </url><url>
-    <loc>https://liveandletlearn.net/</loc>
-    <lastmod>2022-05-20T15:38:13+10:00</lastmod>
-  </url><url>
-    <loc>https://liveandletlearn.net/post/</loc>
     <lastmod>2022-05-20T15:38:13+10:00</lastmod>
   </url><url>
     <loc>https://liveandletlearn.net/tags/</loc>
