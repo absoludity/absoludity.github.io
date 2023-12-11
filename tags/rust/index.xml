@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>rust on Live and let Learn</title>
+    <link>https://liveandletlearn.net/tags/rust/</link>
+    <description>Recent content in rust on Live and let Learn</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <managingEditor>absoludity&#43;lll@gmail.com (Michael Nelson)</managingEditor>
+    <webMaster>absoludity&#43;lll@gmail.com (Michael Nelson)</webMaster>
+    <lastBuildDate>Sun, 10 Dec 2023 13:46:54 +1100</lastBuildDate>
+    <atom:link href="https://liveandletlearn.net/tags/rust/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Advent of Code 2023</title>
+      <link>https://liveandletlearn.net/post/advent-of-code-2023/</link>
+      <pubDate>Sun, 10 Dec 2023 13:46:54 +1100</pubDate><author>absoludity&#43;lll@gmail.com (Michael Nelson)</author>
+      <guid>https://liveandletlearn.net/post/advent-of-code-2023/</guid>
+      <description>Advent of code 2023 - I&amp;rsquo;ll eventually collect some general info about the libraries that I&amp;rsquo;m using repeatedly, as well as some other more general learning, but the details are in each post below.</description>
+    </item>
+  </channel>
+</rss>

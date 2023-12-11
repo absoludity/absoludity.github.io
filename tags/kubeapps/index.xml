@@ -8,96 +8,70 @@
     <language>en-us</language>
     <managingEditor>absoludity&#43;lll@gmail.com (Michael Nelson)</managingEditor>
     <webMaster>absoludity&#43;lll@gmail.com (Michael Nelson)</webMaster>
-    <lastBuildDate>Fri, 20 May 2022 15:38:13 +1000</lastBuildDate><atom:link href="https://liveandletlearn.net/tags/kubeapps/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 20 May 2022 15:38:13 +1000</lastBuildDate>
+    <atom:link href="https://liveandletlearn.net/tags/kubeapps/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Fan-Out and Fan-In Golang channels in Kubeapps</title>
       <link>https://liveandletlearn.net/post/fan-out-fan-in-golang-kubeapps/</link>
-      <pubDate>Fri, 20 May 2022 15:38:13 +1000</pubDate>
-      <author>absoludity&#43;lll@gmail.com (Michael Nelson)</author>
+      <pubDate>Fri, 20 May 2022 15:38:13 +1000</pubDate><author>absoludity&#43;lll@gmail.com (Michael Nelson)</author>
       <guid>https://liveandletlearn.net/post/fan-out-fan-in-golang-kubeapps/</guid>
-      <description>&lt;p&gt;During a career as a software engineer, every now and then you come across a &lt;a href=&#34;https://en.wikipedia.org/wiki/Software_design_pattern&#34;&gt;design pattern&lt;/a&gt; that becomes your darling for a few years following the discovery. Other design patterns are useful, but not so special that you want to tell the world about them.&lt;/p&gt;
-&lt;p&gt;Up until recently, my favourite design pattern was the &lt;a href=&#34;https://en.wikipedia.org/wiki/State_pattern&#34;&gt;state pattern&lt;/a&gt; which allows encapsulating different behaviours (implementations of an interface) in different classes so that an object can delegate its functionality to different state implementations which can be update at runtime. But more recently, while using a lot of concurrency in certain &lt;a href=&#34;https://github.com/vmware-tanzu/kubeapps/&#34;&gt;Kubeapps&lt;/a&gt; services, I&amp;rsquo;ve fallen in love with another design pattern - the fan-out/fan-in messaging pattern (or a form of it).&lt;/p&gt;</description>
+      <description>&lt;p&gt;During a career as a software engineer, every now and then you come across a &lt;a href=&#34;https://en.wikipedia.org/wiki/Software_design_pattern&#34;&gt;design pattern&lt;/a&gt; that becomes your darling for a few years following the discovery. Other design patterns are useful, but not so special that you want to tell the world about them.&lt;/p&gt;&#xA;&lt;p&gt;Up until recently, my favourite design pattern was the &lt;a href=&#34;https://en.wikipedia.org/wiki/State_pattern&#34;&gt;state pattern&lt;/a&gt; which allows encapsulating different behaviours (implementations of an interface) in different classes so that an object can delegate its functionality to different state implementations which can be update at runtime. But more recently, while using a lot of concurrency in certain &lt;a href=&#34;https://github.com/vmware-tanzu/kubeapps/&#34;&gt;Kubeapps&lt;/a&gt; services, I&amp;rsquo;ve fallen in love with another design pattern - the fan-out/fan-in messaging pattern (or a form of it).&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>Kubeapps APIs - a plugable system supporting different Kubernetes packages</title>
       <link>https://liveandletlearn.net/post/kubeapps-apis-kubernetes-packages/</link>
-      <pubDate>Wed, 16 Feb 2022 10:22:30 +1100</pubDate>
-      <author>absoludity&#43;lll@gmail.com (Michael Nelson)</author>
+      <pubDate>Wed, 16 Feb 2022 10:22:30 +1100</pubDate><author>absoludity&#43;lll@gmail.com (Michael Nelson)</author>
       <guid>https://liveandletlearn.net/post/kubeapps-apis-kubernetes-packages/</guid>
-      <description>The recent release of Kubeapps marks a milestone for the Kubeapps team in that we are no longer restricted to presenting a catalog of only Helm packages in our UI and, behind the scenes, we&amp;rsquo;ve addressed a long-standing security issue to remove the reverse proxy to the Kubernetes API server that our UI depended on until now. We&amp;rsquo;ve done a few overviews of the new Kubeapps APIs service which makes this possible (see Kubeapps APIs: Beyond Helm, or the TanzuTV episode 74 where Antonio gives an in-depth demo of the Carvel support), or more recently, a demo of the Flux and Carvel support together:   But in this post I&amp;rsquo;d like to write something a little more detailed about the choices we made as well as some of the implementation details.</description>
+      <description>The recent release of Kubeapps marks a milestone for the Kubeapps team in that we are no longer restricted to presenting a catalog of only Helm packages in our UI and, behind the scenes, we&amp;rsquo;ve addressed a long-standing security issue to remove the reverse proxy to the Kubernetes API server that our UI depended on until now. We&amp;rsquo;ve done a few overviews of the new Kubeapps APIs service which makes this possible (see Kubeapps APIs: Beyond Helm, or the TanzuTV episode 74 where Antonio gives an in-depth demo of the Carvel support), or more recently, a demo of the Flux and Carvel support together: But in this post I&amp;rsquo;d like to write something a little more detailed about the choices we made as well as some of the implementation details.</description>
     </item>
-    
     <item>
       <title>Kubeapps on Tanzu Kubernetes Grid 1.3</title>
       <link>https://liveandletlearn.net/post/kubeapps-on-tanzu-kubernetes-grid-13-part-2/</link>
-      <pubDate>Mon, 19 Apr 2021 21:39:49 +1000</pubDate>
-      <author>absoludity&#43;lll@gmail.com (Michael Nelson)</author>
+      <pubDate>Mon, 19 Apr 2021 21:39:49 +1000</pubDate><author>absoludity&#43;lll@gmail.com (Michael Nelson)</author>
       <guid>https://liveandletlearn.net/post/kubeapps-on-tanzu-kubernetes-grid-13-part-2/</guid>
-      <description>This is the second post in a series of two post detailing the steps that I took to install Kubeapps running on a TKG 1.3 cluster on AWS configured to allow user authentication via the TKG identity management:
- The first post focuses on the TKG 1.3 setup required to get a workload clusters with identity management (using your chosen identity provider), This followup post details the related Kubeapps installation and configuration on the TKG 1.</description>
+      <description>This is the second post in a series of two post detailing the steps that I took to install Kubeapps running on a TKG 1.3 cluster on AWS configured to allow user authentication via the TKG identity management:&#xA;The first post focuses on the TKG 1.3 setup required to get a workload clusters with identity management (using your chosen identity provider), This followup post details the related Kubeapps installation and configuration on the TKG 1.</description>
     </item>
-    
     <item>
       <title>Tanzu Kubernetes Grid 1.3 with Identity Management</title>
       <link>https://liveandletlearn.net/post/kubeapps-on-tanzu-kubernetes-grid-13/</link>
-      <pubDate>Mon, 19 Apr 2021 06:42:43 +1000</pubDate>
-      <author>absoludity&#43;lll@gmail.com (Michael Nelson)</author>
+      <pubDate>Mon, 19 Apr 2021 06:42:43 +1000</pubDate><author>absoludity&#43;lll@gmail.com (Michael Nelson)</author>
       <guid>https://liveandletlearn.net/post/kubeapps-on-tanzu-kubernetes-grid-13/</guid>
-      <description>Way back in 2020 I&amp;rsquo;d detailed how I&amp;rsquo;d setup a Tanzu Kubernetes Grid 1.1 management cluster with OpenID Connect support (for single sign-on) before installing Kubeapps with single sign-on on that management cluster.
-Recently TKG 1.3 was released and the identity management support in TKG has changed significantly, so it&amp;rsquo;s time to see what&amp;rsquo;s different when setting up a TKG cluster with identity management as well as how we can run Kubeapps on TKG 1.</description>
+      <description>Way back in 2020 I&amp;rsquo;d detailed how I&amp;rsquo;d setup a Tanzu Kubernetes Grid 1.1 management cluster with OpenID Connect support (for single sign-on) before installing Kubeapps with single sign-on on that management cluster.&#xA;Recently TKG 1.3 was released and the identity management support in TKG has changed significantly, so it&amp;rsquo;s time to see what&amp;rsquo;s different when setting up a TKG cluster with identity management as well as how we can run Kubeapps on TKG 1.</description>
     </item>
-    
     <item>
       <title>Kubeapps on Tanzu Mission Control via Pinniped</title>
       <link>https://liveandletlearn.net/post/kubeapps-on-tanzu-mission-control/</link>
-      <pubDate>Thu, 25 Feb 2021 11:40:02 +1100</pubDate>
-      <author>absoludity&#43;lll@gmail.com (Michael Nelson)</author>
+      <pubDate>Thu, 25 Feb 2021 11:40:02 +1100</pubDate><author>absoludity&#43;lll@gmail.com (Michael Nelson)</author>
       <guid>https://liveandletlearn.net/post/kubeapps-on-tanzu-mission-control/</guid>
-      <description>&lt;p&gt;We&amp;rsquo;ve been able to run &lt;a href=&#34;https://liveandletlearn.net/post/kubeapps-on-tkg-management-cluster/&#34;&gt;Kubeapps in a multi-cluster setup on various Kubernetes clusters&lt;/a&gt; for a while now, but this was dependent on the Kubeapps&amp;rsquo; user being authenticated in a way that all the clusters trust. Up until now, this meant having all the clusters &lt;a href=&#34;https://kubernetes.io/docs/reference/access-authn-authz/authentication/#configuring-the-api-server&#34;&gt;configured to trust the same OIDC identity provider&lt;/a&gt;, which is not possible in some Kubernetes environments.&lt;/p&gt;
-&lt;p&gt;Particularly, this meant we were unable to demonstrate multi-cluster Kubeapps with clusters created by &lt;a href=&#34;https://tanzu.vmware.com/mission-control&#34;&gt;Tanzu Mission Control&lt;/a&gt; since we can&amp;rsquo;t specify API server options, such as OIDC configuration, when creating a cluster in TMC. But that requirement has now changed thanks to a new project called &lt;a href=&#34;https://pinniped.dev/&#34;&gt;Pinniped&lt;/a&gt;.&lt;/p&gt;</description>
+      <description>&lt;p&gt;We&amp;rsquo;ve been able to run &lt;a href=&#34;https://liveandletlearn.net/post/kubeapps-on-tkg-management-cluster/&#34;&gt;Kubeapps in a multi-cluster setup on various Kubernetes clusters&lt;/a&gt; for a while now, but this was dependent on the Kubeapps&amp;rsquo; user being authenticated in a way that all the clusters trust. Up until now, this meant having all the clusters &lt;a href=&#34;https://kubernetes.io/docs/reference/access-authn-authz/authentication/#configuring-the-api-server&#34;&gt;configured to trust the same OIDC identity provider&lt;/a&gt;, which is not possible in some Kubernetes environments.&lt;/p&gt;&#xA;&lt;p&gt;Particularly, this meant we were unable to demonstrate multi-cluster Kubeapps with clusters created by &lt;a href=&#34;https://tanzu.vmware.com/mission-control&#34;&gt;Tanzu Mission Control&lt;/a&gt; since we can&amp;rsquo;t specify API server options, such as OIDC configuration, when creating a cluster in TMC. But that requirement has now changed thanks to a new project called &lt;a href=&#34;https://pinniped.dev/&#34;&gt;Pinniped&lt;/a&gt;.&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>Carvel kbld With Helm Post Render</title>
       <link>https://liveandletlearn.net/post/carvel-imgbld-with-helm-post-render/</link>
-      <pubDate>Tue, 02 Feb 2021 15:24:29 +1100</pubDate>
-      <author>absoludity&#43;lll@gmail.com (Michael Nelson)</author>
+      <pubDate>Tue, 02 Feb 2021 15:24:29 +1100</pubDate><author>absoludity&#43;lll@gmail.com (Michael Nelson)</author>
       <guid>https://liveandletlearn.net/post/carvel-imgbld-with-helm-post-render/</guid>
-      <description>&lt;p&gt;For the past couple of years I&amp;rsquo;ve been working on the &lt;a href=&#34;https://kubeapps.com/&#34;&gt;Kubeapps project&lt;/a&gt;, which until recently has been a UI dashboard for the &lt;a href=&#34;https://helm.sh/&#34;&gt;Helm project&lt;/a&gt; - providing a simple, web-based UI to deploy applications on &lt;a href=&#34;https://kubernetes.io/&#34;&gt;Kubernetes&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;I&amp;rsquo;m currently looking at generalising Kubeapps to support other Kubernetes packages formats, including &lt;a href=&#34;https://carvel.dev/&#34;&gt;Carvel&lt;/a&gt; from VMware of course. So I set out today to start learning more about Carvel, which in contrast to more monolithic tools like Helm, provides &amp;ldquo;a set of single-purpose, composable tools that aid in your application building, configuration and deployment to Kubernetes&amp;rdquo;.&lt;/p&gt;
-&lt;p&gt;As an example of that composability, I found I can deploy a helm chart using a set of immutable images by utilizing Helm&amp;rsquo;s new-ish support for &lt;a href=&#34;https://helm.sh/docs/topics/advanced/#post-rendering&#34;&gt;post rendering of a chart&lt;/a&gt;. Here&amp;rsquo;s how&amp;hellip;&lt;/p&gt;</description>
+      <description>&lt;p&gt;For the past couple of years I&amp;rsquo;ve been working on the &lt;a href=&#34;https://kubeapps.com/&#34;&gt;Kubeapps project&lt;/a&gt;, which until recently has been a UI dashboard for the &lt;a href=&#34;https://helm.sh/&#34;&gt;Helm project&lt;/a&gt; - providing a simple, web-based UI to deploy applications on &lt;a href=&#34;https://kubernetes.io/&#34;&gt;Kubernetes&lt;/a&gt;.&lt;/p&gt;&#xA;&lt;p&gt;I&amp;rsquo;m currently looking at generalising Kubeapps to support other Kubernetes packages formats, including &lt;a href=&#34;https://carvel.dev/&#34;&gt;Carvel&lt;/a&gt; from VMware of course. So I set out today to start learning more about Carvel, which in contrast to more monolithic tools like Helm, provides &amp;ldquo;a set of single-purpose, composable tools that aid in your application building, configuration and deployment to Kubernetes&amp;rdquo;.&lt;/p&gt;&#xA;&lt;p&gt;As an example of that composability, I found I can deploy a helm chart using a set of immutable images by utilizing Helm&amp;rsquo;s new-ish support for &lt;a href=&#34;https://helm.sh/docs/topics/advanced/#post-rendering&#34;&gt;post rendering of a chart&lt;/a&gt;. Here&amp;rsquo;s how&amp;hellip;&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>What is Kubeapps</title>
       <link>https://liveandletlearn.net/post/what-is-kubeapps/</link>
-      <pubDate>Mon, 28 Sep 2020 10:06:28 +1000</pubDate>
-      <author>absoludity&#43;lll@gmail.com (Michael Nelson)</author>
+      <pubDate>Mon, 28 Sep 2020 10:06:28 +1000</pubDate><author>absoludity&#43;lll@gmail.com (Michael Nelson)</author>
       <guid>https://liveandletlearn.net/post/what-is-kubeapps/</guid>
-      <description>For over a year now I&amp;rsquo;ve been working together with Andres on the Kubeapps project at VMware and have made various videos of new features that we&amp;rsquo;ve worked on, but I&amp;rsquo;ve never stepped back to give an overview and answer the more general question, &amp;ldquo;What is Kubeapps?&amp;rdquo; and show how those features work towards a single goal.
-The goal of Kubeapps is to help users and operators install and manage applications on Kubernetes and the following features work together to achieve this goal:</description>
+      <description>For over a year now I&amp;rsquo;ve been working together with Andres on the Kubeapps project at VMware and have made various videos of new features that we&amp;rsquo;ve worked on, but I&amp;rsquo;ve never stepped back to give an overview and answer the more general question, &amp;ldquo;What is Kubeapps?&amp;rdquo; and show how those features work towards a single goal.&#xA;The goal of Kubeapps is to help users and operators install and manage applications on Kubernetes and the following features work together to achieve this goal:</description>
     </item>
-    
     <item>
       <title>Kubeapps on a TKG Management Cluster</title>
       <link>https://liveandletlearn.net/post/kubeapps-on-tkg-management-cluster/</link>
-      <pubDate>Wed, 23 Sep 2020 11:01:36 +1000</pubDate>
-      <author>absoludity&#43;lll@gmail.com (Michael Nelson)</author>
+      <pubDate>Wed, 23 Sep 2020 11:01:36 +1000</pubDate><author>absoludity&#43;lll@gmail.com (Michael Nelson)</author>
       <guid>https://liveandletlearn.net/post/kubeapps-on-tkg-management-cluster/</guid>
-      <description>This is part two of a series detailing the steps required to run Kubeapps on a VMware TKG management cluster (on AWS) configured to allow users to deploy applications to multiple workload clusters, using the new multicluster support in Kubeapps. Though details will differ, a similar configuration works on other non-TKG multicluster setups as well.
-The first post described setting up your VMware TKG management cluster with two OpenIDConnect-enabled workload clusters.</description>
+      <description>This is part two of a series detailing the steps required to run Kubeapps on a VMware TKG management cluster (on AWS) configured to allow users to deploy applications to multiple workload clusters, using the new multicluster support in Kubeapps. Though details will differ, a similar configuration works on other non-TKG multicluster setups as well.&#xA;The first post described setting up your VMware TKG management cluster with two OpenIDConnect-enabled workload clusters.</description>
     </item>
-    
     <item>
       <title>VMware Tanzu Kubernetes Grid (TKG) with OpenID Connect - First Experience</title>
       <link>https://liveandletlearn.net/post/tanzu-kubernetes-grid-tkg-first-experience/</link>
-      <pubDate>Tue, 22 Sep 2020 10:01:03 +1000</pubDate>
-      <author>absoludity&#43;lll@gmail.com (Michael Nelson)</author>
+      <pubDate>Tue, 22 Sep 2020 10:01:03 +1000</pubDate><author>absoludity&#43;lll@gmail.com (Michael Nelson)</author>
       <guid>https://liveandletlearn.net/post/tanzu-kubernetes-grid-tkg-first-experience/</guid>
-      <description>Andres and I have been doing quite a bit of feature work in Kubeapps over the past months at VMware and one of the key features that I&amp;rsquo;ve been working on personally is enabling Kubeapps users to deploy applications not only on the cluster on which Kubeapps is installed, but to multiple other clusters as well.
-Enter VMware Tanzu Kubernetes Grid (TGK): an &amp;ldquo;Enterprise-ready Kubernetes runtime which streamlines operations across multi-cloud infrastructure&amp;rdquo;, so naturally I was keen to test out running Kubeapps on TKG and deploying applications to a set of TKG-managed clusters.</description>
+      <description>Andres and I have been doing quite a bit of feature work in Kubeapps over the past months at VMware and one of the key features that I&amp;rsquo;ve been working on personally is enabling Kubeapps users to deploy applications not only on the cluster on which Kubeapps is installed, but to multiple other clusters as well.&#xA;Enter VMware Tanzu Kubernetes Grid (TGK): an &amp;ldquo;Enterprise-ready Kubernetes runtime which streamlines operations across multi-cloud infrastructure&amp;rdquo;, so naturally I was keen to test out running Kubeapps on TKG and deploying applications to a set of TKG-managed clusters.</description>
     </item>
-    
   </channel>
 </rss>
