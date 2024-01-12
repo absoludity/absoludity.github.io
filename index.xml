@@ -8,8 +8,15 @@
     <language>en-us</language>
     <managingEditor>absoludity&#43;lll@gmail.com (Michael Nelson)</managingEditor>
     <webMaster>absoludity&#43;lll@gmail.com (Michael Nelson)</webMaster>
-    <lastBuildDate>Sun, 07 Jan 2024 06:13:31 +1100</lastBuildDate>
+    <lastBuildDate>Fri, 12 Jan 2024 06:45:18 +1100</lastBuildDate>
     <atom:link href="https://liveandletlearn.net/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Day03 Tokens, Enums and Docstrings</title>
+      <link>https://liveandletlearn.net/post/advent-of-code-2023/day03-enums-and-docstrings/</link>
+      <pubDate>Fri, 12 Jan 2024 06:45:18 +1100</pubDate><author>absoludity&#43;lll@gmail.com (Michael Nelson)</author>
+      <guid>https://liveandletlearn.net/post/advent-of-code-2023/day03-enums-and-docstrings/</guid>
+      <description>The Day 03 challenge involves the calculating whether a character symbol is adjacent to a part number in a two dimensional map, such as:&#xA;467..114.. ...*...... ..35..633. ......#... 617*...... .....+.58. ..592..... ......755. ...$.*.... .664.598.. and then doing things with the part numbers.&#xA;To calculate whether a symbol is adjacent to a part number we&amp;rsquo;re going to need:&#xA;the position of each symbol, the position of each number, the length of the token for each number.</description>
+    </item>
     <item>
       <title>Day02 Copilot and Vanilla Parsing</title>
       <link>https://liveandletlearn.net/post/advent-of-code-2023/day02-copilot-and-vanilla-parsing/</link>

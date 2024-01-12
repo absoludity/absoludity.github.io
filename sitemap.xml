@@ -2,28 +2,31 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://liveandletlearn.net/post/advent-of-code-2023/day02-copilot-and-vanilla-parsing/</loc>
-    <lastmod>2024-01-07T06:13:31+11:00</lastmod>
+    <loc>https://liveandletlearn.net/post/advent-of-code-2023/day03-enums-and-docstrings/</loc>
+    <lastmod>2024-01-12T06:45:18+11:00</lastmod>
   </url><url>
     <loc>https://liveandletlearn.net/</loc>
-    <lastmod>2024-01-07T06:13:31+11:00</lastmod>
+    <lastmod>2024-01-12T06:45:18+11:00</lastmod>
   </url><url>
     <loc>https://liveandletlearn.net/post/</loc>
+    <lastmod>2024-01-12T06:45:18+11:00</lastmod>
+  </url><url>
+    <loc>https://liveandletlearn.net/tags/programming/</loc>
+    <lastmod>2024-01-12T06:45:18+11:00</lastmod>
+  </url><url>
+    <loc>https://liveandletlearn.net/tags/rust/</loc>
+    <lastmod>2024-01-12T06:45:18+11:00</lastmod>
+  </url><url>
+    <loc>https://liveandletlearn.net/tags/</loc>
+    <lastmod>2024-01-12T06:45:18+11:00</lastmod>
+  </url><url>
+    <loc>https://liveandletlearn.net/post/advent-of-code-2023/day02-copilot-and-vanilla-parsing/</loc>
     <lastmod>2024-01-07T06:13:31+11:00</lastmod>
   </url><url>
     <loc>https://liveandletlearn.net/post/advent-of-code-2023/day01-a-rust-parsing-exercise-with-nom/</loc>
     <lastmod>2023-12-10T13:51:15+11:00</lastmod>
   </url><url>
     <loc>https://liveandletlearn.net/post/advent-of-code-2023/</loc>
-    <lastmod>2023-12-10T13:46:54+11:00</lastmod>
-  </url><url>
-    <loc>https://liveandletlearn.net/tags/programming/</loc>
-    <lastmod>2023-12-10T13:46:54+11:00</lastmod>
-  </url><url>
-    <loc>https://liveandletlearn.net/tags/rust/</loc>
-    <lastmod>2023-12-10T13:46:54+11:00</lastmod>
-  </url><url>
-    <loc>https://liveandletlearn.net/tags/</loc>
     <lastmod>2023-12-10T13:46:54+11:00</lastmod>
   </url><url>
     <loc>https://liveandletlearn.net/post/vmware-take-3-experience-with-rust-and-dbsp/</loc>
