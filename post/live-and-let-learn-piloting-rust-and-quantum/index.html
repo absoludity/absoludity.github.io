@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/WebPage">
+  <head>
+    
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+ 
+
+
+      <title>Live and Let Learn with Rust, Quantum Computing and Piloting aeroplanes - </title>
+
+  <meta name="description" content="In mid 2022 I was presented with an amazing opportunity through no effort of my own: VMware, the company I worked for, announced it was being acquired by a non-remote, non-open-source-oriented multi-national in a somewhat lengthy 18 month process. As a fully-remote staff engineer on an open-source project I estimated a 75 to 90 percent probability that I&rsquo;d receive a redundancy in around 18 months time.
+A redundancy, really? An amazing opportunity? This post is a personal reflection and reminder to my future self to step back and evaluate the potential opportunities that a situation provides. I&rsquo;m currently using this opportunity to weave three passions of mine into a possible future of software engineering with Rust on quantum computing projects and piloting aeroplanes on the side. Sure, reality may force me to compromise in one way or another in time, but for now I&rsquo;m leaving my options open.">
+  <meta name="author" content="Michael Nelson"/><script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "WebSite",
+    "name": "Live and let Learn",
+    
+    "url": "https:\/\/liveandletlearn.net\/"
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Organization",
+  "name": "",
+  "url": "https:\/\/liveandletlearn.net\/"
+  
+  
+  
+  
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@id": "https:\/\/liveandletlearn.net\/",
+          "name": "home"
+        }
+    },{
+        "@type": "ListItem",
+        "position": 3,
+        "item": {
+          "@id": "https:\/\/liveandletlearn.net\/post\/live-and-let-learn-piloting-rust-and-quantum\/",
+          "name": "Live and let learn with rust, quantum computing and piloting aeroplanes"
+        }
+    }]
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "author": {
+    "name" : "Michael Nelson"
+  },
+  "headline": "Live and Let Learn with Rust, Quantum Computing and Piloting aeroplanes",
+  "description" : "In mid 2022 I was presented with an amazing opportunity through no effort of my own: VMware, the company I worked for, announced it was being acquired by a non-remote, non-open-source-oriented multi-national in a somewhat lengthy 18 month process. As a fully-remote staff engineer on an open-source project I estimated a 75 to 90 percent probability that I\u0026rsquo;d receive a redundancy in around 18 months time.\nA redundancy, really? An amazing opportunity? This post is a personal reflection and reminder to my future self to step back and evaluate the potential opportunities that a situation provides. I\u0026rsquo;m currently using this opportunity to weave three passions of mine into a possible future of software engineering with Rust on quantum computing projects and piloting aeroplanes on the side. Sure, reality may force me to compromise in one way or another in time, but for now I\u0026rsquo;m leaving my options open.\n",
+  "inLanguage" : "en",
+  "wordCount":  1348 ,
+  "datePublished" : "2024-02-22T16:25:25",
+  "dateModified" : "2024-02-22T16:25:25",
+  "image" : "https:\/\/liveandletlearn.net\/img\/avatar-icon.png",
+  "keywords" : [ "life, learning, rust, piloting, quantum-computing" ],
+  "mainEntityOfPage" : "https:\/\/liveandletlearn.net\/post\/live-and-let-learn-piloting-rust-and-quantum\/",
+  "publisher" : {
+    "@type": "Organization",
+    "name" : "https:\/\/liveandletlearn.net\/",
+    "logo" : {
+        "@type" : "ImageObject",
+        "url" : "https:\/\/liveandletlearn.net\/img\/avatar-icon.png",
+        "height" :  60 ,
+        "width" :  60
+    }
+  }
+}
+</script>
+
+<meta property="og:title" content="Live and Let Learn with Rust, Quantum Computing and Piloting aeroplanes" />
+<meta property="og:description" content="In mid 2022 I was presented with an amazing opportunity through no effort of my own: VMware, the company I worked for, announced it was being acquired by a non-remote, non-open-source-oriented multi-national in a somewhat lengthy 18 month process. As a fully-remote staff engineer on an open-source project I estimated a 75 to 90 percent probability that I&rsquo;d receive a redundancy in around 18 months time.
+A redundancy, really? An amazing opportunity? This post is a personal reflection and reminder to my future self to step back and evaluate the potential opportunities that a situation provides. I&rsquo;m currently using this opportunity to weave three passions of mine into a possible future of software engineering with Rust on quantum computing projects and piloting aeroplanes on the side. Sure, reality may force me to compromise in one way or another in time, but for now I&rsquo;m leaving my options open.">
+<meta property="og:image" content="https://liveandletlearn.net/img/avatar-icon.png" />
+<meta property="og:url" content="https://liveandletlearn.net/post/live-and-let-learn-piloting-rust-and-quantum/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Live and let Learn" />
+
+  <meta name="twitter:title" content="Live and Let Learn with Rust, Quantum Computing and Piloting …" />
+  <meta name="twitter:description" content="In mid 2022 I was presented with an amazing opportunity through no effort of my own: VMware, the company I worked for, announced it was being acquired by a non-remote, non-open-source-oriented …">
+  <meta name="twitter:image" content="https://liveandletlearn.net/img/avatar-icon.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@michaelanelson" />
+  <meta name="twitter:creator" content="@michaelanelson" />
+  <link href='https://liveandletlearn.net/img/favicon.ico' rel='icon' type='image/x-icon'/>
+  <meta name="generator" content="Hugo 0.123.2">
+  <link rel="alternate" href="https://liveandletlearn.net/index.xml" type="application/rss+xml" title="Live and let Learn"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.css" integrity="sha384-3UiQGuEI4TTMaFmGIZumfRPtfKQ3trwQE2JgosJxCnGmQpL/lJdjpcHkaaFwHlcI" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous"><link rel="stylesheet" href="https://liveandletlearn.net/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" /><link rel="stylesheet" href="https://liveandletlearn.net/css/syntax.css" /><link rel="stylesheet" href="https://liveandletlearn.net/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://liveandletlearn.net/">Live and let Learn</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="Blog" href="/">Blog</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="About" href="/about/">About</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="Tags" href="/tags">Tags</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="Live and let Learn" href="https://liveandletlearn.net/">
+            <img class="avatar-img" src="https://liveandletlearn.net/img/avatar-icon.png" alt="Live and let Learn" />
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-heading">
+              
+                <h1>Live and Let Learn with Rust, Quantum Computing and Piloting aeroplanes</h1>
+              
+              
+              
+              
+                <span class="post-meta">
+  
+  
+  <i class="fas fa-calendar"></i>&nbsp;Posted on February 22, 2024
+  
+  
+  
+  
+    
+      &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;Michael Nelson
+    
+  
+  
+</span>
+
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        <p>In mid 2022 I was presented with an <strong>amazing opportunity</strong> through no effort of my own: VMware, the company I worked for, announced it was being acquired by a non-remote, non-open-source-oriented multi-national in a somewhat lengthy 18 month process. As a fully-remote staff engineer on an open-source project <strong>I estimated a 75 to 90 percent probability that I&rsquo;d receive a redundancy in around 18 months time</strong>.</p>
+<p>A redundancy, really? An amazing opportunity? This post is a personal reflection and reminder to my future self to step back and evaluate the potential opportunities that a situation provides. I&rsquo;m currently using this opportunity to <strong>weave three passions of mine into a possible future of software engineering with Rust on quantum computing projects and piloting aeroplanes on the side</strong>. Sure, reality may force me to compromise in one way or another in time, but for now I&rsquo;m leaving my options open.</p>
+<h2 id="a-future-acquisition-and-probable-redundancy">A future acquisition and probable redundancy</h2>
+<p>Normally a potential redundancy isn&rsquo;t necessarily associated with amazing opportunities, and more to the point, I loved my role as a Staff Software engineer on the open source <a href="https://kubeapps.dev/">Kubeapps project</a>: I had great team-mates and I enjoyed the combination of <a href="https://go.dev">Go</a> and <a href="https://rust-lang.org">Rust</a> with a bearable amount of <a href="https://react.dev">React/Javascript</a>, as well as the <a href="/post/fan-out-fan-in-golang-kubeapps/">interesting problems that we got to solve</a>. So I didn&rsquo;t initially think of a probable redundancy as an opportunity either.</p>
+<p><img src="/img/live-and-let-learn-piloting-rust-and-quantum/gemini-test.png" alt="Broadcom / VMware"></p>
+<p>It was only when I stepped back to evaluate what my next steps might be that I realised: I could start looking for another interesting software engineering role straight away and avoid the long drawn-out acquisition (like quite a few people did). Or I could use the approximately 18 months of paid work on an open-source project that I enjoy, while also <strong>re-evaluating my life goals and planning how I might best utilise the probable redundancy period and the future beyond</strong>. Once I viewed the situation this way, it was hard to ignore the opportunity that had presented itself.</p>
+<h2 id="rust-for-the-future">Rust for the future</h2>
+<p>The first thing I did was apply for a program within VMware to spend 3 months working on a project written in the <a href="https://rust-lang.org">Rust</a> programming language with experienced Rust developers. I&rsquo;d learned Rust for fun in the early days and more recently designed and implemented one of the Kubeapps backend services in Rust, but I was keen to learn from others and get more exposure to the type system and tooling of the language. This resulted in a wonderful three months with <a href="https://www.feldera.com/about-us">Leonid and the crew</a> on the Database Stream Processing project. I wrote a <a href="/post/vmware-take-3-experience-with-rust-and-dbsp/">review of my three months work on the DBSP project at the time</a> and the code-base has since forked to the <a href="https://github.com/feldera/feldera">Feldera repository</a> and is the basis for the <a href="https://www.feldera.com/">Feldera</a> service - real-time data analytics for live-streaming sources.</p>
+<p>The three month experience re-enforced <strong>how much I enjoy expressing ideas and solutions efficiently in Rust and resolved my goal to learn the language intimately</strong>. I&rsquo;m currently continuing this goal by working through the excellent <a href="https://www.amazon.com.au/Rust-Rustaceans-Programming-Experienced-Developers/dp/1718501854/">Rust for Rustaceans: Idiomatic Programming for Experienced Developers</a> book by Jon Gjengset, among other Rust tasks such as <a href="/post/advent-of-code-2023/day03-enums-and-docstrings/">Advent of code</a> or the occasional leetcode problem.</p>
+<h2 id="becoming-a-pilot-on-the-side">Becoming a Pilot on the side&hellip;</h2>
+<p>At the same time in mid 2022, I began thinking about how I can best use a probable redundancy to achieve other life goals. I was looking for <strong>something that I&rsquo;m passionate about</strong> that I can progress slowly on the side next to work for a year before then <strong>focusing on and completing in a probable redundancy period</strong>, making the most of the opportunity.</p>
+<p>Two years earlier I began a journey towards a life-long goal to fly when <a href="/post/learning-to-paraglide/">I learned to fly a paraglider</a>. I&rsquo;ve been flying paragliders locally ever since in my spare time and have had some memorable flights with friends, such as flying 90kms, powered only by thermals in the air, from Blackheath to Lake Windermere near Mudgee. Like many people, I&rsquo;ve always dreamed of flying and the reality did not disappoint - being in the air feels somehow natural (as unnatural as I know is it is for an 80kg lump of flesh to be suspended high above the ground).</p>
+<p>Although I didn&rsquo;t see a future where I could be paid to fly a paraglider, after chatting with numerous friends in different stages of their flying careers <strong>I did see a possibility of working towards being paid a little to fly small planes, while continuing my normal line of work</strong> as a software engineer or consultant, or even potentially merging those two passions, <a href="https://www.baesystems.com/en/product/aircraft-electrification">developing software or controllers for electric aircraft or avionics</a>. So I began taking an occasional flying lesson at the excellent <a href="https://wardair.com.au/">WardAir in Bathurst</a>, while beginning the study towards my commercial pilots license theory examinations in the evenings and on weekends. <strong>By the time the acquisition went through I&rsquo;d completed five of the seven commercial pilot examinations.</strong></p>
+<h2 id="maximising-redundancy">Maximising redundancy</h2>
+<p>A month or so after the acquisition finally went through, the redundancy notice was issued to many of us on open-source projects and so, after a lovely few weeks in summer relaxing with my family, I began to focus half my time on my planned pilot qualification (which I&rsquo;ll write about separately) while simultaneously <strong>evaluating which niche domain I might focus my software engineering and Rust learning on while I have the opportunity</strong>.</p>
+<h2 id="quantum-computing-with-rust">Quantum computing with Rust</h2>
+<p>Since university I&rsquo;ve been combining my passion for physics - <strong>understanding the universe around me</strong> - with computer science and engineering. From second year I filled all my Comp. Sci. electives with quantum physics and relativity subjects and in my final year implemented a 3D relativistic renderer for my thesis on one of UNSW&rsquo;s first <a href="https://en.wikipedia.org/wiki/SGI_O2">Silicon Graphics O2</a> workstations. A few years later I was exposed to the beautiful mathematical language of <a href="https://bivector.net">Geometric Algebra</a> and have since spent way too much time exploring how Geometric Algebra provides a simpler, more intuitive way to understand many physical phenomena. I even created the website <a href="https://geometry-of-relativity.net">Geometry of Relativity</a> as a way to help people with an inclination to see the beauty in <a href="https://geometry-of-relativity.net/rotations-in-spacetime/2d-rotations-in-spacetime/">Special Relativity as a simple rotation in space-time</a> (not a new concept, but beautiful nonetheless).</p>
+<p>This passion has lead me back to quantum mechanics and, in particular, quantum computing - an exciting area of computer science and software engineering that hasn&rsquo;t yet reached market maturity. I plan to write more about Quantum Computing in the future but for now I&rsquo;m loving <a href="https://learning.quantum.ibm.com/catalog/courses">IBM&rsquo;s excellent set of Quantum Computing courses</a> that, while they don&rsquo;t shy away from the mathematics, are <strong>phenomenal examples of self-paced, quality online education with clearly defined learning expectations</strong> especially when combined with the accompanying video lectures by John Watrous - the technical director from IBM Quantum Education - adding a more human touch to an anonymous learning interaction. Of course you can also try out all the examples using <a href="https://www.ibm.com/quantum/qiskit">IBM&rsquo;s open-source Qiskit toolkit</a> as part of the lecture itself.</p>
+<p>Of particular interest to me is that <a href="https://medium.com/qiskit/new-weve-started-using-rust-in-qiskit-for-better-performance-a3676433ca8c">parts of IBM&rsquo;s Qiskit are being re-implemented in Rust</a>, so there may be some opportunities to get involved in an open-source project which combines Rust and Quantum Computing.</p>
+<h2 id="available-for-hire">Available for hire</h2>
+<p>I now have some months where I can enjoy living and learning - re-evaluating and redirecting my software engineering career while pushing forward with my pilot license. Of course, when I start looking for work I&rsquo;m not expecting to find the perfect Rust consulting/contract position which integrates quantum computing or aviation: it may be a go-lang and React role for an unrelated domain, or a role picking up and helping lead a struggling remote team or project. But while I have the opportunity <strong>I am going to use this planned redundancy to get involved in the specific areas that I am interested in personally and see what opportunities may be there</strong>.</p>
+<p>If you&rsquo;ve read this far you&rsquo;re either my parents or you happen to have similar interests in Rust, Quantum Computing or flying (or all three). If you&rsquo;re interested in chatting about any of the above, or working together, do get in touch (absoludity at gmail dot com)!</p>
+
+        
+          <div class="blog-tags">
+            
+              <a href="https://liveandletlearn.net//tags/life/">life</a>&nbsp;
+            
+              <a href="https://liveandletlearn.net//tags/learning/">learning</a>&nbsp;
+            
+              <a href="https://liveandletlearn.net//tags/rust/">rust</a>&nbsp;
+            
+              <a href="https://liveandletlearn.net//tags/piloting/">piloting</a>&nbsp;
+            
+              <a href="https://liveandletlearn.net//tags/quantum-computing/">quantum-computing</a>&nbsp;
+            
+          </div>
+        
+
+        
+
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="https://liveandletlearn.net/post/vmware-take-3-experience-with-rust-and-dbsp/" data-toggle="tooltip" data-placement="top" title="VMware Take 3 Experience With Rust and DBSP">&larr; Previous Post</a>
+            </li>
+          
+          
+        </ul>
+      
+
+
+      
+        
+          
+          <div class="disqus-comments">
+            <div id="disqus_thread"></div>
+<script>
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "liveandletlearn" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+          </div>
+          
+        
+        
+      
+
+    </div>
+  </div>
+</div>
+
+      
+<footer>
+  <div class="container">
+    
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+		
+		  <a href="mailto:absoludity&#43;lll@gmail.com" title="Email me">
+		
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+		
+		  <a href="https://github.com/absoludity" title="GitHub">
+		
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+		
+		  <a href="https://twitter.com/michaelanelson" title="Twitter">
+		
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-twitter fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          <li>
+            <a href="" title="RSS">
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              Michael Nelson
+            
+          
+
+          &nbsp;&bull;&nbsp;&copy;
+          
+            2024
+          
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://liveandletlearn.net/">Live and let Learn</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="https://gohugo.io">Hugo v0.123.2</a> powered &nbsp;&bull;&nbsp; Theme <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a> adapted from <a href="https://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.js" integrity="sha384-G0zcxDFp5LWZtDuRMnBkk3EphCK1lhEf4UEyEM693ka574TZGwo4IWwS6QLzM/2t" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+<script src="https://code.jquery.com/jquery-3.7.0.slim.min.js" integrity="sha384-w5y/xIeYixWvfM+A1cEbmHPURnvyqmVg5eVENruEdDjcyRLUSNej7512JQGspFUr" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+
+<script src="https://liveandletlearn.net/js/main.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script><script src="https://liveandletlearn.net/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+
+
+
+    
+  </body>
+</html>
+

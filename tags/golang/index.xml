@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>golang on Live and let Learn</title>
+    <title>Golang on Live and let Learn</title>
     <link>https://liveandletlearn.net/tags/golang/</link>
-    <description>Recent content in golang on Live and let Learn</description>
+    <description>Recent content in Golang on Live and let Learn</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <managingEditor>absoludity&#43;lll@gmail.com (Michael Nelson)</managingEditor>

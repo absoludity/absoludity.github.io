@@ -2,22 +2,37 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://liveandletlearn.net/tags/learning/</loc>
+    <lastmod>2024-02-22T16:25:25+11:00</lastmod>
+  </url><url>
+    <loc>https://liveandletlearn.net/tags/life/</loc>
+    <lastmod>2024-02-22T16:25:25+11:00</lastmod>
+  </url><url>
+    <loc>https://liveandletlearn.net/</loc>
+    <lastmod>2024-02-22T16:25:25+11:00</lastmod>
+  </url><url>
+    <loc>https://liveandletlearn.net/post/live-and-let-learn-piloting-rust-and-quantum/</loc>
+    <lastmod>2024-02-22T16:25:25+11:00</lastmod>
+  </url><url>
+    <loc>https://liveandletlearn.net/tags/piloting/</loc>
+    <lastmod>2024-02-22T16:25:25+11:00</lastmod>
+  </url><url>
+    <loc>https://liveandletlearn.net/post/</loc>
+    <lastmod>2024-02-22T16:25:25+11:00</lastmod>
+  </url><url>
+    <loc>https://liveandletlearn.net/tags/quantum-computing/</loc>
+    <lastmod>2024-02-22T16:25:25+11:00</lastmod>
+  </url><url>
+    <loc>https://liveandletlearn.net/tags/rust/</loc>
+    <lastmod>2024-02-22T16:25:25+11:00</lastmod>
+  </url><url>
+    <loc>https://liveandletlearn.net/tags/</loc>
+    <lastmod>2024-02-22T16:25:25+11:00</lastmod>
+  </url><url>
     <loc>https://liveandletlearn.net/post/advent-of-code-2023/day03-enums-and-docstrings/</loc>
     <lastmod>2024-01-12T06:45:18+11:00</lastmod>
   </url><url>
-    <loc>https://liveandletlearn.net/</loc>
-    <lastmod>2024-01-12T06:45:18+11:00</lastmod>
-  </url><url>
-    <loc>https://liveandletlearn.net/post/</loc>
-    <lastmod>2024-01-12T06:45:18+11:00</lastmod>
-  </url><url>
     <loc>https://liveandletlearn.net/tags/programming/</loc>
-    <lastmod>2024-01-12T06:45:18+11:00</lastmod>
-  </url><url>
-    <loc>https://liveandletlearn.net/tags/rust/</loc>
-    <lastmod>2024-01-12T06:45:18+11:00</lastmod>
-  </url><url>
-    <loc>https://liveandletlearn.net/tags/</loc>
     <lastmod>2024-01-12T06:45:18+11:00</lastmod>
   </url><url>
     <loc>https://liveandletlearn.net/post/advent-of-code-2023/day02-copilot-and-vanilla-parsing/</loc>
