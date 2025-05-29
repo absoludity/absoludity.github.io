@@ -4,10 +4,8 @@
     <title>Categories on Live and let Learn</title>
     <link>https://liveandletlearn.net/categories/</link>
     <description>Recent content in Categories on Live and let Learn</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo</generator>
     <language>en-us</language>
-    <managingEditor>absoludity&#43;lll@gmail.com (Michael Nelson)</managingEditor>
-    <webMaster>absoludity&#43;lll@gmail.com (Michael Nelson)</webMaster>
     <atom:link href="https://liveandletlearn.net/categories/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>

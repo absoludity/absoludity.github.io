@@ -4,32 +4,30 @@
     <title>Advent of Code 2023 on Live and let Learn</title>
     <link>https://liveandletlearn.net/post/advent-of-code-2023/</link>
     <description>Recent content in Advent of Code 2023 on Live and let Learn</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo</generator>
     <language>en-us</language>
-    <managingEditor>absoludity&#43;lll@gmail.com (Michael Nelson)</managingEditor>
-    <webMaster>absoludity&#43;lll@gmail.com (Michael Nelson)</webMaster>
     <lastBuildDate>Fri, 12 Jan 2024 06:45:18 +1100</lastBuildDate>
     <atom:link href="https://liveandletlearn.net/post/advent-of-code-2023/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Day03 Tokens, Enums and Docstrings</title>
       <link>https://liveandletlearn.net/post/advent-of-code-2023/day03-enums-and-docstrings/</link>
-      <pubDate>Fri, 12 Jan 2024 06:45:18 +1100</pubDate><author>absoludity&#43;lll@gmail.com (Michael Nelson)</author>
+      <pubDate>Fri, 12 Jan 2024 06:45:18 +1100</pubDate>
       <guid>https://liveandletlearn.net/post/advent-of-code-2023/day03-enums-and-docstrings/</guid>
-      <description>The Day 03 challenge involves the calculating whether a character symbol is adjacent to a part number in a two dimensional map, such as:&#xA;467..114.. ...*...... ..35..633. ......#... 617*...... .....+.58. ..592..... ......755. ...$.*.... .664.598.. and then doing things with the part numbers.&#xA;To calculate whether a symbol is adjacent to a part number we&amp;rsquo;re going to need:&#xA;the position of each symbol, the position of each number, the length of the token for each number.</description>
+      <description>&lt;p&gt;The &lt;a href=&#34;https://adventofcode.com/2023/day/3&#34;&gt;Day 03 challenge&lt;/a&gt; involves the calculating whether a character symbol is adjacent to a part number in a two dimensional map, such as:&lt;/p&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;467..114..&#xA;...*......&#xA;..35..633.&#xA;......#...&#xA;617*......&#xA;.....+.58.&#xA;..592.....&#xA;......755.&#xA;...$.*....&#xA;.664.598..&#xA;&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;and then doing things with the part numbers.&lt;/p&gt;&#xA;&lt;p&gt;To calculate whether a symbol is adjacent to a part number we&amp;rsquo;re going to need:&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;the position of each symbol,&lt;/li&gt;&#xA;&lt;li&gt;the position of each number,&lt;/li&gt;&#xA;&lt;li&gt;the length of the token for each number.&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;tokenising-the-input&#34;&gt;Tokenising the input&lt;/h2&gt;&#xA;&lt;p&gt;The simplest way to get this data that I can think of is to parse the map into a list of tokens, where the number and blank tokens contain the info for me to know the length (ie. the &lt;code&gt;&amp;amp;str&lt;/code&gt;).&lt;/p&gt;</description>
     </item>
     <item>
       <title>Day02 Copilot and Vanilla Parsing</title>
       <link>https://liveandletlearn.net/post/advent-of-code-2023/day02-copilot-and-vanilla-parsing/</link>
-      <pubDate>Sun, 07 Jan 2024 06:13:31 +1100</pubDate><author>absoludity&#43;lll@gmail.com (Michael Nelson)</author>
+      <pubDate>Sun, 07 Jan 2024 06:13:31 +1100</pubDate>
       <guid>https://liveandletlearn.net/post/advent-of-code-2023/day02-copilot-and-vanilla-parsing/</guid>
-      <description>After refreshing my knowledge of the rust parsing library &amp;rsquo;nom&amp;rsquo; with the day01 challenge, I was keen to do the second challenge without, simply using the standard library&amp;rsquo;s string manipulation and default parsing for this simpler parsing problem.&#xA;At the same time, I was keen to work more with GitHub Copilot since I&amp;rsquo;ve not been able to use copilot at my most recent job due to potential legal issues.&#xA;The Elf&amp;rsquo;s game for day 02 consists of pulling out multiple combinations of red, green and blue balls from a sack - and the parsing looks quite straight forward.</description>
+      <description>&lt;p&gt;After refreshing my knowledge of &lt;a href=&#34;https://liveandletlearn.net/post/advent-of-code-2023/day01-a-rust-parsing-exercise-with-nom/&#34;&gt;the rust parsing library &amp;rsquo;nom&amp;rsquo; with the day01 challenge&lt;/a&gt;, I was keen to do the second challenge without, simply using the standard library&amp;rsquo;s string manipulation and default parsing for this simpler parsing problem.&lt;/p&gt;&#xA;&lt;p&gt;At the same time, I was keen to work more with &lt;a href=&#34;https://github.com/features/copilot&#34;&gt;GitHub Copilot&lt;/a&gt; since I&amp;rsquo;ve not been able to use copilot at my most recent job due to potential legal issues.&lt;/p&gt;&#xA;&lt;p&gt;The &lt;a href=&#34;https://adventofcode.com/2023/day/2&#34;&gt;Elf&amp;rsquo;s game for day 02&lt;/a&gt; consists of pulling out multiple combinations of red, green and blue balls from a sack - and the parsing looks quite straight forward.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Day 01 - a Rust Parsing Exercise With Nom</title>
       <link>https://liveandletlearn.net/post/advent-of-code-2023/day01-a-rust-parsing-exercise-with-nom/</link>
-      <pubDate>Sun, 10 Dec 2023 13:51:15 +1100</pubDate><author>absoludity&#43;lll@gmail.com (Michael Nelson)</author>
+      <pubDate>Sun, 10 Dec 2023 13:51:15 +1100</pubDate>
       <guid>https://liveandletlearn.net/post/advent-of-code-2023/day01-a-rust-parsing-exercise-with-nom/</guid>
-      <description>It&amp;rsquo;s been quite some time since I&amp;rsquo;ve taken time to enjoy coding challenges primarily for the fun of it. Over the next months, I&amp;rsquo;m keen to work my way through the 2023 Advent of Code - a fun set of problems created by Eric Wastl strung together with a seasonal story - and write up a bit about my own learning and fun.&#xA;For me it&amp;rsquo;s a chance to keep improving my fluency with various Rust libraries and tools (start learning the Rust programming language here!</description>
+      <description>&lt;p&gt;It&amp;rsquo;s been quite some time since I&amp;rsquo;ve taken time to enjoy coding challenges primarily for the fun of it. Over the next months, I&amp;rsquo;m keen to work my way through the &lt;a href=&#34;https://adventofcode.com/2023&#34;&gt;2023 Advent of Code&lt;/a&gt; - a fun set of problems created by &lt;a href=&#34;https://adventofcode.com/2023/about&#34;&gt;Eric Wastl&lt;/a&gt; strung together with a seasonal story - and write up a bit about my own learning and fun.&lt;/p&gt;&#xA;&lt;p&gt;For me it&amp;rsquo;s a chance to keep improving my fluency with various Rust libraries and tools (start &lt;a href=&#34;https://www.rust-lang.org/learn&#34;&gt;learning the Rust programming language here!&lt;/a&gt;). And the &lt;a href=&#34;https://adventofcode.com/2023/day/1&#34;&gt;first day of the 2023 Advent of Code&lt;/a&gt; is a parsing exercise - a good opportunity to re-familiarise myself with Rust&amp;rsquo;s &lt;a href=&#34;https://docs.rs/nom/latest/nom/&#34;&gt;nom&lt;/a&gt; parsing library as well as re-enforce in my head that &lt;a href=&#34;https://en.wikipedia.org/wiki/Confirmation_bias&#34;&gt;confirmation bias&lt;/a&gt; is strong in this one (me).&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>

@@ -4,16 +4,21 @@
     <title>Learning on Live and let Learn</title>
     <link>https://liveandletlearn.net/tags/learning/</link>
     <description>Recent content in Learning on Live and let Learn</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo</generator>
     <language>en-us</language>
-    <managingEditor>absoludity&#43;lll@gmail.com (Michael Nelson)</managingEditor>
-    <webMaster>absoludity&#43;lll@gmail.com (Michael Nelson)</webMaster>
-    <lastBuildDate>Thu, 22 Feb 2024 16:25:25 +1100</lastBuildDate>
+    <lastBuildDate>Thu, 29 May 2025 09:15:09 +1000</lastBuildDate>
     <atom:link href="https://liveandletlearn.net/tags/learning/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>United Nations Transparency Protocol: transparent facts about products you purchase</title>
+      <link>https://liveandletlearn.net/post/united-nations-transparency-protocol-part-1/</link>
+      <pubDate>Thu, 29 May 2025 09:15:09 +1000</pubDate>
+      <guid>https://liveandletlearn.net/post/united-nations-transparency-protocol-part-1/</guid>
+      <description>&lt;p&gt;For the past year I&amp;rsquo;ve been working with the people at &lt;a href=&#34;https://gosource.com.au/&#34;&gt;GoSource&lt;/a&gt; around 3 days per week while also working towards my commercial pilot license (more on that journey separately). GoSource are involved in quite a number of interesting projects, but for the past 5 months I&amp;rsquo;ve been involved with the &lt;a href=&#34;https://uncefact.github.io/spec-untp/docs/about/&#34;&gt;United Nations Transparency Protocol&lt;/a&gt;, which aims to make product claims easy to verify - claims such as whether the product was produced on land that is &lt;a href=&#34;https://environment.ec.europa.eu/topics/forests/deforestation/regulation-deforestation-free-products_en&#34;&gt;deforestation-free&lt;/a&gt;, or whether a battery in your EV was sourced with components that meet &lt;a href=&#34;https://environment.ec.europa.eu/topics/waste-and-recycling/batteries_en&#34;&gt;certain sustainability goals&lt;/a&gt;.&lt;/p&gt;</description>
+    </item>
     <item>
       <title>Live and Let Learn with Rust, Quantum Computing and Piloting aeroplanes</title>
       <link>https://liveandletlearn.net/post/live-and-let-learn-piloting-rust-and-quantum/</link>
-      <pubDate>Thu, 22 Feb 2024 16:25:25 +1100</pubDate><author>absoludity&#43;lll@gmail.com (Michael Nelson)</author>
+      <pubDate>Thu, 22 Feb 2024 16:25:25 +1100</pubDate>
       <guid>https://liveandletlearn.net/post/live-and-let-learn-piloting-rust-and-quantum/</guid>
       <description>&lt;p&gt;In mid 2022 I was presented with an &lt;strong&gt;amazing opportunity&lt;/strong&gt; through no effort of my own: VMware, the company I worked for, announced it was being acquired by a non-remote, non-open-source-oriented multi-national in a somewhat lengthy 18 month process. As a fully-remote staff engineer on an open-source project &lt;strong&gt;I estimated a 75 to 90 percent probability that I&amp;rsquo;d receive a redundancy in around 18 months time&lt;/strong&gt;.&lt;/p&gt;&#xA;&lt;p&gt;A redundancy, really? An amazing opportunity? This post is a personal reflection and reminder to my future self to step back and evaluate the potential opportunities that a situation provides. I&amp;rsquo;m currently using this opportunity to &lt;strong&gt;weave three passions of mine into a possible future of software engineering with Rust on quantum computing projects and piloting aeroplanes on the side&lt;/strong&gt;. Sure, reality may force me to compromise in one way or another in time, but for now I&amp;rsquo;m leaving my options open.&lt;/p&gt;</description>
     </item>

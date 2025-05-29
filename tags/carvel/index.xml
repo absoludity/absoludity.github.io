@@ -4,16 +4,14 @@
     <title>Carvel on Live and let Learn</title>
     <link>https://liveandletlearn.net/tags/carvel/</link>
     <description>Recent content in Carvel on Live and let Learn</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo</generator>
     <language>en-us</language>
-    <managingEditor>absoludity&#43;lll@gmail.com (Michael Nelson)</managingEditor>
-    <webMaster>absoludity&#43;lll@gmail.com (Michael Nelson)</webMaster>
     <lastBuildDate>Tue, 02 Feb 2021 15:24:29 +1100</lastBuildDate>
     <atom:link href="https://liveandletlearn.net/tags/carvel/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Carvel kbld With Helm Post Render</title>
       <link>https://liveandletlearn.net/post/carvel-imgbld-with-helm-post-render/</link>
-      <pubDate>Tue, 02 Feb 2021 15:24:29 +1100</pubDate><author>absoludity&#43;lll@gmail.com (Michael Nelson)</author>
+      <pubDate>Tue, 02 Feb 2021 15:24:29 +1100</pubDate>
       <guid>https://liveandletlearn.net/post/carvel-imgbld-with-helm-post-render/</guid>
       <description>&lt;p&gt;For the past couple of years I&amp;rsquo;ve been working on the &lt;a href=&#34;https://kubeapps.com/&#34;&gt;Kubeapps project&lt;/a&gt;, which until recently has been a UI dashboard for the &lt;a href=&#34;https://helm.sh/&#34;&gt;Helm project&lt;/a&gt; - providing a simple, web-based UI to deploy applications on &lt;a href=&#34;https://kubernetes.io/&#34;&gt;Kubernetes&lt;/a&gt;.&lt;/p&gt;&#xA;&lt;p&gt;I&amp;rsquo;m currently looking at generalising Kubeapps to support other Kubernetes packages formats, including &lt;a href=&#34;https://carvel.dev/&#34;&gt;Carvel&lt;/a&gt; from VMware of course. So I set out today to start learning more about Carvel, which in contrast to more monolithic tools like Helm, provides &amp;ldquo;a set of single-purpose, composable tools that aid in your application building, configuration and deployment to Kubernetes&amp;rdquo;.&lt;/p&gt;&#xA;&lt;p&gt;As an example of that composability, I found I can deploy a helm chart using a set of immutable images by utilizing Helm&amp;rsquo;s new-ish support for &lt;a href=&#34;https://helm.sh/docs/topics/advanced/#post-rendering&#34;&gt;post rendering of a chart&lt;/a&gt;. Here&amp;rsquo;s how&amp;hellip;&lt;/p&gt;</description>
     </item>

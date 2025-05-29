@@ -4,51 +4,49 @@
     <title>Tutorial on Live and let Learn</title>
     <link>https://liveandletlearn.net/tags/tutorial/</link>
     <description>Recent content in Tutorial on Live and let Learn</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo</generator>
     <language>en-us</language>
-    <managingEditor>absoludity&#43;lll@gmail.com (Michael Nelson)</managingEditor>
-    <webMaster>absoludity&#43;lll@gmail.com (Michael Nelson)</webMaster>
     <lastBuildDate>Mon, 19 Apr 2021 21:39:49 +1000</lastBuildDate>
     <atom:link href="https://liveandletlearn.net/tags/tutorial/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Kubeapps on Tanzu Kubernetes Grid 1.3</title>
       <link>https://liveandletlearn.net/post/kubeapps-on-tanzu-kubernetes-grid-13-part-2/</link>
-      <pubDate>Mon, 19 Apr 2021 21:39:49 +1000</pubDate><author>absoludity&#43;lll@gmail.com (Michael Nelson)</author>
+      <pubDate>Mon, 19 Apr 2021 21:39:49 +1000</pubDate>
       <guid>https://liveandletlearn.net/post/kubeapps-on-tanzu-kubernetes-grid-13-part-2/</guid>
-      <description>This is the second post in a series of two post detailing the steps that I took to install Kubeapps running on a TKG 1.3 cluster on AWS configured to allow user authentication via the TKG identity management:&#xA;The first post focuses on the TKG 1.3 setup required to get a workload clusters with identity management (using your chosen identity provider), This followup post details the related Kubeapps installation and configuration on the TKG 1.</description>
+      <description>&lt;p&gt;This is the second post in a series of two post detailing the steps that I took to install Kubeapps running on a TKG 1.3 cluster on AWS configured to allow user authentication via the TKG identity management:&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;The first post focuses on the &lt;a href=&#34;https://liveandletlearn.net/post/kubeapps-on-tanzu-kubernetes-grid-13/&#34;&gt;TKG 1.3 setup required to get a workload clusters with identity management&lt;/a&gt; (using your chosen identity provider),&lt;/li&gt;&#xA;&lt;li&gt;This followup post details the related Kubeapps installation and configuration on the TKG 1.3 workload cluster.&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;The details below assume that you&amp;rsquo;ve already successfully created your TKG management and workload clusters configured with identity management and verified that you can authenticate with both clusters using your identity provider (ie. not admin credentials).&lt;/p&gt;</description>
     </item>
     <item>
       <title>Tanzu Kubernetes Grid 1.3 with Identity Management</title>
       <link>https://liveandletlearn.net/post/kubeapps-on-tanzu-kubernetes-grid-13/</link>
-      <pubDate>Mon, 19 Apr 2021 06:42:43 +1000</pubDate><author>absoludity&#43;lll@gmail.com (Michael Nelson)</author>
+      <pubDate>Mon, 19 Apr 2021 06:42:43 +1000</pubDate>
       <guid>https://liveandletlearn.net/post/kubeapps-on-tanzu-kubernetes-grid-13/</guid>
-      <description>Way back in 2020 I&amp;rsquo;d detailed how I&amp;rsquo;d setup a Tanzu Kubernetes Grid 1.1 management cluster with OpenID Connect support (for single sign-on) before installing Kubeapps with single sign-on on that management cluster.&#xA;Recently TKG 1.3 was released and the identity management support in TKG has changed significantly, so it&amp;rsquo;s time to see what&amp;rsquo;s different when setting up a TKG cluster with identity management as well as how we can run Kubeapps on TKG 1.</description>
+      <description>&lt;p&gt;Way back in 2020 I&amp;rsquo;d detailed how I&amp;rsquo;d setup a &lt;a href=&#34;https://liveandletlearn.net/post/tanzu-kubernetes-grid-tkg-first-experience/&#34;&gt;Tanzu Kubernetes Grid 1.1 management cluster with OpenID Connect support&lt;/a&gt; (for single sign-on) before installing &lt;a href=&#34;https://liveandletlearn.net/post/kubeapps-on-tkg-management-cluster/&#34;&gt;Kubeapps with single sign-on on that management cluster&lt;/a&gt;.&lt;/p&gt;&#xA;&lt;p&gt;Recently TKG 1.3 was released and the identity management support in TKG has changed significantly, so it&amp;rsquo;s time to see what&amp;rsquo;s different when setting up a TKG cluster with identity management as well as how we can run Kubeapps on TKG 1.3 with identity management. You will of course need to work through the &lt;a href=&#34;https://docs.vmware.com/en/VMware-Tanzu-Kubernetes-Grid/1.3/vmware-tanzu-kubernetes-grid-13/GUID-index.html&#34;&gt;TKG 1.3 documentation for your environment&lt;/a&gt;, I&amp;rsquo;ll just highlight the significant points and small issues that I needed to work around, due to my environment.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Kubeapps on Tanzu Mission Control via Pinniped</title>
       <link>https://liveandletlearn.net/post/kubeapps-on-tanzu-mission-control/</link>
-      <pubDate>Thu, 25 Feb 2021 11:40:02 +1100</pubDate><author>absoludity&#43;lll@gmail.com (Michael Nelson)</author>
+      <pubDate>Thu, 25 Feb 2021 11:40:02 +1100</pubDate>
       <guid>https://liveandletlearn.net/post/kubeapps-on-tanzu-mission-control/</guid>
       <description>&lt;p&gt;We&amp;rsquo;ve been able to run &lt;a href=&#34;https://liveandletlearn.net/post/kubeapps-on-tkg-management-cluster/&#34;&gt;Kubeapps in a multi-cluster setup on various Kubernetes clusters&lt;/a&gt; for a while now, but this was dependent on the Kubeapps&amp;rsquo; user being authenticated in a way that all the clusters trust. Up until now, this meant having all the clusters &lt;a href=&#34;https://kubernetes.io/docs/reference/access-authn-authz/authentication/#configuring-the-api-server&#34;&gt;configured to trust the same OIDC identity provider&lt;/a&gt;, which is not possible in some Kubernetes environments.&lt;/p&gt;&#xA;&lt;p&gt;Particularly, this meant we were unable to demonstrate multi-cluster Kubeapps with clusters created by &lt;a href=&#34;https://tanzu.vmware.com/mission-control&#34;&gt;Tanzu Mission Control&lt;/a&gt; since we can&amp;rsquo;t specify API server options, such as OIDC configuration, when creating a cluster in TMC. But that requirement has now changed thanks to a new project called &lt;a href=&#34;https://pinniped.dev/&#34;&gt;Pinniped&lt;/a&gt;.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Kubeapps on a TKG Management Cluster</title>
       <link>https://liveandletlearn.net/post/kubeapps-on-tkg-management-cluster/</link>
-      <pubDate>Wed, 23 Sep 2020 11:01:36 +1000</pubDate><author>absoludity&#43;lll@gmail.com (Michael Nelson)</author>
+      <pubDate>Wed, 23 Sep 2020 11:01:36 +1000</pubDate>
       <guid>https://liveandletlearn.net/post/kubeapps-on-tkg-management-cluster/</guid>
-      <description>This is part two of a series detailing the steps required to run Kubeapps on a VMware TKG management cluster (on AWS) configured to allow users to deploy applications to multiple workload clusters, using the new multicluster support in Kubeapps. Though details will differ, a similar configuration works on other non-TKG multicluster setups as well.&#xA;The first post described setting up your VMware TKG management cluster with two OpenIDConnect-enabled workload clusters.</description>
+      <description>&lt;p&gt;This is part two of a series detailing the steps required to run &lt;a href=&#34;https://kubeapps.com&#34;&gt;Kubeapps&lt;/a&gt; on a &lt;a href=&#34;https://tanzu.vmware.com/kubernetes-grid&#34;&gt;VMware TKG&lt;/a&gt; management cluster (on AWS) configured to allow users to deploy applications to multiple&#xA;workload clusters, using the new multicluster support in Kubeapps. Though details will differ, a similar configuration works on other non-TKG multicluster setups as well.&lt;/p&gt;&#xA;&lt;p&gt;The first post described &lt;a href=&#34;https://liveandletlearn.net/post/tanzu-kubernetes-grid-tkg-first-experience/&#34;&gt;setting up your VMware TKG management cluster with two OpenIDConnect-enabled workload clusters&lt;/a&gt;. This post assumes you have your TKG environment setup as described there and focuses on the Kubeapps installation and configuration. The following video demos the result: &lt;div style=&#34;position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;&#34;&gt;&#xA;      &lt;iframe allow=&#34;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen&#34; loading=&#34;eager&#34; referrerpolicy=&#34;strict-origin-when-cross-origin&#34; src=&#34;https://www.youtube.com/embed/pzVMZGTK0vU?autoplay=0&amp;amp;controls=1&amp;amp;end=0&amp;amp;loop=0&amp;amp;mute=0&amp;amp;start=0&#34; style=&#34;position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;&#34; title=&#34;YouTube video&#34;&gt;&lt;/iframe&gt;&#xA;    &lt;/div&gt;&#xA;&lt;/p&gt;</description>
     </item>
     <item>
       <title>VMware Tanzu Kubernetes Grid (TKG) with OpenID Connect - First Experience</title>
       <link>https://liveandletlearn.net/post/tanzu-kubernetes-grid-tkg-first-experience/</link>
-      <pubDate>Tue, 22 Sep 2020 10:01:03 +1000</pubDate><author>absoludity&#43;lll@gmail.com (Michael Nelson)</author>
+      <pubDate>Tue, 22 Sep 2020 10:01:03 +1000</pubDate>
       <guid>https://liveandletlearn.net/post/tanzu-kubernetes-grid-tkg-first-experience/</guid>
-      <description>Andres and I have been doing quite a bit of feature work in Kubeapps over the past months at VMware and one of the key features that I&amp;rsquo;ve been working on personally is enabling Kubeapps users to deploy applications not only on the cluster on which Kubeapps is installed, but to multiple other clusters as well.&#xA;Enter VMware Tanzu Kubernetes Grid (TGK): an &amp;ldquo;Enterprise-ready Kubernetes runtime which streamlines operations across multi-cloud infrastructure&amp;rdquo;, so naturally I was keen to test out running Kubeapps on TKG and deploying applications to a set of TKG-managed clusters.</description>
+      <description>&lt;p&gt;&lt;a href=&#34;https://github.com/andresmgot&#34;&gt;Andres&lt;/a&gt; and I have been doing quite a bit of&#xA;feature work in &lt;a href=&#34;https://kubeapps.com/&#34;&gt;Kubeapps&lt;/a&gt; over the past months at VMware and&#xA;one of the key features that I&amp;rsquo;ve been working on personally is enabling&#xA;Kubeapps users to deploy applications not only on the cluster on which&#xA;Kubeapps is installed, but to multiple other clusters as well.&lt;/p&gt;&#xA;&lt;p&gt;&lt;img src=&#34;https://liveandletlearn.net/img/kubeapps-on-tkg-management-cluster/kubeapps-multicluster.png&#34; alt=&#34;The new Kubeapps UI with Multicluster support&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;Enter &lt;a href=&#34;https://tanzu.vmware.com/kubernetes-grid&#34;&gt;VMware Tanzu Kubernetes Grid&lt;/a&gt;&#xA;(TGK): an &amp;ldquo;Enterprise-ready Kubernetes runtime which streamlines operations&#xA;across multi-cloud infrastructure&amp;rdquo;, so naturally I was keen to test out&#xA;running Kubeapps on TKG and deploying applications to a set of TKG-managed clusters.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Dual booting the Dell XPS13 (9365) with linux</title>
       <link>https://liveandletlearn.net/post/dell-xps13-9365-dual-boot/</link>
-      <pubDate>Sun, 30 Apr 2017 19:50:00 +1000</pubDate><author>absoludity&#43;lll@gmail.com (Michael Nelson)</author>
+      <pubDate>Sun, 30 Apr 2017 19:50:00 +1000</pubDate>
       <guid>https://liveandletlearn.net/post/dell-xps13-9365-dual-boot/</guid>
       <description>&lt;p&gt;I recently purchased a &lt;a href=&#34;http://www.dell.com/au/p/xps-13-9365-2-in-1-laptop/pd?oc=z511203au&amp;amp;model_id=xps-13-9365-2-in-1-laptop&#34;&gt;Dell XPS13 (9365)&lt;/a&gt; (thanks to&#xA;&lt;a href=&#34;https://bitnami.com/&#34;&gt;Bitnami&lt;/a&gt; for whom I now work) which comes with Windows 10 preinstalled. I was&#xA;aware when purchasing that &lt;a href=&#34;https://bugzilla.kernel.org/show_bug.cgi?id=192591&#34;&gt;suspend on Linux is not yet working&lt;/a&gt;&#xA;(thanks &lt;a href=&#34;http://perltricks.com/article/laptop-review--dell-xps-13-2-in-1--9365-/&#34;&gt;David Farrell&lt;/a&gt;. As of &lt;a href=&#34;#suspendfix&#34;&gt;Aug 2017 suspend is fixed&lt;/a&gt;,&#xA;see below), as well as other functionality (autorotate, pen integration etc.)&#xA;and so was keen to have a few options to&#xA;work on this machine&lt;/p&gt;</description>
     </item>

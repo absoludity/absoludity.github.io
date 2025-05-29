@@ -4,16 +4,14 @@
     <title>Golang on Live and let Learn</title>
     <link>https://liveandletlearn.net/tags/golang/</link>
     <description>Recent content in Golang on Live and let Learn</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo</generator>
     <language>en-us</language>
-    <managingEditor>absoludity&#43;lll@gmail.com (Michael Nelson)</managingEditor>
-    <webMaster>absoludity&#43;lll@gmail.com (Michael Nelson)</webMaster>
     <lastBuildDate>Fri, 20 May 2022 15:38:13 +1000</lastBuildDate>
     <atom:link href="https://liveandletlearn.net/tags/golang/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Fan-Out and Fan-In Golang channels in Kubeapps</title>
       <link>https://liveandletlearn.net/post/fan-out-fan-in-golang-kubeapps/</link>
-      <pubDate>Fri, 20 May 2022 15:38:13 +1000</pubDate><author>absoludity&#43;lll@gmail.com (Michael Nelson)</author>
+      <pubDate>Fri, 20 May 2022 15:38:13 +1000</pubDate>
       <guid>https://liveandletlearn.net/post/fan-out-fan-in-golang-kubeapps/</guid>
       <description>&lt;p&gt;During a career as a software engineer, every now and then you come across a &lt;a href=&#34;https://en.wikipedia.org/wiki/Software_design_pattern&#34;&gt;design pattern&lt;/a&gt; that becomes your darling for a few years following the discovery. Other design patterns are useful, but not so special that you want to tell the world about them.&lt;/p&gt;&#xA;&lt;p&gt;Up until recently, my favourite design pattern was the &lt;a href=&#34;https://en.wikipedia.org/wiki/State_pattern&#34;&gt;state pattern&lt;/a&gt; which allows encapsulating different behaviours (implementations of an interface) in different classes so that an object can delegate its functionality to different state implementations which can be update at runtime. But more recently, while using a lot of concurrency in certain &lt;a href=&#34;https://github.com/vmware-tanzu/kubeapps/&#34;&gt;Kubeapps&lt;/a&gt; services, I&amp;rsquo;ve fallen in love with another design pattern - the fan-out/fan-in messaging pattern (or a form of it).&lt;/p&gt;</description>
     </item>

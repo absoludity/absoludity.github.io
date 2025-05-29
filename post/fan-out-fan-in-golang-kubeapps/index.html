@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en" itemscope itemtype="http://schema.org/WebPage">
   <head>
@@ -13,8 +15,7 @@
       <title>Fan-Out and Fan-In Golang channels in Kubeapps - </title>
 
   <meta name="description" content="During a career as a software engineer, every now and then you come across a design pattern that becomes your darling for a few years following the discovery. Other design patterns are useful, but not so special that you want to tell the world about them.
-Up until recently, my favourite design pattern was the state pattern which allows encapsulating different behaviours (implementations of an interface) in different classes so that an object can delegate its functionality to different state implementations which can be update at runtime. But more recently, while using a lot of concurrency in certain Kubeapps services, I&rsquo;ve fallen in love with another design pattern - the fan-out/fan-in messaging pattern (or a form of it).">
-  <meta name="author" content="Michael Nelson"/><script type="application/ld+json">
+Up until recently, my favourite design pattern was the state pattern which allows encapsulating different behaviours (implementations of an interface) in different classes so that an object can delegate its functionality to different state implementations which can be update at runtime. But more recently, while using a lot of concurrency in certain Kubeapps services, I&rsquo;ve fallen in love with another design pattern - the fan-out/fan-in messaging pattern (or a form of it)."><script type="application/ld+json">
 {
     "@context": "http://schema.org",
     "@type": "WebSite",
@@ -59,14 +60,14 @@ Up until recently, my favourite design pattern was the state pattern which allow
   "@context": "http://schema.org",
   "@type": "Article",
   "author": {
-    "name" : "Michael Nelson"
+    "name" : ""
   },
   "headline": "Fan-Out and Fan-In Golang channels in Kubeapps",
   "description" : "During a career as a software engineer, every now and then you come across a design pattern that becomes your darling for a few years following the discovery. Other design patterns are useful, but not so special that you want to tell the world about them.\nUp until recently, my favourite design pattern was the state pattern which allows encapsulating different behaviours (implementations of an interface) in different classes so that an object can delegate its functionality to different state implementations which can be update at runtime. But more recently, while using a lot of concurrency in certain Kubeapps services, I\u0026rsquo;ve fallen in love with another design pattern - the fan-out\/fan-in messaging pattern (or a form of it).\n",
   "inLanguage" : "en",
   "wordCount":  687 ,
-  "datePublished" : "2022-05-20T15:38:13",
-  "dateModified" : "2022-05-20T15:38:13",
+  "datePublished" : "2022-05-20T15:38:13\u002b10:00",
+  "dateModified" : "2022-05-20T15:38:13\u002b10:00",
   "image" : "https:\/\/liveandletlearn.net\/img\/avatar-icon.png",
   "keywords" : [ "kubeapps, vmware, golang" ],
   "mainEntityOfPage" : "https:\/\/liveandletlearn.net\/post\/fan-out-fan-in-golang-kubeapps\/",
@@ -83,6 +84,7 @@ Up until recently, my favourite design pattern was the state pattern which allow
 }
 </script>
 
+
 <meta property="og:title" content="Fan-Out and Fan-In Golang channels in Kubeapps" />
 <meta property="og:description" content="During a career as a software engineer, every now and then you come across a design pattern that becomes your darling for a few years following the discovery. Other design patterns are useful, but not so special that you want to tell the world about them.
 Up until recently, my favourite design pattern was the state pattern which allows encapsulating different behaviours (implementations of an interface) in different classes so that an object can delegate its functionality to different state implementations which can be update at runtime. But more recently, while using a lot of concurrency in certain Kubeapps services, I&rsquo;ve fallen in love with another design pattern - the fan-out/fan-in messaging pattern (or a form of it).">
@@ -95,12 +97,10 @@ Up until recently, my favourite design pattern was the state pattern which allow
   <meta name="twitter:description" content="During a career as a software engineer, every now and then you come across a design pattern that becomes your darling for a few years following the discovery. Other design patterns are useful, but not …">
   <meta name="twitter:image" content="https://liveandletlearn.net/img/avatar-icon.png" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:site" content="@michaelanelson" />
-  <meta name="twitter:creator" content="@michaelanelson" />
   <link href='https://liveandletlearn.net/img/favicon.ico' rel='icon' type='image/x-icon'/>
-  <meta name="generator" content="Hugo 0.123.2">
+  <meta name="generator" content="Hugo 0.147.6">
   <link rel="alternate" href="https://liveandletlearn.net/index.xml" type="application/rss+xml" title="Live and let Learn"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.css" integrity="sha384-3UiQGuEI4TTMaFmGIZumfRPtfKQ3trwQE2JgosJxCnGmQpL/lJdjpcHkaaFwHlcI" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.6.0/css/all.css" integrity="sha384-h/hnnw1Bi4nbpD6kE7nYfCXzovi622sY5WBxww8ARKwpdLj5kUWjRuyiXaD1U2JT" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous"><link rel="stylesheet" href="https://liveandletlearn.net/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" /><link rel="stylesheet" href="https://liveandletlearn.net/css/syntax.css" /><link rel="stylesheet" href="https://liveandletlearn.net/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
@@ -152,6 +152,7 @@ Up until recently, my favourite design pattern was the state pattern which allow
         <div class="avatar-img-border">
           <a title="Live and let Learn" href="https://liveandletlearn.net/">
             <img class="avatar-img" src="https://liveandletlearn.net/img/avatar-icon.png" alt="Live and let Learn" />
+           
           </a>
         </div>
       </div>
@@ -245,7 +246,7 @@ Up until recently, my favourite design pattern was the state pattern which allow
   
   
     
-      &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;Michael Nelson
+      &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;
     
   
   
@@ -270,10 +271,9 @@ Up until recently, my favourite design pattern was the state pattern which allow
         <p>During a career as a software engineer, every now and then you come across a <a href="https://en.wikipedia.org/wiki/Software_design_pattern">design pattern</a> that becomes your darling for a few years following the discovery. Other design patterns are useful, but not so special that you want to tell the world about them.</p>
 <p>Up until recently, my favourite design pattern was the <a href="https://en.wikipedia.org/wiki/State_pattern">state pattern</a> which allows encapsulating different behaviours (implementations of an interface) in different classes so that an object can delegate its functionality to different state implementations which can be update at runtime. But more recently, while using a lot of concurrency in certain <a href="https://github.com/vmware-tanzu/kubeapps/">Kubeapps</a> services, I&rsquo;ve fallen in love with another design pattern - the fan-out/fan-in messaging pattern (or a form of it).</p>
 <p>Or, if you prefer you can watch a video demo&rsquo;ing the fan-out/fan-in with the game Infinifactory:</p>
-
 <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-  <iframe src="https://www.youtube.com/embed/hRQpU-w8fEY" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
-</div>
+      <iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen" loading="eager" referrerpolicy="strict-origin-when-cross-origin" src="https://www.youtube.com/embed/hRQpU-w8fEY?autoplay=0&amp;controls=1&amp;end=0&amp;loop=0&amp;mute=0&amp;start=0" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" title="YouTube video"></iframe>
+    </div>
 
 <h2 id="the-problem">The problem</h2>
 <p>In Kubeapps, we have a <a href="/post/kubeapps-apis-kubernetes-packages/">pluggable API server for supporting different package formats for Kubernetes</a>, allowing users to install, update and delete packages on a cluster with a consistent UX experience across different packaging systems.</p>
@@ -304,11 +304,14 @@ Up until recently, my favourite design pattern was the state pattern which allow
         
           <div class="blog-tags">
             
-              <a href="https://liveandletlearn.net//tags/kubeapps/">kubeapps</a>&nbsp;
+              
+              <a href="https://liveandletlearn.net/tags/kubeapps/">kubeapps</a>&nbsp;
             
-              <a href="https://liveandletlearn.net//tags/vmware/">vmware</a>&nbsp;
+              
+              <a href="https://liveandletlearn.net/tags/vmware/">vmware</a>&nbsp;
             
-              <a href="https://liveandletlearn.net//tags/golang/">golang</a>&nbsp;
+              
+              <a href="https://liveandletlearn.net/tags/golang/">golang</a>&nbsp;
             
           </div>
         
@@ -335,10 +338,16 @@ Up until recently, my favourite design pattern was the state pattern which allow
 
 
       
-        
+      
+      
+      
+      
           
           <div class="disqus-comments">
-            <div id="disqus_thread"></div>
+            
+  
+    <div class="comments">
+      <div id="disqus_thread"></div>
 <script>
     window.disqus_config = function () {
     
@@ -358,6 +367,10 @@ Up until recently, my favourite design pattern was the state pattern which allow
 </script>
 <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 <a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </div>
+  
+
+
           </div>
           
         
@@ -368,65 +381,23 @@ Up until recently, my favourite design pattern was the state pattern which allow
   </div>
 </div>
 
-      
-<footer>
+      <footer>
   <div class="container">
     
     <div class="row">
       <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
         <ul class="list-inline text-center footer-links">
           
-              <li>
-		
-		  <a href="mailto:absoludity&#43;lll@gmail.com" title="Email me">
-		
-                  <span class="fa-stack fa-lg">
-                    <i class="fas fa-circle fa-stack-2x"></i>
-                    <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
-                  </span>
-                </a>
-              </li>
-              <li>
-		
-		  <a href="https://github.com/absoludity" title="GitHub">
-		
-                  <span class="fa-stack fa-lg">
-                    <i class="fas fa-circle fa-stack-2x"></i>
-                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
-                  </span>
-                </a>
-              </li>
-              <li>
-		
-		  <a href="https://twitter.com/michaelanelson" title="Twitter">
-		
-                  <span class="fa-stack fa-lg">
-                    <i class="fas fa-circle fa-stack-2x"></i>
-                    <i class="fab fa-twitter fa-stack-1x fa-inverse"></i>
-                  </span>
-                </a>
-              </li>
           
-          <li>
-            <a href="" title="RSS">
-              <span class="fa-stack fa-lg">
-                <i class="fas fa-circle fa-stack-2x"></i>
-                <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
-              </span>
-            </a>
-          </li>
+          
           
         </ul>
         <p class="credits copyright text-muted">
           
-            
-              Michael Nelson
-            
-          
 
           &nbsp;&bull;&nbsp;&copy;
           
-            2024
+            2025
           
 
           
@@ -436,7 +407,7 @@ Up until recently, my favourite design pattern was the state pattern which allow
         </p>
         
         <p class="credits theme-by text-muted">
-          <a href="https://gohugo.io">Hugo v0.123.2</a> powered &nbsp;&bull;&nbsp; Theme <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a> adapted from <a href="https://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a>
+          <a href="https://gohugo.io">Hugo v0.147.6</a> powered &nbsp;&bull;&nbsp; Theme <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a> adapted from <a href="https://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a>
           
         </p>
       </div>
@@ -449,6 +420,7 @@ Up until recently, my favourite design pattern was the state pattern which allow
 
 <script src="https://liveandletlearn.net/js/main.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script><script src="https://liveandletlearn.net/js/load-photoswipe.js"></script>
+
 
 
 
