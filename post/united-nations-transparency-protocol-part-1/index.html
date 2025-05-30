@@ -64,7 +64,7 @@
   "headline": "United Nations Transparency Protocol: transparent facts about products you purchase",
   "description" : "For the past year I\u0026rsquo;ve been working with the people at GoSource around 3 days per week while also working towards my commercial pilot license (more on that journey separately). GoSource are involved in quite a number of interesting projects, but for the past 5 months I\u0026rsquo;ve been involved with the United Nations Transparency Protocol, which aims to make product claims easy to verify - claims such as whether the product was produced on land that is deforestation-free, or whether a battery in your EV was sourced with components that meet certain sustainability goals.\n",
   "inLanguage" : "en",
-  "wordCount":  1245 ,
+  "wordCount":  1307 ,
   "datePublished" : "2025-05-29T09:15:09\u002b10:00",
   "dateModified" : "2025-05-29T09:15:09\u002b10:00",
   "image" : "https:\/\/liveandletlearn.net\/img\/avatar-icon.png",
@@ -301,8 +301,9 @@ essentially allowing the information provided by a set of credentials to be link
 </ul>
 <p>But the other side of that is, in my opinion, that:</p>
 <ul>
-<li><strong>this added complexity is not exposed to the developers (or users) who are using those document formats</strong> (such as those publishing their own credentials or viewing or verifying the credentials of others). Instead, they simply benefit from the extra work that has been done behind the scenes to enable unique, well-defined information that can be collected across the web, understood consistently by both humans and computers and transformed into a graph of information for further processing.</li>
+<li><strong>this added complexity is not exposed to the developers (or users) who are using those document formats</strong> (such as those publishing their own credentials or viewing or verifying the credentials of others). Instead, they simply benefit from the extra work that has been done behind the scenes that <strong>enables unique, well-defined information that can be collected across the web, understood consistently by both humans and computers and transformed into a graph of information</strong> for further insights and processing.</li>
 </ul>
+<p>I&rsquo;ll demonstrate the benefit of this graph of collected data and the inferences we can build upon it in the next post.</p>
 <h2 id="decentralized-identifiers">Decentralized Identifiers</h2>
 <p>Verifiable Credentials actually belong to a family of W3C specifications that enable a decentralized architecture for the identities used to issue credentials. That is, without necessarily relying on a trusted centralised identification services such as Google, Microsoft, Github, FB or similar, to establish a trustworthy identity (or even relying on ssh key servers for signature verification).</p>
 <p>The recently published <a href="https://www.w3.org/TR/vc-data-integrity/">Verifiable Credential Data Integrity</a> specification builds on the earlier Verifiable Credentials specification and</p>
@@ -311,7 +312,8 @@ essentially allowing the information provided by a set of credentials to be link
 <p>while the related <a href="https://www.w3.org/TR/cid-1.0/">Controlled Identifiers</a> specification appears to build on the earlier <a href="https://www.w3.org/TR/did-1.0/">Decentralized Identifiers specification</a>, defining a more general controlled identifier document as:</p>
 <blockquote>
 <p>A controlled identifier document contains cryptographic material and lists service endpoints for the purposes of verifying cryptographic proofs from, and interacting with, the controller of an identifier.</p></blockquote>
-<p>Decentralised Identifiers (DIDs) are a very interesting area and a central part of Verifiable Credentials and therefore the UNTP as well.</p>
+<p>That is, Decentralized Identifiers allow individuals and organisations to control their own digital identity, listing their own public keys (for example) and services for which the identity can be used (such as authentication or signature verification or both).</p>
+<p>Decentralized Identifiers (DIDs) are a very interesting area and a central part of Verifiable Credentials and therefore the UNTP as well.</p>
 <p>I hope that provides enough background information and links to some of the technical specifications that are underpinning the United Nations Transparency Protocol, in particular, for <strong>Verifiable Credentials</strong>, <strong>JSON Linked Data</strong> and <strong>Decentralized Identifiers</strong>), so that anyone interested in learning more or wanting to get involved can do so. I&rsquo;ll be following up with a more technical deep-dive into a proof-of-concept tool that I worked on recently that is able to benefit from the JSON-LD format used for verifiable credentials to build trust information from graphs of UNTP data.</p>
 
 
