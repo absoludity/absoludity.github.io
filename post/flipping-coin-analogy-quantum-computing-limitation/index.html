@@ -1,0 +1,480 @@
+
+
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/WebPage">
+  <head>
+    
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+ 
+
+
+      <title>Flipping a Coin: An Analogy for simulated Quantum Computing Limitations - </title>
+
+  <meta name="description" content="I love chatting about science with whoever I find myself with and learning together through those interactions. A few times I&rsquo;ve found myself talking about Quantum Computing and specifically discussing why quantum computers are required for quantum calculations. That is, restating the question, why can&rsquo;t we just simulate quantum calculations on the powerful computers we have today?
+The quick answer is that the amount of data (numbers) required to do those quantum calculations grows way too large very quickly as the size of the calculation grows. So yes, we can simulate very simple quantum calculations that require only a few quantum bits, or qubits, but as the number of qubits grows, that data required for the calculation grows too large for our computers to handle - at least with the current math that we use for quantum calculations."><script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "WebSite",
+    "name": "Live and let Learn",
+    
+    "url": "https:\/\/liveandletlearn.net\/"
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Organization",
+  "name": "",
+  "url": "https:\/\/liveandletlearn.net\/"
+  
+  
+  
+  
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@id": "https:\/\/liveandletlearn.net\/",
+          "name": "home"
+        }
+    },{
+        "@type": "ListItem",
+        "position": 3,
+        "item": {
+          "@id": "https:\/\/liveandletlearn.net\/post\/flipping-coin-analogy-quantum-computing-limitation\/",
+          "name": "Flipping a coin an analogy for simulated quantum computing limitations"
+        }
+    }]
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "author": {
+    "name" : ""
+  },
+  "headline": "Flipping a Coin: An Analogy for simulated Quantum Computing Limitations",
+  "description" : "I love chatting about science with whoever I find myself with and learning together through those interactions. A few times I\u0026rsquo;ve found myself talking about Quantum Computing and specifically discussing why quantum computers are required for quantum calculations. That is, restating the question, why can\u0026rsquo;t we just simulate quantum calculations on the powerful computers we have today?\nThe quick answer is that the amount of data (numbers) required to do those quantum calculations grows way too large very quickly as the size of the calculation grows. So yes, we can simulate very simple quantum calculations that require only a few quantum bits, or qubits, but as the number of qubits grows, that data required for the calculation grows too large for our computers to handle - at least with the current math that we use for quantum calculations.\n",
+  "inLanguage" : "en",
+  "wordCount":  1499 ,
+  "datePublished" : "2025-06-07T14:05:30\u002b10:00",
+  "dateModified" : "2025-06-07T14:05:30\u002b10:00",
+  "image" : "https:\/\/liveandletlearn.net\/img\/avatar-icon.png",
+  "keywords" : [ "learning, quantum-computing" ],
+  "mainEntityOfPage" : "https:\/\/liveandletlearn.net\/post\/flipping-coin-analogy-quantum-computing-limitation\/",
+  "publisher" : {
+    "@type": "Organization",
+    "name" : "https:\/\/liveandletlearn.net\/",
+    "logo" : {
+        "@type" : "ImageObject",
+        "url" : "https:\/\/liveandletlearn.net\/img\/avatar-icon.png",
+        "height" :  60 ,
+        "width" :  60
+    }
+  }
+}
+</script>
+
+
+<meta property="og:title" content="Flipping a Coin: An Analogy for simulated Quantum Computing Limitations" />
+<meta property="og:description" content="I love chatting about science with whoever I find myself with and learning together through those interactions. A few times I&rsquo;ve found myself talking about Quantum Computing and specifically discussing why quantum computers are required for quantum calculations. That is, restating the question, why can&rsquo;t we just simulate quantum calculations on the powerful computers we have today?
+The quick answer is that the amount of data (numbers) required to do those quantum calculations grows way too large very quickly as the size of the calculation grows. So yes, we can simulate very simple quantum calculations that require only a few quantum bits, or qubits, but as the number of qubits grows, that data required for the calculation grows too large for our computers to handle - at least with the current math that we use for quantum calculations.">
+<meta property="og:image" content="https://liveandletlearn.net/img/avatar-icon.png" />
+<meta property="og:url" content="https://liveandletlearn.net/post/flipping-coin-analogy-quantum-computing-limitation/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Live and let Learn" />
+
+  <meta name="twitter:title" content="Flipping a Coin: An Analogy for simulated Quantum Computing …" />
+  <meta name="twitter:description" content="I love chatting about science with whoever I find myself with and learning together through those interactions. A few times I&rsquo;ve found myself talking about Quantum Computing and specifically …">
+  <meta name="twitter:image" content="https://liveandletlearn.net/img/avatar-icon.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link href='https://liveandletlearn.net/img/favicon.ico' rel='icon' type='image/x-icon'/>
+  <meta name="generator" content="Hugo 0.147.6">
+  <link rel="alternate" href="https://liveandletlearn.net/index.xml" type="application/rss+xml" title="Live and let Learn"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.css" integrity="sha384-3UiQGuEI4TTMaFmGIZumfRPtfKQ3trwQE2JgosJxCnGmQpL/lJdjpcHkaaFwHlcI" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.6.0/css/all.css" integrity="sha384-h/hnnw1Bi4nbpD6kE7nYfCXzovi622sY5WBxww8ARKwpdLj5kUWjRuyiXaD1U2JT" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous"><link rel="stylesheet" href="https://liveandletlearn.net/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" /><link rel="stylesheet" href="https://liveandletlearn.net/css/syntax.css" /><link rel="stylesheet" href="https://liveandletlearn.net/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://liveandletlearn.net/">Live and let Learn</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="Blog" href="/">Blog</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="About" href="/about/">About</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="Tags" href="/tags">Tags</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="Live and let Learn" href="https://liveandletlearn.net/">
+            <img class="avatar-img" src="https://liveandletlearn.net/img/avatar-icon.png" alt="Live and let Learn" />
+           
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-heading">
+              
+                <h1>Flipping a Coin: An Analogy for simulated Quantum Computing Limitations</h1>
+              
+              
+              
+              
+                <span class="post-meta">
+  
+  
+  <i class="fas fa-calendar"></i>&nbsp;Posted on June 7, 2025
+  
+  
+  
+  
+    
+      &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;
+    
+  
+  
+</span>
+
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        <p>I love chatting about science with whoever I find myself with and learning together through those interactions. A few times I&rsquo;ve found myself talking about Quantum Computing and specifically discussing why quantum computers are required for quantum calculations. That is, restating the question, <strong>why can&rsquo;t we just simulate quantum calculations on the powerful computers we have today</strong>?</p>
+<p>The quick answer is that the <strong>amount of data (numbers) required to do those quantum calculations grows way too large very quickly</strong> as the size of the calculation grows. So yes, we can simulate very simple quantum calculations that require only a few quantum bits, or qubits, but as the number of qubits grows, that data required for the calculation grows too large for our computers to handle - at least with the current math that we use for quantum calculations.</p>
+<p>But that&rsquo;s not a satisfactory explanation: <strong>it&rsquo;s a question stopper rather than a way to understand why</strong>. So here&rsquo;s my attempt to unpack a little more deeply why the data required for a quantum calculation grows so quickly, using an analogy of flipping coins. I&rsquo;ve tried to keep the maths to a minimum required, but have introduced one of the simpler notation ideas of quantum mechanics - the state vector.</p>
+<h2 id="a-single-coin-flip">A single coin flip</h2>
+<p>If I flip a single coin and keep it covered with my hand, I know the coin is already in one of two states - either heads or tails. Assuming it&rsquo;s a standard coin, the probability of it being heads is one half, as is the probability of it being tails. I can represent the current state of my single coin system as \(\psi\) with a probability equation:
+$$\psi = \frac{1}{2}\text{HEADS} + \frac{1}{2}\text{TAILS}$$
+to communicate that the probability that my single coin is heads-up is one half and the probability that it is tails-up is one half.</p>
+<p>Let&rsquo;s simplify the notation by just using \(\text{H}\) and \(\text{T}\) for \(\text{HEADS}\) and \(\text{TAILS}\), so it&rsquo;s just:</p>
+<p>$$\psi = \frac{1}{2}\text{H} + \frac{1}{2}\text{T}$$</p>
+<p>Notice that we need to use two numbers: one number for the probability of each possible state of the single coin. In quantum mechanics, this is expressed more concisely as a state vector of just those two numbers.</p>
+<h3 id="a-state-vector-for-a-single-coin-flip">A state vector for a single coin flip</h3>
+<p>$$
+\psi = \begin{pmatrix}
+\frac{1}{2} \\[1ex]
+\frac{1}{2}
+\end{pmatrix}
+$$</p>
+<p>This notation assumes that the top number represents \(\text{H}\) and the bottom number \(\text{T}\) (this isn&rsquo;t a quantum state vector as there&rsquo;s nothing quantum about coin flipping, but just introduces the similar notation).</p>
+<h2 id="a-double-coin-flip">A double coin flip</h2>
+<p>Now let&rsquo;s look at the similar situation but with two coins - coin A and coin B. If we flip both and cover both, then both coins are in the state, having equal chance of being heads or tails:
+$$
+\begin{align}
+\psi_{A} &amp;= \frac{1}{2}\text{H} + \frac{1}{2}\text{T} \\[2ex]
+\psi_{B} &amp;= \frac{1}{2}\text{H} + \frac{1}{2}\text{T}
+\end{align}
+$$</p>
+<p>I can again represent the current <em>system</em> state of the two coins A and B together with a probability equation but this time it is the product of my two individual state equations for each coin. Let&rsquo;s call this the <em>product state</em>:</p>
+<h3 id="a-product-state-for-two-coins-a-and-b">A product state for two coins A and B</h3>
+<p>$$
+\psi_{AB} = \psi_{A}\psi_{B} = (\frac{1}{2}\text{H} + \frac{1}{2}\text{T})(\frac{1}{2}\text{H} + \frac{1}{2}\text{T})
+$$</p>
+<p><strong>Product State</strong>: the state of the system expressed as the product of the individual states of each coin.</p>
+<p>Notice that the product state has 2 numbers for each coin&rsquo;s state and so \(2 + 2 = 4\) numbers in total to represent the product state.</p>
+<p>We can also expand the product state to reveal the probabilities of each possible result for the two coins A and B in an expanded state:
+$$
+\psi_{AB} = \frac{1}{4}\text{HH} +\frac{1}{4}\text{HT}  +\frac{1}{4}\text{TH}  +\frac{1}{4}\text{TT}
+$$
+<strong>Expanded State</strong>: the state of the system expressed as the expansion of the product state which lists each possible <em>system outcome of both coins</em> with its own probability.</p>
+<h3 id="a-state-vector-for-a-double-coin-flip">A state vector for a double coin flip</h3>
+<p>And again, in quantum mechanics, the more concise state vector notation would be used:</p>
+<p>$$
+\psi_{AB} = \begin{pmatrix}\frac{1}{4} \\[1ex] \frac{1}{4}\\[1ex] \frac{1}{4}\\[1ex] \frac{1}{4}\end{pmatrix}
+$$</p>
+<p>with the knowledge that the first top number represents the probability of both coins being heads (\(\text{HH}\)), the second heads-tails, the third tails-heads and the last tails-tails.</p>
+<p>For this state vector we need 4 numbers to represent the 4 different system states that the coins might be in (\(\text{HH}\), \(\text{HT}\), \(\text{TH}\) or \(\text{TT}\)).</p>
+<h2 id="a-triple-coin-flip">A triple coin flip</h2>
+<p>Using the same process with three coins we start to see a difference between the two representations of the <strong>product state</strong> and the quantum mechanics <strong>state vector</strong>. Without repeating the same steps, the product state for the system where I flip and cover three coins, coin A, coin B and coin C, is:</p>
+<h3 id="product-state-for-three-coins-a-b-and-c">Product state for three coins A, B and C</h3>
+<p>$$
+\psi_{ABC} = \psi_{A}\psi_{B}\psi_{C} = (\frac{1}{2}\text{H} + \frac{1}{2}\text{T})(\frac{1}{2}\text{H} + \frac{1}{2}\text{T}) (\frac{1}{2}\text{H} + \frac{1}{2}\text{T})
+$$</p>
+<p>Now we have \(2 + 2 + 2 = 2 \times 3 = 6\) numbers to represent the product state. Yet when we expand the product to get the expanded state it now lists all 8 possible outcomes for our system with three labelled coins:
+$$
+\psi_{ABC} = \frac{1}{8}\text{HHH} +\frac{1}{8}\text{HHT}  +\frac{1}{8}\text{HTH}  +\frac{1}{8}\text{HTT} + \frac{1}{8}\text{THH} +\frac{1}{8}\text{THT}  +\frac{1}{8}\text{TTH}  +\frac{1}{8}\text{TTT}
+$$
+or as a quantum mechanics state vector as follows.</p>
+<h3 id="a-state-vector-for-a-triple-coin-flip">A state vector for a triple coin flip</h3>
+<p>The more concise state vector notation from quantum mechanics would be:
+$$
+\psi_{ABC} = \begin{pmatrix}\frac{1}{8} \\[1ex] \frac{1}{8} \\[1ex] \frac{1}{8} \\[1ex] \frac{1}{8} \\[1ex] \frac{1}{8} \\[1ex] \frac{1}{8} \\[1ex] \frac{1}{8} \\[1ex] \frac{1}{8}\end{pmatrix}
+$$
+again with the knowledge that the top number represents the probability of \(\text{HHH}\), followed by \(\text{HHT}\), \(\text{HTH}\), etc. through to \(\text{TTT}\).</p>
+<p>So now, given the two possible outcomes for coin A, two possible outcomes for coin B and two possible outcomes for coin C, we need \(2\times 2\times 2 = 8\) numbers to represent the 8 separate possible outcomes. This is only slightly larger than the 6 numbers we needed above for the product state of the three coins.</p>
+<h2 id="exponential-requirements-for-more-coin-flips">Exponential requirements for more coin flips</h2>
+<p>So if we have 5 coins, we&rsquo;ll need \(5\times 2 = 10\) numbers to represent the state as the product state - the product of 5 individual coin states, but if we expand that product out to obtain the expanded system state with a separate probability for each possible outcome, we&rsquo;ll have \(2^5 = 32\) possible outcomes needing 32 numbers to represent the probability of each possible outcome. That&rsquo;s a state vector that looks something like:</p>
+<p>$$
+\psi_{ABCDE} = \begin{pmatrix}\frac{1}{32} \\[1ex] \frac{1}{32} \\[1ex] \frac{1}{32} \\[1ex] \frac{1}{32} \\[1ex] \frac{1}{32} \\[1ex] \frac{1}{32} \\[1ex] \vdots \\[1ex] \frac{1}{32}\end{pmatrix}
+$$
+but much longer (ie. with 32 numbers in total). So rather than the 10 numbers needed to express the same system as a <em>product state</em>, we need 32 for the state vector.</p>
+<p>This difference between the how many numbers are needed to represent the <em>product state</em> versus the state vector diverges very quickly:</p>
+<ul>
+<li>10 coins: 20 vs 1024 numbers</li>
+<li>20 coins:  40 vs 1,048,576 numbers</li>
+<li>50 coins: 100 vs 1,125,899,906,842,624 numbers</li>
+</ul>
+<p>With 100 coins, we&rsquo;d need 200 numbers to store and manipulate the <em>product state</em> but \(2^{100}\) numbers to represent all the different possible states in a state vector, which is around a billion times more numbers than the best guesstimates of the number of grains of sand on the earth (<a href="https://www.scientificamerican.com/article/do-stars-outnumber-the-sands-of-earths-beaches/">estimated to be somewhere around</a> \(10^{20}\) where as \(2^{100}\) is around \(10^{30}\)).</p>
+<p>So why not just use the product state, which requires only 200 numbers for the 100 coins? That&rsquo;s exactly what you&rsquo;d do if we were just calculating non-quantum coin flips, but&hellip;</p>
+<h2 id="quantum-bits-versus-coins">Quantum Bits versus Coins</h2>
+<p>Unlike the state of a system of coins, the state of a system of quantum bits, known as qubits, <strong>can&rsquo;t always be represented as a product of individual states</strong>. In quantum calculations the qubits become entangled with one another (dependent on one another) in a way that means, at least with our current maths, we can&rsquo;t represent intermediate single states of qubits and so <strong>the full state vector is required to represent the system</strong>.</p>
+<p>The \(2^{100}\) numbers required for the state vector of a 100 qubit simulation is not physically possible for any computer to store or process. To give an idea of how much computer storage would be required, if you assume 8 bytes of data per number (for a single-precision floating point number), it works out to around 40 million times more data than <a href="https://www.statista.com/statistics/871513/worldwide-data-created/">humans are estimated to have ever created up until 2024 </a> (which is approximately 120 zettabytes, for what it&rsquo;s worth).</p>
+<p>So with a 2025 typical laptop, you&rsquo;ll being doing well to be able to simulate quantum simulations of <a href="https://quantumai.google/qsim/choose_hw">20 to 30 qubits</a>.</p>
+<p>It would require a little more maths to be able to explain <em>why</em> quantum calculations can&rsquo;t use the product of individual states, but hopefully this analogy with coin flipping goes one level deeper than the initial explanation and at least helps understand <strong>why the state vector for a system grows exponentially as the number of coins or qubits increases</strong>.</p>
+
+
+        
+          <div class="blog-tags">
+            
+              
+              <a href="https://liveandletlearn.net/tags/learning/">learning</a>&nbsp;
+            
+              
+              <a href="https://liveandletlearn.net/tags/quantum-computing/">quantum-computing</a>&nbsp;
+            
+          </div>
+        
+
+        
+
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="https://liveandletlearn.net/post/united-nations-transparency-protocol-part-1/" data-toggle="tooltip" data-placement="top" title="United Nations Transparency Protocol: transparent facts about products you purchase">&larr; Previous Post</a>
+            </li>
+          
+          
+        </ul>
+      
+
+
+      
+      
+      
+      
+      
+          
+          <div class="disqus-comments">
+            
+  
+    <div class="comments">
+      <div id="disqus_thread"></div>
+<script>
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "liveandletlearn" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </div>
+  
+
+
+          </div>
+          
+        
+        
+      
+
+    </div>
+  </div>
+</div>
+
+      <footer>
+  <div class="container">
+    
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+          
+          
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+
+          &nbsp;&bull;&nbsp;&copy;
+          
+            2025
+          
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://liveandletlearn.net/">Live and let Learn</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="https://gohugo.io">Hugo v0.147.6</a> powered &nbsp;&bull;&nbsp; Theme <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a> adapted from <a href="https://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.js" integrity="sha384-G0zcxDFp5LWZtDuRMnBkk3EphCK1lhEf4UEyEM693ka574TZGwo4IWwS6QLzM/2t" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+<script src="https://code.jquery.com/jquery-3.7.0.slim.min.js" integrity="sha384-w5y/xIeYixWvfM+A1cEbmHPURnvyqmVg5eVENruEdDjcyRLUSNej7512JQGspFUr" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+
+<script src="https://liveandletlearn.net/js/main.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script><script src="https://liveandletlearn.net/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+
+
+
+
+    
+  </body>
+</html>
+

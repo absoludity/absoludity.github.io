@@ -6,13 +6,20 @@
     <description>Recent content in Tags on Live and let Learn</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 29 May 2025 09:15:09 +1000</lastBuildDate>
+    <lastBuildDate>Sat, 07 Jun 2025 14:05:30 +1000</lastBuildDate>
     <atom:link href="https://liveandletlearn.net/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Learning</title>
       <link>https://liveandletlearn.net/tags/learning/</link>
-      <pubDate>Thu, 29 May 2025 09:15:09 +1000</pubDate>
+      <pubDate>Sat, 07 Jun 2025 14:05:30 +1000</pubDate>
       <guid>https://liveandletlearn.net/tags/learning/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Quantum-Computing</title>
+      <link>https://liveandletlearn.net/tags/quantum-computing/</link>
+      <pubDate>Sat, 07 Jun 2025 14:05:30 +1000</pubDate>
+      <guid>https://liveandletlearn.net/tags/quantum-computing/</guid>
       <description></description>
     </item>
     <item>
@@ -41,13 +48,6 @@
       <link>https://liveandletlearn.net/tags/piloting/</link>
       <pubDate>Thu, 22 Feb 2024 16:25:25 +1100</pubDate>
       <guid>https://liveandletlearn.net/tags/piloting/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Quantum-Computing</title>
-      <link>https://liveandletlearn.net/tags/quantum-computing/</link>
-      <pubDate>Thu, 22 Feb 2024 16:25:25 +1100</pubDate>
-      <guid>https://liveandletlearn.net/tags/quantum-computing/</guid>
       <description></description>
     </item>
     <item>

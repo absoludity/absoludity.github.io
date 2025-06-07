@@ -6,8 +6,15 @@
     <description>Recent content on Live and let Learn</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 29 May 2025 09:15:09 +1000</lastBuildDate>
+    <lastBuildDate>Sat, 07 Jun 2025 14:05:30 +1000</lastBuildDate>
     <atom:link href="https://liveandletlearn.net/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Flipping a Coin: An Analogy for simulated Quantum Computing Limitations</title>
+      <link>https://liveandletlearn.net/post/flipping-coin-analogy-quantum-computing-limitation/</link>
+      <pubDate>Sat, 07 Jun 2025 14:05:30 +1000</pubDate>
+      <guid>https://liveandletlearn.net/post/flipping-coin-analogy-quantum-computing-limitation/</guid>
+      <description>&lt;p&gt;I love chatting about science with whoever I find myself with and learning together through those interactions. A few times I&amp;rsquo;ve found myself talking about Quantum Computing and specifically discussing why quantum computers are required for quantum calculations. That is, restating the question, &lt;strong&gt;why can&amp;rsquo;t we just simulate quantum calculations on the powerful computers we have today&lt;/strong&gt;?&lt;/p&gt;&#xA;&lt;p&gt;The quick answer is that the &lt;strong&gt;amount of data (numbers) required to do those quantum calculations grows way too large very quickly&lt;/strong&gt; as the size of the calculation grows. So yes, we can simulate very simple quantum calculations that require only a few quantum bits, or qubits, but as the number of qubits grows, that data required for the calculation grows too large for our computers to handle - at least with the current math that we use for quantum calculations.&lt;/p&gt;</description>
+    </item>
     <item>
       <title>United Nations Transparency Protocol: transparent facts about products you purchase</title>
       <link>https://liveandletlearn.net/post/united-nations-transparency-protocol-part-1/</link>
